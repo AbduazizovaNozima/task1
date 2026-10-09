@@ -2,7 +2,7 @@ import ast
 from pathlib import Path
 
 from bot.api_client import AskReply
-from bot.main import NOT_FOUND, TELEGRAM_MESSAGE_LIMIT, format_reply
+from bot.main import CLARIFY, NOT_FOUND, TELEGRAM_MESSAGE_LIMIT, format_reply
 
 BOT_DIR = Path(__file__).resolve().parents[1] / "bot"
 
@@ -17,6 +17,18 @@ def test_found_answer_is_sent_as_is() -> None:
 
 def test_not_found_gives_friendly_message() -> None:
     assert format_reply(reply(False, None)) == NOT_FOUND
+
+
+def test_ambiguous_reply_lists_suggestions() -> None:
+    ambiguous = AskReply(
+        found=False,
+        answer=None,
+        matched_question=None,
+        score=0.7,
+        suggestions=["Pasport olish", "Pasport almashtirish"],
+    )
+
+    assert format_reply(ambiguous) == f"{CLARIFY}\n• Pasport olish\n• Pasport almashtirish"
 
 
 def test_long_answer_fits_telegram_limit() -> None:

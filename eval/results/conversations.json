@@ -1,0 +1,127 @@
+[
+  {
+    "scenario": "xalq iborasi va inkor",
+    "query": "man erga tegmoqchiman. necha yosh bolishim kerak?",
+    "correct": true,
+    "matched_question": "Iltimos, ayting: nikoh yoshi necha yosh?",
+    "suggestions": [],
+    "context_used": false
+  },
+  {
+    "scenario": "xalq iborasi va inkor",
+    "query": "erga tegmoqchiman prava olmayman",
+    "correct": false,
+    "matched_question": null,
+    "suggestions": [],
+    "context_used": false
+  },
+  {
+    "scenario": "xalq iborasi va inkor",
+    "query": "amir temur qachon tug'ilgan",
+    "correct": true,
+    "matched_question": null,
+    "suggestions": [],
+    "context_used": false
+  },
+  {
+    "scenario": "davomi savol (lotin)",
+    "query": "Id karta olish uchun nima kerak",
+    "correct": true,
+    "matched_question": "ID-karta olish uchun qanday hujjatlar kerak?",
+    "suggestions": [],
+    "context_used": false
+  },
+  {
+    "scenario": "davomi savol (lotin)",
+    "query": "muddati-chi?",
+    "correct": true,
+    "matched_question": "ID-karta qancha muddatga beriladi?",
+    "suggestions": [],
+    "context_used": true
+  },
+  {
+    "scenario": "davomi savol (lotin)",
+    "query": "pensiya nechpul",
+    "correct": false,
+    "matched_question": "Pensiyani qanday olish mumkin — naqd yoki kartaga?",
+    "suggestions": [],
+    "context_used": false
+  },
+  {
+    "scenario": "davomi savol (kirill)",
+    "query": "Ид карта олиш учун нима керак",
+    "correct": true,
+    "matched_question": "ID-karta olish uchun qanday hujjatlar kerak?",
+    "suggestions": [],
+    "context_used": false
+  },
+  {
+    "scenario": "davomi savol (kirill)",
+    "query": "муддати-чи?",
+    "correct": true,
+    "matched_question": "ID-karta qancha muddatga beriladi?",
+    "suggestions": [],
+    "context_used": true
+  },
+  {
+    "scenario": "noaniq qisqa so'rov",
+    "query": "passport",
+    "correct": true,
+    "matched_question": null,
+    "suggestions": [
+      "Pasport yoki ID-karta yo'qolsa qanday?",
+      "Xorijga chiqish biometrik pasportini olish qanday?",
+      "Pasportni (ID-karta) almashtirish qanday?",
+      "Xorijga chiqishda ID-karta yetarlimi yoki pasport qanday?"
+    ],
+    "context_used": false
+  },
+  {
+    "scenario": "noaniq qisqa so'rov",
+    "query": "pasportni almashtirmoqchiman",
+    "correct": true,
+    "matched_question": "Pasportni (ID-karta) almashtirish qanday?",
+    "suggestions": [],
+    "context_used": false
+  },
+  {
+    "scenario": "ishora olmoshi",
+    "query": "Pasportni almashtirish tartibi qanday",
+    "correct": true,
+    "matched_question": "Pasportni (ID-karta) almashtirish tartibi qanday?",
+    "suggestions": [],
+    "context_used": false
+  },
+  {
+    "scenario": "ishora olmoshi",
+    "query": "buning uchun qanday hujjatlar kerak",
+    "correct": false,
+    "matched_question": "Chet elda yashovchi fuqaro pasport/ID-kartani almashtiradi qanday?",
+    "suggestions": [],
+    "context_used": true
+  },
+  {
+    "scenario": "mavzu almashishi",
+    "query": "Id karta olish uchun nima kerak",
+    "correct": true,
+    "matched_question": "ID-karta olish uchun qanday hujjatlar kerak?",
+    "suggestions": [],
+    "context_used": false
+  },
+  {
+    "scenario": "mavzu almashishi",
+    "query": "Nikoh yoshi necha yosh",
+    "correct": true,
+    "matched_question": "Nikoh yoshi necha yosh?",
+    "suggestions": [],
+    "context_used": false
+  },
+  {
+    "scenario": "mavzu almashishi",
+    "query": "prava olish uchun ekzamen qanday topshiriladi",
+    "correct": true,
+    "matched_question": "Haydovchilik imtihoni qanday topshiriladi?",
+    "suggestions": [],
+    "context_used": false
+  }
+]

@@ -46,142 +46,142 @@
 {"query": "bog'cha puli uchun lgota bormi", "expected": ["Bolalar bog'chasi to'lovida imtiyoz bormi?"]}
 {"query": "pasportni yangisiga almashtirish uchun nima qilish kerak", "expected": ["Pasportni (ID-karta) almashtirish tartibi qanday?"]}
 {"query": "ID kartani almashtrish tartibi", "expected": ["Pasportni (ID-karta) almashtirish tartibi qanday?"]}
-{"query": "Как поменять паспорт на ID-карту?", "expected": ["Pasportni (ID-karta) almashtirish tartibi qanday?"]}
+{"query": "Паспортни ID-картага қандай алмаштирса бўлади?", "expected": ["Pasportni (ID-karta) almashtirish tartibi qanday?"]}
 {"query": "eri bilan ajrashmoqchi bo'lgan ayol qayerga boradi", "expected": ["Ajrashish (nikohni bekor qilish) qanday amalga oshiriladi?"]}
 {"query": "ажрашиш учун қаерга мурожаат қилиш керак", "expected": ["Ajrashish (nikohni bekor qilish) qanday amalga oshiriladi?"]}
-{"query": "развод как оформить в Узбекистане", "expected": ["Ajrashish (nikohni bekor qilish) qanday amalga oshiriladi?"]}
+{"query": "ажралиш қандай расмийлаштирилади", "expected": ["Ajrashish (nikohni bekor qilish) qanday amalga oshiriladi?"]}
 {"query": "haydovchilik guvohnomasi olish uchun nima qilish kerak", "expected": ["Haydovchilik guvohnomasini qanday rasmiylashtirish mumkin?"]}
 {"query": "prava olish tartibi qanaqa", "expected": ["Haydovchilik guvohnomasini qanday rasmiylashtirish mumkin?"]}
-{"query": "водительские права как получить", "expected": ["Haydovchilik guvohnomasini qanday rasmiylashtirish mumkin?"]}
+{"query": "ҳайдовчилик гувоҳномасини қандай олса бўлади", "expected": ["Haydovchilik guvohnomasini qanday rasmiylashtirish mumkin?"]}
 {"query": "JSHSHIR degani nima", "expected": ["JSHSHIR (shaxsiy identifikatsiya raqami) nima?"]}
 {"query": "pinfl nima o'zi", "expected": ["JSHSHIR (shaxsiy identifikatsiya raqami) nima?"]}
 {"query": "ЖШШИР нима?", "expected": ["JSHSHIR (shaxsiy identifikatsiya raqami) nima?"]}
 {"query": "doverennost qanday qilinadi", "expected": ["Ishonchnoma (ishonch xati) qanday rasmiylashtiriladi?"]}
 {"query": "ishonchnoma yozdirish uchun notariusga boramanmi", "expected": ["Ishonchnoma (ishonch xati) qanday rasmiylashtiriladi?"]}
-{"query": "как оформить доверенность", "expected": ["Ishonchnoma (ishonch xati) qanday rasmiylashtiriladi?"]}
+{"query": "ишончнома қандай расмийлаштирилади", "expected": ["Ishonchnoma (ishonch xati) qanday rasmiylashtiriladi?"]}
 {"query": "yakka tadbirkor qanaqa soliq to'laydi", "expected": ["Yakka tartibdagi tadbirkor (YaTT) soliqlarni qanday to'laydi?"]}
-{"query": "ИП налоги как платить в Узбекистане", "expected": ["Yakka tartibdagi tadbirkor (YaTT) soliqlarni qanday to'laydi?"]}
+{"query": "ЯТТ солиқларни қандай тўлайди", "expected": ["Yakka tartibdagi tadbirkor (YaTT) soliqlarni qanday to'laydi?"]}
 {"query": "якка тартибдаги тадбиркор солиқни қандай тўлайди", "expected": ["Yakka tartibdagi tadbirkor (YaTT) soliqlarni qanday to'laydi?"]}
 {"query": "bolalar puli qanday tayinlanadi", "expected": ["Bolalarga oid nafaqalar qanday tayinlanadi?"]}
 {"query": "bolalik nafaqasiga qanday ariza beraman", "expected": ["Bolalarga oid nafaqalar qanday tayinlanadi?"]}
-{"query": "детское пособие как оформить", "expected": ["Bolalarga oid nafaqalar qanday tayinlanadi?"]}
+{"query": "болалар нафақасини қандай расмийлаштираман", "expected": ["Bolalarga oid nafaqalar qanday tayinlanadi?"]}
 {"query": "harbiy hisobga turish uchun qayerga borish kerak", "expected": ["Harbiy hisobga olish (chaqiruv) bo'yicha qayerga murojaat qilinadi?"]}
 {"query": "voenkomatga qachon borish kerak", "expected": ["Harbiy hisobga olish (chaqiruv) bo'yicha qayerga murojaat qilinadi?"]}
 {"query": "ҳарбий ҳисобга олиш бўйича қаерга мурожаат қилинади", "expected": ["Harbiy hisobga olish (chaqiruv) bo'yicha qayerga murojaat qilinadi?"]}
 {"query": "guvohnomadagi xatoni to'g'irlash", "expected": ["FHDYO yozuvidagi xato qanday tuzatiladi?"]}
 {"query": "ZAGS hujjatidagi familiya xato yozilgan", "expected": ["FHDYO yozuvidagi xato qanday tuzatiladi?"]}
-{"query": "ошибка в свидетельстве о рождении как исправить", "expected": ["FHDYO yozuvidagi xato qanday tuzatiladi?"]}
+{"query": "туғилганлик гувоҳномасидаги хатони қандай тузатаман", "expected": ["FHDYO yozuvidagi xato qanday tuzatiladi?"]}
 {"query": "uyni hadya qilish shartnomasi", "expected": ["Ko'chmas mulkni hadya (sovg'a) shartnomasi qanday tuziladi?"]}
 {"query": "kvartirani akamga sovg'a qilmoqchiman qanday rasmiylashtiraman", "expected": ["Ko'chmas mulkni hadya (sovg'a) shartnomasi qanday tuziladi?"]}
-{"query": "договор дарения квартиры", "expected": ["Ko'chmas mulkni hadya (sovg'a) shartnomasi qanday tuziladi?"]}
+{"query": "квартирани ҳадя қилиш шартномаси", "expected": ["Ko'chmas mulkni hadya (sovg'a) shartnomasi qanday tuziladi?"]}
 {"query": "skuter haydash uchun prava kerakmi", "expected": ["Moped yoki skuter uchun qanday guvohnoma kerak?"]}
 {"query": "moped uchun qaysi toifa kerak", "expected": ["Moped yoki skuter uchun qanday guvohnoma kerak?"]}
-{"query": "нужны ли права на мопед", "expected": ["Moped yoki skuter uchun qanday guvohnoma kerak?"]}
+{"query": "мопед учун права керакми", "expected": ["Moped yoki skuter uchun qanday guvohnoma kerak?"]}
 {"query": "firmani qanday yopaman", "expected": ["Tadbirkorlik faoliyatini tugatish (yopish) tartibi qanday?"]}
 {"query": "tadbirkorlikni tugatish", "expected": ["Tadbirkorlik faoliyatini tugatish (yopish) tartibi qanday?"]}
-{"query": "как закрыть ИП", "expected": ["Tadbirkorlik faoliyatini tugatish (yopish) tartibi qanday?"]}
+{"query": "ЯТТни қандай ёпаман", "expected": ["Tadbirkorlik faoliyatini tugatish (yopish) tartibi qanday?"]}
 {"query": "pensiyani naqd olsa bo'ladimi", "expected": ["Pensiyani qanday olish mumkin — naqd yoki kartaga?"]}
 {"query": "nafaqani kartaga otkazish", "expected": ["Pensiyani qanday olish mumkin — naqd yoki kartaga?"]}
-{"query": "пенсию можно получать наличными?", "expected": ["Pensiyani qanday olish mumkin — naqd yoki kartaga?"]}
+{"query": "пенсияни нақд олса бўладими", "expected": ["Pensiyani qanday olish mumkin — naqd yoki kartaga?"]}
 {"query": "o'qishdan spravka olish", "expected": ["O'qish joyidan ma'lumotnomani qanday olish mumkin?"]}
 {"query": "talabalik ma'lumotnomasi qayerdan olinadi", "expected": ["O'qish joyidan ma'lumotnomani qanday olish mumkin?"]}
-{"query": "справка с места учёбы", "expected": ["O'qish joyidan ma'lumotnomani qanday olish mumkin?"]}
+{"query": "ўқиш жойидан маълумотнома", "expected": ["O'qish joyidan ma'lumotnomani qanday olish mumkin?"]}
 {"query": "sud qarorini kim bajaradi", "expected": ["Sud qarorining ijrosi (undiruv) qayerda amalga oshiriladi?"]}
 {"query": "sud qarori bo'yicha pulni undirish", "expected": ["Sud qarorining ijrosi (undiruv) qayerda amalga oshiriladi?"]}
-{"query": "исполнение решения суда где", "expected": ["Sud qarorining ijrosi (undiruv) qayerda amalga oshiriladi?"]}
+{"query": "суд қарорини ким ижро этади", "expected": ["Sud qarorining ijrosi (undiruv) qayerda amalga oshiriladi?"]}
 {"query": "yangi tug'ilgan chaqaloqqa qanday hujjatlar qilinadi", "expected": ["Chaqaloq tug'ilgach qanday hujjatlar ketma-ket rasmiylashtiriladi?"]}
 {"query": "bola tug'ildi endi qanday hujjat qilish kerak", "expected": ["Chaqaloq tug'ilgach qanday hujjatlar ketma-ket rasmiylashtiriladi?"]}
-{"query": "документы на новорожденного", "expected": ["Chaqaloq tug'ilgach qanday hujjatlar ketma-ket rasmiylashtiriladi?"]}
+{"query": "янги туғилган чақалоққа ҳужжатлар", "expected": ["Chaqaloq tug'ilgach qanday hujjatlar ketma-ket rasmiylashtiriladi?"]}
 {"query": "mashinani hisobdan chiqarish", "expected": ["Transport vositasini hisobdan chiqarish (utilizatsiya) tartibi qanday?"]}
 {"query": "eski avtomobilni utilga topshirish", "expected": ["Transport vositasini hisobdan chiqarish (utilizatsiya) tartibi qanday?"]}
-{"query": "снять машину с учёта", "expected": ["Transport vositasini hisobdan chiqarish (utilizatsiya) tartibi qanday?"]}
+{"query": "машинани ҳисобдан чиқариш", "expected": ["Transport vositasini hisobdan chiqarish (utilizatsiya) tartibi qanday?"]}
 {"query": "nikoh shartnomasi tuzsa bo'ladimi", "expected": ["Nikohdan oldingi shartnoma (nikoh shartnomasi) tuzish mumkinmi?"]}
-{"query": "брачный контракт можно заключить?", "expected": ["Nikohdan oldingi shartnoma (nikoh shartnomasi) tuzish mumkinmi?"]}
+{"query": "никоҳ шартномасини тузса бўладими", "expected": ["Nikohdan oldingi shartnoma (nikoh shartnomasi) tuzish mumkinmi?"]}
 {"query": "to'ydan oldin mol-mulk bo'yicha shartnoma", "expected": ["Nikohdan oldingi shartnoma (nikoh shartnomasi) tuzish mumkinmi?"]}
 {"query": "fuqaroligi yo'q odam hujjatni qanday qiladi", "expected": ["Fuqaroligi bo'lmagan shaxs hujjatlarini qanday rasmiylashtiradi?"]}
 {"query": "apatrid hujjatlari", "expected": ["Fuqaroligi bo'lmagan shaxs hujjatlarini qanday rasmiylashtiradi?"]}
-{"query": "лицо без гражданства документы", "expected": ["Fuqaroligi bo'lmagan shaxs hujjatlarini qanday rasmiylashtiradi?"]}
+{"query": "фуқаролиги йўқ шахснинг ҳужжатлари", "expected": ["Fuqaroligi bo'lmagan shaxs hujjatlarini qanday rasmiylashtiradi?"]}
 {"query": "kadastr raqamini qanday bilaman", "expected": ["Ko'chmas mulkning kadastr raqamini qayerdan bilib olish mumkin?"]}
 {"query": "uyimning kadastr nomerini topish", "expected": ["Ko'chmas mulkning kadastr raqamini qayerdan bilib olish mumkin?"]}
-{"query": "кадастровый номер где узнать", "expected": ["Ko'chmas mulkning kadastr raqamini qayerdan bilib olish mumkin?"]}
+{"query": "кадастр рақамини қаердан билсам бўлади", "expected": ["Ko'chmas mulkning kadastr raqamini qayerdan bilib olish mumkin?"]}
 {"query": "uzumda sotsam soliq to'laymanmi", "expected": ["Onlayn (marketpleys orqali) savdo qiluvchi soliqni qanday to'laydi?"]}
 {"query": "internetda savdo qilganga soliq", "expected": ["Onlayn (marketpleys orqali) savdo qiluvchi soliqni qanday to'laydi?"]}
-{"query": "налог для продавцов на маркетплейсе", "expected": ["Onlayn (marketpleys orqali) savdo qiluvchi soliqni qanday to'laydi?"]}
+{"query": "маркетплейсда сотувчиларга солиқ", "expected": ["Onlayn (marketpleys orqali) savdo qiluvchi soliqni qanday to'laydi?"]}
 {"query": "dekret ta'tiliga chiqish", "expected": ["Homiladorlik va tug'ruq ta'tili qanday rasmiylashtiriladi?"]}
 {"query": "tug'ruq ta'tilini rasmiylashtirish", "expected": ["Homiladorlik va tug'ruq ta'tili qanday rasmiylashtiriladi?"]}
-{"query": "декретный отпуск как оформить", "expected": ["Homiladorlik va tug'ruq ta'tili qanday rasmiylashtiriladi?"]}
+{"query": "декрет таътилини қандай расмийлаштираман", "expected": ["Homiladorlik va tug'ruq ta'tili qanday rasmiylashtiriladi?"]}
 {"query": "rodomni o'zim tanlasam bo'ladimi", "expected": ["Tug'ruqxonani tanlash mumkinmi?"]}
 {"query": "qaysi tug'ruqxonada tug'ishni tanlash mumkinmi", "expected": ["Tug'ruqxonani tanlash mumkinmi?"]}
-{"query": "можно ли выбрать роддом", "expected": ["Tug'ruqxonani tanlash mumkinmi?"]}
+{"query": "туғруқхонани ўзим танласам бўладими", "expected": ["Tug'ruqxonani tanlash mumkinmi?"]}
 {"query": "armiyadan keyin qanday imtiyozlar bor", "expected": ["Muddatli xizmatni o'tagach qanday imtiyozlar bo'ladi?"]}
 {"query": "harbiy xizmatni tugatganlarga lgotalar", "expected": ["Muddatli xizmatni o'tagach qanday imtiyozlar bo'ladi?"]}
-{"query": "льготы после срочной службы", "expected": ["Muddatli xizmatni o'tagach qanday imtiyozlar bo'ladi?"]}
+{"query": "муддатли хизматдан кейин имтиёзлар", "expected": ["Muddatli xizmatni o'tagach qanday imtiyozlar bo'ladi?"]}
 {"query": "ijro varaqasi olish", "expected": ["Ijro varaqasini qanday olish mumkin?"]}
 {"query": "ispolnitelniy list qayerdan olinadi", "expected": ["Ijro varaqasini qanday olish mumkin?"]}
-{"query": "исполнительный лист как получить", "expected": ["Ijro varaqasini qanday olish mumkin?"]}
+{"query": "ижро варақасини қандай оламан", "expected": ["Ijro varaqasini qanday olish mumkin?"]}
 {"query": "qariyalarga uyga kelib xizmat qilishadimi", "expected": ["Keksalar yoki nogironlar uchun uyga chiqib xizmat ko'rsatiladimi?"]}
 {"query": "nogiron odam uchun uyga chiqib xizmat", "expected": ["Keksalar yoki nogironlar uchun uyga chiqib xizmat ko'rsatiladimi?"]}
-{"query": "выездное обслуживание для пожилых", "expected": ["Keksalar yoki nogironlar uchun uyga chiqib xizmat ko'rsatiladimi?"]}
+{"query": "кексаларга уйга чиқиб хизмат кўрсатиладими", "expected": ["Keksalar yoki nogironlar uchun uyga chiqib xizmat ko'rsatiladimi?"]}
 {"query": "ID kartani boshqa odam olib bersa bo'ladimi", "expected": ["ID-kartani boshqa shaxs (ishonchnoma bilan) olib bera oladimi?"]}
 {"query": "ishonchnoma bilan pasportni olish mumkinmi", "expected": ["ID-kartani boshqa shaxs (ishonchnoma bilan) olib bera oladimi?"]}
-{"query": "может ли другой человек получить мою ID-карту", "expected": ["ID-kartani boshqa shaxs (ishonchnoma bilan) olib bera oladimi?"]}
+{"query": "ID-картамни бошқа одам олиб бера оладими", "expected": ["ID-kartani boshqa shaxs (ishonchnoma bilan) olib bera oladimi?"]}
 {"query": "repatriantlar uchun yengillik bormi", "expected": ["Etnik o'zbeklar (repatriantlar) uchun soddalashtirilgan tartib bormi?"]}
 {"query": "chetdagi o'zbeklar fuqarolikni oson olishi", "expected": ["Etnik o'zbeklar (repatriantlar) uchun soddalashtirilgan tartib bormi?"]}
-{"query": "этнические узбеки упрощённый порядок", "expected": ["Etnik o'zbeklar (repatriantlar) uchun soddalashtirilgan tartib bormi?"]}
+{"query": "этник ўзбеклар учун соддалаштирилган тартиб", "expected": ["Etnik o'zbeklar (repatriantlar) uchun soddalashtirilgan tartib bormi?"]}
 {"query": "uyni aka-ukalar o'rtasida bo'lish", "expected": ["Uy-joyni majburiy bo'lish (ulush ajratish) qanday hal qilinadi?"]}
 {"query": "mulkdan ulushimni ajratib olmoqchiman", "expected": ["Uy-joyni majburiy bo'lish (ulush ajratish) qanday hal qilinadi?"]}
-{"query": "раздел доли в квартире", "expected": ["Uy-joyni majburiy bo'lish (ulush ajratish) qanday hal qilinadi?"]}
+{"query": "квартирадаги улушни ажратиш", "expected": ["Uy-joyni majburiy bo'lish (ulush ajratish) qanday hal qilinadi?"]}
 {"query": "chetdan kelgan pulga soliq bormi", "expected": ["Chet eldan kelgan pul o'tkazmasi soliqqa tortiladimi?"]}
 {"query": "rossiyadan pul o'tkazmasi soliqqa tortiladimi", "expected": ["Chet eldan kelgan pul o'tkazmasi soliqqa tortiladimi?"]}
-{"query": "облагаются ли налогом переводы из-за границы", "expected": ["Chet eldan kelgan pul o'tkazmasi soliqqa tortiladimi?"]}
+{"query": "чет элдан келган пул ўтказмаларига солиқ борми", "expected": ["Chet eldan kelgan pul o'tkazmasi soliqqa tortiladimi?"]}
 {"query": "ishga kirganda sinov muddati qancha", "expected": ["Sinov muddati (ish boshlashda) qancha bo'lishi mumkin?"]}
 {"query": "ispytatelniy srok necha oy", "expected": ["Sinov muddati (ish boshlashda) qancha bo'lishi mumkin?"]}
-{"query": "испытательный срок сколько", "expected": ["Sinov muddati (ish boshlashda) qancha bo'lishi mumkin?"]}
+{"query": "синов муддати қанча бўлади", "expected": ["Sinov muddati (ish boshlashda) qancha bo'lishi mumkin?"]}
 {"query": "haydovchilar tibbiy ko'rikdan qayerda o'tadi", "expected": ["Majburiy tibbiy ko'rik (haydovchi, ovqat sohasi) qayerda o'tkaziladi?"]}
 {"query": "medkomissiya qayerda", "expected": ["Majburiy tibbiy ko'rik (haydovchi, ovqat sohasi) qayerda o'tkaziladi?"]}
-{"query": "медосмотр для водителей где проходить", "expected": ["Majburiy tibbiy ko'rik (haydovchi, ovqat sohasi) qayerda o'tkaziladi?"]}
+{"query": "ҳайдовчилар тиббий кўрикдан қаерда ўтади", "expected": ["Majburiy tibbiy ko'rik (haydovchi, ovqat sohasi) qayerda o'tkaziladi?"]}
 {"query": "armiyadan qochsa nima bo'ladi", "expected": ["Harbiy majburiyatni bajarmaslik uchun javobgarlik qanday?"]}
 {"query": "chaqiruvga bormasam jazo bormi", "expected": ["Harbiy majburiyatni bajarmaslik uchun javobgarlik qanday?"]}
-{"query": "ответственность за уклонение от армии", "expected": ["Harbiy majburiyatni bajarmaslik uchun javobgarlik qanday?"]}
+{"query": "армиядан бўйин товлаганлик учун жавобгарлик", "expected": ["Harbiy majburiyatni bajarmaslik uchun javobgarlik qanday?"]}
 {"query": "sudlanmaganlik spravkasiga apostil", "expected": ["Sudlanmaganlik ma'lumotnomasini chet el uchun apostil qilish qanday?"]}
-{"query": "справка о несудимости апостиль", "expected": ["Sudlanmaganlik ma'lumotnomasini chet el uchun apostil qilish qanday?"]}
+{"query": "судланмаганлик маълумотномасига апостил", "expected": ["Sudlanmaganlik ma'lumotnomasini chet el uchun apostil qilish qanday?"]}
 {"query": "chet elga sudlanmaganlik ma'lumotnomasi", "expected": ["Sudlanmaganlik ma'lumotnomasini chet el uchun apostil qilish qanday?"]}
 {"query": "ERI bilan qanday imzolanadi", "expected": ["Elektron imzo bilan hujjatni qanday imzolayman?"]}
 {"query": "elektron imzo bilan hujjatga qo'l qo'yish", "expected": ["Elektron imzo bilan hujjatni qanday imzolayman?"]}
-{"query": "как подписать ЭЦП", "expected": ["Elektron imzo bilan hujjatni qanday imzolayman?"]}
+{"query": "ЭРИ билан қандай имзолайман", "expected": ["Elektron imzo bilan hujjatni qanday imzolayman?"]}
 {"query": "chet elda pasportim muddati tugadi", "expected": ["Chet elda pasport muddati tugasa nima qilinadi?"]}
 {"query": "zagranpasport muddati o'tib ketdi rossiyada", "expected": ["Chet elda pasport muddati tugasa nima qilinadi?"]}
-{"query": "паспорт истёк за границей что делать", "expected": ["Chet elda pasport muddati tugasa nima qilinadi?"]}
+{"query": "чет элда паспорт муддати тугаса нима қилиш керак", "expected": ["Chet elda pasport muddati tugasa nima qilinadi?"]}
 {"query": "chet ellik yashash guvohnomasini yo'qotdi", "expected": ["Yashash guvohnomasini yo'qotgan chet ellik nima qiladi?"]}
 {"query": "vid na jitelstvo yo'qoldi", "expected": ["Yashash guvohnomasini yo'qotgan chet ellik nima qiladi?"]}
-{"query": "потерял вид на жительство иностранец", "expected": ["Yashash guvohnomasini yo'qotgan chet ellik nima qiladi?"]}
+{"query": "чет эллик яшаш гувоҳномасини йўқотди", "expected": ["Yashash guvohnomasini yo'qotgan chet ellik nima qiladi?"]}
 {"query": "hujjatni notarial tarjima qilish", "expected": ["Notarial tarjima uchun qanday hujjat kerak?"]}
 {"query": "perevod notarialno zaverit qilish uchun nima kerak", "expected": ["Notarial tarjima uchun qanday hujjat kerak?"]}
-{"query": "нотариальный перевод какие документы", "expected": ["Notarial tarjima uchun qanday hujjat kerak?"]}
+{"query": "нотариал таржима учун қандай ҳужжатлар керак", "expected": ["Notarial tarjima uchun qanday hujjat kerak?"]}
 {"query": "yangi haydovchilarga cheklov bormi", "expected": ["Staji kam (yosh) haydovchi uchun cheklovlar bormi?"]}
 {"query": "stajim kam, avtobus haydasam bo'ladimi", "expected": ["Staji kam (yosh) haydovchi uchun cheklovlar bormi?"]}
-{"query": "ограничения для молодых водителей", "expected": ["Staji kam (yosh) haydovchi uchun cheklovlar bormi?"]}
+{"query": "ёш ҳайдовчилар учун чекловлар", "expected": ["Staji kam (yosh) haydovchi uchun cheklovlar bormi?"]}
 {"query": "filial ochish", "expected": ["Filial yoki vakolatxona ochish qanday rasmiylashtiriladi?"]}
 {"query": "vakolatxona ro'yxatdan o'tkazish", "expected": ["Filial yoki vakolatxona ochish qanday rasmiylashtiriladi?"]}
-{"query": "открыть филиал компании", "expected": ["Filial yoki vakolatxona ochish qanday rasmiylashtiriladi?"]}
+{"query": "компания филиалини очиш", "expected": ["Filial yoki vakolatxona ochish qanday rasmiylashtiriladi?"]}
 {"query": "uyda bola boqayotgan onaga pul to'lanadimi", "expected": ["Bolaga qarab uyda o'tirgan ota-onaga nafaqa beriladimi?"]}
 {"query": "bola parvarishi nafaqasi", "expected": ["Bolaga qarab uyda o'tirgan ota-onaga nafaqa beriladimi?"]}
-{"query": "пособие по уходу за ребёнком", "expected": ["Bolaga qarab uyda o'tirgan ota-onaga nafaqa beriladimi?"]}
+{"query": "болани парвариш қилиш нафақаси", "expected": ["Bolaga qarab uyda o'tirgan ota-onaga nafaqa beriladimi?"]}
 {"query": "chet eldan kelgan bolani maktabga berish", "expected": ["Chet eldan kelgan bolani maktabga qanday joylashtiriladi?"]}
 {"query": "rossiyadan qaytdik bolani maktabga qanday joylayman", "expected": ["Chet eldan kelgan bolani maktabga qanday joylashtiriladi?"]}
-{"query": "ребёнок из-за границы в школу", "expected": ["Chet eldan kelgan bolani maktabga qanday joylashtiriladi?"]}
+{"query": "чет элдан келган болани мактабга жойлаштириш", "expected": ["Chet eldan kelgan bolani maktabga qanday joylashtiriladi?"]}
 {"query": "uyni do'konga aylantirish uchun ruxsat", "expected": ["Uyni do'kon yoki ofis sifatida ishlatish uchun ruxsat qanday olinadi?"]}
 {"query": "kvartirani ofisga o'tkazish", "expected": ["Uyni do'kon yoki ofis sifatida ishlatish uchun ruxsat qanday olinadi?"]}
-{"query": "перевод жилья в нежилое", "expected": ["Uyni do'kon yoki ofis sifatida ishlatish uchun ruxsat qanday olinadi?"]}
+{"query": "уй-жойни нотурар жойга ўтказиш", "expected": ["Uyni do'kon yoki ofis sifatida ishlatish uchun ruxsat qanday olinadi?"]}
 {"query": "pochta necha kunda yetib boradi", "expected": ["Pochta orqali hujjat yuborishda qancha vaqt ketadi?"]}
 {"query": "posilka qancha vaqtda boradi", "expected": ["Pochta orqali hujjat yuborishda qancha vaqt ketadi?"]}
-{"query": "сколько идёт письмо почтой", "expected": ["Pochta orqali hujjat yuborishda qancha vaqt ketadi?"]}
+{"query": "почта орқали хат неча кунда боради", "expected": ["Pochta orqali hujjat yuborishda qancha vaqt ketadi?"]}
 {"query": "my.gov.uz da telefon raqamni o'zgartirish", "expected": ["Shaxsiy aloqa ma'lumotlarini (telefon, pochta) qanday yangilanadi?"]}
 {"query": "elektron pochtamni yangilash", "expected": ["Shaxsiy aloqa ma'lumotlarini (telefon, pochta) qanday yangilanadi?"]}
-{"query": "как изменить номер телефона в личном кабинете", "expected": ["Shaxsiy aloqa ma'lumotlarini (telefon, pochta) qanday yangilanadi?"]}
+{"query": "шахсий кабинетда телефон рақамини ўзгартириш", "expected": ["Shaxsiy aloqa ma'lumotlarini (telefon, pochta) qanday yangilanadi?"]}
 {"query": "turmushga chiqqanda erning familiyasini olish shartmi", "expected": ["Nikohdan keyin er-xotin umumiy familiyani tanlashi mumkinmi?"]}
 {"query": "nikohdan keyin familiya tanlash", "expected": ["Nikohdan keyin er-xotin umumiy familiyani tanlashi mumkinmi?"]}
-{"query": "можно ли взять фамилию мужа", "expected": ["Nikohdan keyin er-xotin umumiy familiyani tanlashi mumkinmi?"]}
+{"query": "эримнинг фамилиясини олсам бўладими", "expected": ["Nikohdan keyin er-xotin umumiy familiyani tanlashi mumkinmi?"]}
 {"query": "Ertaga Toshkentda havo qanday bo'ladi?", "expected": []}
 {"query": "Palov qanday tayyorlanadi?", "expected": []}
 {"query": "Real Madrid bugun kim bilan o'ynaydi?", "expected": []}
@@ -208,32 +208,38 @@
 {"query": "Matematikadan uy vazifasini yechib ber", "expected": []}
 {"query": "Dunyodagi eng baland tog' qaysi?", "expected": []}
 {"query": "Toshkent metrosining ish vaqti qanday?", "expected": []}
-{"query": "Как приготовить плов?", "expected": []}
+{"query": "Палов қандай тайёрланади?", "expected": []}
 {"query": "Kecha qaysi jamoa yutdi?", "expected": []}
 {"query": "Ertangi namoz vaqtlari qachon?", "expected": []}
-{"query": "Сколько стоит iPhone 15?", "expected": []}
+{"query": "iPhone 15 қанча туради?", "expected": []}
 {"query": "Uyda non qanday yopiladi?", "expected": []}
 {"query": "Shahmatda qanday g'alaba qozonish mumkin?", "expected": []}
 {"query": "Bosh og'rig'iga qaysi tabletka yaxshi?", "expected": []}
 {"query": "Mening ismim nima?", "expected": []}
 {"query": "Bugun nechanchi sana?", "expected": []}
 {"query": "Qaysi universitet eng yaxshi?", "expected": []}
-{"query": "Как выучить английский за месяц?", "expected": []}
+{"query": "Инглиз тилини бир ойда қандай ўрганса бўлади?", "expected": []}
 {"query": "Ёзда қаерга дам олишга бориш мумкин?", "expected": []}
 {"query": "Машина ювиш қанча туради?", "expected": []}
 {"query": "Kompyuter o'yinlari uchun qaysi videokarta yaxshi?", "expected": []}
 {"query": "Yer quyosh atrofida qancha vaqtda aylanadi?", "expected": []}
-{"query": "Самый большой город мира?", "expected": []}
+{"query": "Дунёдаги энг катта шаҳар қайси?", "expected": []}
 {"query": "Toshkentdan Samarqandgacha necha kilometr?", "expected": []}
 {"query": "Telegram kanal qanday ochiladi?", "expected": []}
 {"query": "Sevgilimga qanday sovg'a olay?", "expected": []}
 {"query": "Qaysi mashina kam yoqilg'i yeydi?", "expected": []}
-{"query": "Как удалить аккаунт в Instagram?", "expected": []}
+{"query": "Инстаграмдаги аккаунтни қандай ўчираман?", "expected": []}
 {"query": "Futbolchi bo'lish uchun nima qilish kerak?", "expected": []}
 {"query": "Nega osmon ko'k?", "expected": []}
 {"query": "Нон қандай ёпилади?", "expected": []}
 {"query": "Kvadrat tenglamani qanday yechaman?", "expected": []}
 {"query": "Uy hayvonlari uchun qaysi ozuqa yaxshi?", "expected": []}
 {"query": "Yangi yilda qayerda dam olsa bo'ladi?", "expected": []}
-{"query": "Как настроить Wi-Fi роутер?", "expected": []}
+{"query": "Wi-Fi роутерни қандай созлайман?", "expected": []}
 {"query": "Ob-havo prognozi qanday?", "expected": []}
+{"query": "man erga tegmoqchiman. necha yosh bolishim kerak?", "expected": ["Nikoh yoshi necha yosh?"]}
+{"query": "Id karta qanaqa qilib olinadi", "expected": ["ID-karta olish uchun qanday hujjatlar kerak?", "Pasportni (ID-karta) almashtirish tartibi qanday?"]}
+{"query": "pensiya nechpul", "expected": []}
+{"query": "san kimsan", "expected": []}
+{"query": "bazada qanday malumotlar bor", "expected": []}
+{"query": "amir temur qachon tug'ilgan", "expected": []}

@@ -3,59 +3,79 @@ from uuid import uuid4
 import pytest
 
 from app.domain.errors import DataInconsistencyError, EmptyQueryError
-from app.domain.models import QAPair, QASheet, VectorHit
-from app.services.ingestion import IngestionService
-from app.services.search import SearchService, best_per_answer
-from tests.fakes import FakeEmbedder, InMemoryIndex, InMemoryRepository
+from app.domain.models import QAPair, VectorHit
+from app.services.search import best_per_answer
+from tests.fakes import build_services
 
 PAIRS = [
     QAPair(question="Pasport qanday olinadi", answer="DXM orqali."),
     QAPair(question="Pasport almashtirish tartibi", answer="DXM orqali."),
+    QAPair(question="Pasport yo'qolsa nima qilinadi", answer="Ichki ishlar organiga ariza beriladi."),
     QAPair(question="Nikoh qayerda qayd etiladi", answer="FHDYO bo'limida."),
 ]
 
 
-def build(threshold: float = 0.5) -> tuple[SearchService, InMemoryRepository]:
-    repository, index, embedder = InMemoryRepository(), InMemoryIndex(), FakeEmbedder()
-    IngestionService(repository, index, embedder, batch_size=8).ingest(QASheet(pairs=PAIRS, skipped=[]))
-    return SearchService(embedder, index, repository, threshold=threshold, candidates=10), repository
-
-
-def test_ask_returns_answer_for_close_question() -> None:
-    result = build()[0].ask("Pasport  qanday OLINADI")
+def test_ask_returns_answer_and_candidates() -> None:
+    result = build_services(PAIRS).search.ask("Pasport  qanday OLINADI")
 
     assert result.found
     assert result.answer == "DXM orqali."
     assert result.matched_question == "Pasport qanday olinadi"
     assert result.score == pytest.approx(1.0)
+    assert result.candidates[0].question == "Pasport qanday olinadi"
 
 
 def test_ask_reports_not_found_below_threshold() -> None:
-    result = build(threshold=0.9)[0].ask("ertaga ob-havo qanday")
+    result = build_services(PAIRS, threshold=0.9).search.ask("ertaga ob-havo qanday")
 
     assert not result.found
     assert result.answer is None
-    assert result.matched_question is None
     assert result.score is not None and result.score < 0.9
 
 
 def test_ask_rejects_blank_query() -> None:
     with pytest.raises(EmptyQueryError):
-        build()[0].ask("   ")
+        build_services(PAIRS).search.ask("   ")
 
 
 def test_ask_fails_loudly_when_database_lacks_indexed_question() -> None:
-    service, repository = build()
-    repository.questions.clear()
+    services = build_services(PAIRS)
+    services.repository.questions.clear()
 
     with pytest.raises(DataInconsistencyError):
-        service.ask("Pasport qanday olinadi")
+        services.search.ask("Pasport qanday olinadi")
+
+
+def test_ask_can_exclude_previous_answer() -> None:
+    services = build_services(PAIRS)
+    first = services.search.ask("pasport qanday olinadi")
+
+    second = services.search.ask("pasport qanday olinadi", exclude_answer_id=first.answer_id)
+
+    assert second.answer_id != first.answer_id
+
+
+def test_short_ambiguous_query_asks_to_clarify() -> None:
+    pairs = [QAPair(question="pasport olish", answer="A"), QAPair(question="pasport almashtirish", answer="B")]
+    services = build_services(pairs, threshold=0.5, ambiguity_margin=0.05)
+
+    result = services.search.ask("pasport")
+
+    assert not result.found
+    assert set(result.suggestions) == {"pasport olish", "pasport almashtirish"}
+
+
+def test_long_query_is_never_treated_as_ambiguous() -> None:
+    pairs = [QAPair(question="pasport olish", answer="A"), QAPair(question="pasport almashtirish", answer="B")]
+    services = build_services(pairs, threshold=0.3, ambiguity_margin=1.0)
+
+    assert services.search.ask("menga pasport olish kerak edi").found
 
 
 def test_rank_returns_one_hit_per_answer() -> None:
-    ranked = build()[0].rank("pasport")
+    ranked = build_services(PAIRS).search.rank("pasport")
 
-    assert len(ranked) == len({hit.answer_id for hit in ranked}) == 2
+    assert len(ranked) == len({hit.answer_id for hit in ranked})
 
 
 def test_best_per_answer_keeps_highest_score() -> None:

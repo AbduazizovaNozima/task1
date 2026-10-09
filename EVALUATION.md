@@ -1,87 +1,59 @@
 # Qidiruv sifatini baholash
 
-Natijalarni qayta hosil qilish (PostgreSQL va Qdrant'ga ma'lumot yuklangan bo'lishi kerak):
-
 ```bash
-python -m eval.evaluate
+python -m eval.evaluate   # natijalar: eval/results/{metrics,failures,conversations}.json
 ```
 
-Natijalar `eval/results/metrics.json` (barcha ko'rsatkichlar va chegara sweep'i) va `eval/results/failures.json` (xatolar ro'yxati) fayllariga yoziladi.
+## To'plamlar
 
-## 1. Baholash to'plami qanday tuzilgan
+**`eval/dataset.jsonl`** — 245 ta bitta savollik so'rov:
+- **bazada javobi bor 186 ta savol:** 46 ta javobga 3 tadan parafraz, avvalgi loyihadan 46 ta real uslubdagi savol, bot chatidan 2 ta savol. Ulardan 137 tasi lotin, 49 tasi kirill yozuvida;
+- **bazada javobi yo'q 59 ta savol.**
 
-`eval/dataset.jsonl` — 239 ta savol. Har bir qator: `{"query": ..., "expected": [bazadagi savol matni, ...]}`. Kutilgan javob bazadagi savol matni orqali beriladi, chunki u o'qilishi oson va ID o'zgarsa ham buzilmaydi. `expected: []` — bazada javobi yo'q savol.
+Bot faqat o'zbek tilida ishlaydi, shuning uchun ruscha savollar o'zbekcha kirill variantlariga almashtirilgan.
 
-| Qism | Soni | Qanday tuzilgan |
-|---|---|---|
-| Parafrazlar (yangi) | 138 | Bazadagi 505 ta javobdan har 11-chisi olindi: 46 ta javob, barcha 9 kategoriyani qamraydi. Har biriga 3 tadan parafraz yozildi: so'zlashuv uslubida, imlo xatosi bilan, kirill yozuvida va ruscha. |
-| Parafrazlar (avvalgi loyihadan) | 46 | Qo'lda yozilgan real uslubdagi savollar ("prava", "voenniy bilet", "otpusk" kabi so'zlar bilan). |
-| Domendan tashqari (yangi) | 30 | Bazada javobi yo'q savollar: kundalik hayot, texnika, ob-havo; o'zbek, kirill va rus tillarida. |
-| Domendan tashqari (avvalgi) | 25 | Xuddi shunday. |
+**`eval/conversations.jsonl`** — 6 ta suhbat ssenariysi, jami 15 ta xabar: davomi savollar, mavzu almashishi, noaniq so'rov, xalq iborasi.
 
-Yozuv turi bo'yicha: lotin — 135 ta, kirill (o'zbek va rus) — 49 ta savol (bazada javobi bor savollar hisobida).
+**Cheklov:** savollarni real foydalanuvchilar emas, ishlab chiquvchi yozgan. Lug'atdagi bir nechta so'z ("rodom", "lgota", "pinfl") shu to'plamdagi xatolarga qarab qo'shilgan, chegara ham shu to'plamda tanlangan. Shuning uchun raqamlar biroz optimistik.
 
-**Cheklov.** Parafrazlarni real foydalanuvchilar emas, ishlab chiquvchi yozgan. Bazadagi savollarning o'zi esa shablon asosida yaratilgan ("Menga ... haqida ayting"). Shu sababli ular baholashda ishlatilmadi: ularda sifat haqiqatdagidan yuqori chiqib qolardi.
-
-## 2. Qidiruv sifati (bazada javobi bor 184 ta savol)
+## Natijalar
 
 | Ko'rsatkich | Qiymat |
 |---|---|
-| Recall@1 | **0.734** |
-| Recall@3 | **0.891** |
-| MRR | **0.813** |
-| Recall@1, lotin yozuvi (135) | 0.726 |
-| Recall@1, kirill yozuvi (49) | 0.735 |
+| Recall@1 | **0.785** |
+| Recall@3 | **0.909** |
+| MRR | **0.849** |
+| "Topilmadi" qarori, F1 (chegara 0.64) | **0.891** |
+| Suhbat ssenariylari | **12 / 15** xabar to'g'ri |
 
-Kirill yozuvidagi o'zbekcha savollar lotinga o'girilmasa ham to'g'ri topildi ("ЗАГСда никоҳдан ўтиш учун нималар керак?" → nikohni qayd qilish). Shuning uchun eski koddagi "kirill → lotin" transliteratsiyasi olib tashlandi. U ruscha matnni ham lotinga o'girib, bge-m3 tushunadigan ruscha so'zlarni buzar edi.
+## Chegara tanlovi
 
-## 3. "Topilmadi" qarori va chegara tanlovi
+"Ijobiy" sinf — bazada javobi yo'q savolni rad etish.
 
-"Ijobiy" sinf — rad etilishi kerak bo'lgan savol, ya'ni bazada javobi yo'q savol:
-
-- **precision** — rad etilganlar ichida haqiqatan domendan tashqari bo'lganlar ulushi;
-- **recall** — domendan tashqari savollarning rad etilgan ulushi.
-
-`answered` — bazada javobi bor savollardan nechtasiga to'g'ri javob berilgani (chegaradan o'tgan **va** 1-o'rindagi javob to'g'ri).
-
-| Chegara | Precision | Recall | F1 | Answered | Noto'g'ri rad etilgan | Noto'g'ri qabul qilingan |
+| Chegara | Precision | Recall | F1 | To'g'ri javob ulushi | Noto'g'ri rad etilgan | Noto'g'ri qabul qilingan |
 |---|---|---|---|---|---|---|
-| 0.50 | 0.714 | 0.091 | 0.161 | 0.734 | 2 | 50 |
-| 0.55 | 0.800 | 0.436 | 0.565 | 0.728 | 6 | 31 |
-| 0.60 | 0.776 | 0.818 | 0.796 | 0.712 | 13 | 10 |
-| **0.62** | **0.750** | **0.982** | **0.850** | **0.701** | **18** | **1** |
-| 0.65 | 0.639 | 1.000 | 0.780 | 0.652 | 31 | 0 |
-| 0.70 | 0.462 | 1.000 | 0.632 | 0.565 | 64 | 0 |
+| 0.60 | 0.830 | 0.746 | 0.786 | 0.769 | 9 | 15 |
+| 0.62 | 0.844 | 0.915 | 0.878 | 0.763 | 10 | 5 |
+| **0.64** | **0.826** | **0.966** | **0.891** | **0.758** | **12** | **2** |
+| 0.65 | 0.763 | 0.983 | 0.859 | 0.737 | 18 | 1 |
 
-**Tanlov: `MATCH_THRESHOLD=0.62`** — sweep (0.30–0.90, qadam 0.01) bo'yicha F1 eng yuqori bo'lgan nuqta.
+`MATCH_THRESHOLD=0.64` F1 eng yuqori bo'lgan nuqta: 59 ta begona savoldan 57 tasi rad etiladi. Davlat xizmatlari botida noto'g'ri javob "topilmadi" javobidan qimmatroq tushadi.
 
-- 0.62 da domendan tashqari 55 ta savoldan 54 tasi rad etiladi, to'g'ri javoblar ulushi esa atigi 3 punktga kamayadi (0.734 → 0.701).
-- 0.60 da 10 ta begona savolga noto'g'ri javob beriladi. Davlat xizmatlari bo'yicha botda noto'g'ri javob "topilmadi" javobidan qimmatroq tushadi.
-- 0.65 da esa to'g'ri savollarning 17 foizi rad etiladi.
+## Qolgan xatolar
 
-bge-m3 kosinus ballari tor diapazonda yotadi: domendan tashqari savollarning eng yuqori bali 0.628 bo'ldi. Oldingi koddagi "taxminiy" 0.70 chegarasi bilan to'g'ri savollarning 35 foizi (184 tadan 64 tasi) rad etilgan bo'lardi.
+| Savol | Natija | Sabab |
+|---|---|---|
+| `pensiya nechpul` | Pensiya haqidagi boshqa javob (0.662) | Pensiya miqdori bazada yo'q, lekin pensiya mavzusidagi savollar yaqin ball oladi. |
+| `erga tegmoqchiman prava olmayman` | Topilmadi (0.638) | Qisqa so'rov chegaradan biroz past. 0.62 chegarada to'g'ri javob topilardi. |
+| `Pasportni almashtirish...` → `buning uchun qanday hujjatlar kerak` | Chet elda pasport almashtirish | Davomi savolda mavzu so'zlari ustun chiqadi. Vektorlarni aralashtirish ham sinab ko'rildi, umumiy natijani yaxshilamadi. |
+| `Id karta qanaqa qilib olinadi` | To'g'ri javob 2-o'rinda | Bitta mavzudagi o'nlab savol bir-biriga juda yaqin ball oladi. |
+| `guvohnomadagi xatoni to'g'irlash` | Mazmunan bir xil boshqa javob | Bazada deyarli bir xil javoblar bor. Bunday holatlar xatolarning qariyb yarmini tashkil qiladi. |
+| `vid na jitelstvo yo'qoldi`, `OSAGO polis` | Topilmadi | Ruscha ibora lotin harflarida va lug'atda yo'q qisqartma. |
+| "ID-karta narxi" | Topilmaydi | Narx faqat javob matni ichida yozilgan, faqat savollar indekslanadi. |
 
-## 4. Xato misollari va tahlil
+## Keyingi qadamlar
 
-| # | Savol | Ball | Natija | Sabab |
-|---|---|---|---|---|
-| 1 | `guvohnomadagi xatoni to'g'irlash` | 0.786 | "Guvohnomadagi sana yoki ma'lumotni tuzatish mumkinmi?" (kutilgan: "FHDYO yozuvidagi xato qanday tuzatiladi?") | **Yorliq noaniqligi.** Bazada mazmunan deyarli bir xil ikki javob bor, model topgani ham to'g'ri. Xatolarning qariyb yarmi shu turdagi (49 ta xatodan 23 tasida to'g'ri javob 2-o'rinda, 29 tasida — top-3 ichida). |
-| 2 | `firmani qanday yopaman` | 0.756 | "Firma nomini o'zgartirish qanday qilinadi?" | **Leksik ustunlik.** "firma" so'zi niyatdan ("yopish") kuchliroq chiqdi. To'g'ri javob 2-o'rinda. |
-| 3 | `vid na jitelstvo yo'qoldi` | 0.548 | rad etildi | **Ruscha so'z lotin harflarida.** Tokenizator buni na rus, na o'zbek so'zi deb taniydi. |
-| 4 | `pinfl nima o'zi` | 0.457 | rad etildi | **Qisqartma.** Bazada faqat "JSHSHIR" shakli bor. Dense vektor qisqartmalar sinonimligini bilmaydi. |
-| 5 | `OSAGO polis qanday olinadi` | 0.492 | rad etildi | Xuddi shunday: qisqartma bazada boshqacha ifodalangan. |
-| 6 | `rodomni o'zim tanlasam bo'ladimi` | 0.567 | to'g'ri javob 18-o'rinda | **Jargon** ("rodom" = tug'ruqxona). |
-| 7 | `bog'cha puli uchun lgota bormi` | 0.608 | 1-o'rin to'g'ri, lekin chegaradan past → rad etildi | **Noto'g'ri rad etish.** Ruscha "lgota" so'zi ballni pasaytirdi. |
-| 8 | `mulkdan ulushimni ajratib olmoqchiman` | 0.677 | "Menga xorijga chiqishga qo'yilgan taqiqni tekshirish bekor qilish haqida ayting" | **Shablon shovqini.** Bazadagi "Menga ... haqida ayting" shabloni savollar orasida umumiy "shovqin" hosil qiladi. |
-| 9 | `Avtomobil moyini qachon almashtirish kerak?` (domendan tashqari) | 0.628 | noto'g'ri qabul qilindi: "Avtomobil rangi yoki dvigateli o'zgartirilsa qayd etiladimi?" | **Mavzu yaqinligi.** Savol avtomobil haqida, bazada ham avtomobil bo'yicha savollar bor. Bu yagona noto'g'ri qabul. |
-
-## 5. Yaxshilash g'oyalari (amalga oshirilmagan)
-
-Ko'rsatkichlar maqbul darajada bo'lgani uchun quyidagilar faqat taklif sifatida qoldirildi:
-
-1. **Hybrid qidiruv: dense + sparse.** bge-m3 bir vaqtda leksik (sparse) og'irliklarni ham qaytaradi. Qdrant ularni named sparse vector sifatida saqlab, RRF yoki og'irlikli yig'indi bilan birlashtira oladi. Bu qisqartmalar (JSHSHIR, OSAGO, ERI) va aniq atamalar bo'yicha 3–5-misollardagi xatolarni kamaytirishi kutiladi.
-2. **Reranker (`bge-reranker-v2-m3`, lokal).** Top-10 nomzodni qayta tartiblash 1, 2 va 8-misollardagi turdagi xatolarni (to'g'ri javob 2–3-o'rinda) tuzatadi. Bunda Recall@1 Recall@3 (0.89) ga yaqinlashishi mumkin. Narxi: har bir so'rovga CPU'da ~100–200 ms.
-3. **Sinonimlar lug'ati.** `pinfl → JSHSHIR`, `prava → haydovchilik guvohnomasi`, `rodom → tug'ruqxona`, `lgota → imtiyoz` kabi kichik lug'at bilan so'rovni kengaytirish.
-4. **Ma'lumotni tozalash.** Savollardagi "Menga ... haqida ayting", "Iltimos, ayting:" kabi shablon qismlarni olib tashlash, mazmunan bir xil javoblarni birlashtirish.
-5. **Javob matnini ham indekslash** (alohida vektor sifatida) — savol variantlari kam bo'lgan javoblar uchun foydali.
-6. **Chegarani qayta kalibrovka qilish.** Real foydalanuvchi so'rovlari logidan to'plam yig'ib, chegarani qayta tanlash.
+1. **Reranker** (`bge-reranker-v2-m3`, lokal, ~2.3 GB). Nomzodlarni savol bilan birga o'qib qayta tartiblaydi. Bu 2-o'rindagi to'g'ri javoblar va chegara yaqinidagi noto'g'ri qabullar uchun eng katta yaxshilanishni berishi kutiladi.
+2. **Javob matnlarini ham indekslash.**
+3. **Bazani tozalash:** "Menga ... haqida ayting" shablonlarini olib tashlash, mazmunan bir xil javoblarni birlashtirish.
+4. **Real foydalanuvchi savollari logidan to'plam yig'ib, chegarani qayta kalibrovka qilish.**

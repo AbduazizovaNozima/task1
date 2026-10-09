@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from typing import Protocol
 from uuid import UUID
 
-from app.domain.models import Answer, QARecord, Question, VectorHit
+from app.domain.models import Answer, ChatTurn, QARecord, Question, VectorHit
 
 
 class Embedder(Protocol):
@@ -20,4 +20,12 @@ class VectorIndex(Protocol):
 class QARepository(Protocol):
     def upsert(self, answers: Sequence[Answer], questions: Sequence[Question]) -> None: ...
 
-    def get(self, question_id: UUID) -> QARecord | None: ...
+    def get_many(self, question_ids: Sequence[UUID]) -> dict[UUID, QARecord]: ...
+
+
+class ChatHistory(Protocol):
+    def last(self, session_id: str) -> ChatTurn | None: ...
+
+    def save(self, session_id: str, turn: ChatTurn) -> None: ...
+
+    def clear(self, session_id: str) -> None: ...

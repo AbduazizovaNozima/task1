@@ -1,9 +1,13 @@
 import math
 import zlib
 from collections.abc import Sequence
+from dataclasses import dataclass
 from uuid import UUID
 
-from app.domain.models import Answer, QARecord, Question, VectorHit
+from app.domain.models import Answer, ChatTurn, QAPair, QARecord, QASheet, Question, VectorHit
+from app.services.conversation import ConversationService
+from app.services.ingestion import IngestionService
+from app.services.search import SearchService
 
 DIMENSION = 64
 
@@ -55,8 +59,57 @@ class InMemoryRepository:
         self.answers.update((a.id, a) for a in answers)
         self.questions.update((q.id, q) for q in questions)
 
-    def get(self, question_id: UUID) -> QARecord | None:
-        question = self.questions.get(question_id)
-        if question is None:
-            return None
-        return QARecord(question=question.text, answer=self.answers[question.answer_id].text)
+    def get_many(self, question_ids: Sequence[UUID]) -> dict[UUID, QARecord]:
+        return {
+            qid: QARecord(question=self.questions[qid].text, answer=self.answers[self.questions[qid].answer_id].text)
+            for qid in question_ids
+            if qid in self.questions
+        }
+
+
+class InMemoryChatHistory:
+    def __init__(self) -> None:
+        self.sessions: dict[str, ChatTurn] = {}
+
+    def last(self, session_id: str) -> ChatTurn | None:
+        return self.sessions.get(session_id)
+
+    def save(self, session_id: str, turn: ChatTurn) -> None:
+        self.sessions[session_id] = turn
+
+    def clear(self, session_id: str) -> None:
+        self.sessions.pop(session_id, None)
+
+
+@dataclass(frozen=True)
+class Services:
+    repository: InMemoryRepository
+    index: InMemoryIndex
+    embedder: FakeEmbedder
+    history: InMemoryChatHistory
+    search: SearchService
+    conversation: ConversationService
+    ingestion: IngestionService
+
+
+def build_services(
+    pairs: Sequence[QAPair] = (),
+    threshold: float = 0.6,
+    ambiguity_margin: float = 0.0,
+) -> Services:
+    repository, index, embedder, history = InMemoryRepository(), InMemoryIndex(), FakeEmbedder(), InMemoryChatHistory()
+    ingestion = IngestionService(repository, index, embedder, batch_size=8)
+    if pairs:
+        ingestion.ingest(QASheet(pairs=list(pairs), skipped=[]))
+    search = SearchService(
+        embedder,
+        index,
+        repository,
+        threshold=threshold,
+        candidates=10,
+        top_k=3,
+        ambiguity_margin=ambiguity_margin,
+        ambiguity_max_words=2,
+    )
+    conversation = ConversationService(search, history)
+    return Services(repository, index, embedder, history, search, conversation, ingestion)

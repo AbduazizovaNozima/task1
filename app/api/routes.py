@@ -1,14 +1,15 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, File, UploadFile
+from fastapi import APIRouter, Depends, File, UploadFile, status
 
 from app.adapters.excel_reader import read_qa_sheet
-from app.api.deps import get_ingestion, get_search, get_settings
+from app.api.deps import get_container, get_conversation, get_ingestion, get_settings
 from app.api.schemas import AskRequest, AskResponse, HealthResponse, IngestResponse
 from app.config import Settings
+from app.container import Container
 from app.domain.errors import InvalidSpreadsheetError
+from app.services.conversation import ConversationService
 from app.services.ingestion import IngestionService
-from app.services.search import SearchService
 
 BYTES_IN_MB = 1024 * 1024
 XLSX_SUFFIX = ".xlsx"
@@ -17,14 +18,20 @@ router = APIRouter()
 
 
 @router.get("/health")
-def health() -> HealthResponse:
+def health(container: Annotated[Container, Depends(get_container)]) -> HealthResponse:
+    container.check()
     return HealthResponse(status="ok")
 
 
 @router.post("/ask")
-def ask(payload: AskRequest, search: Annotated[SearchService, Depends(get_search)]) -> AskResponse:
-    result = search.ask(payload.question)
+def ask(payload: AskRequest, conversation: Annotated[ConversationService, Depends(get_conversation)]) -> AskResponse:
+    result = conversation.ask(payload.question, payload.session_id)
     return AskResponse.model_validate(result.model_dump())
+
+
+@router.delete("/sessions/{session_id}", status_code=status.HTTP_204_NO_CONTENT)
+def reset_session(session_id: str, conversation: Annotated[ConversationService, Depends(get_conversation)]) -> None:
+    conversation.reset(session_id)
 
 
 @router.post("/ingest")

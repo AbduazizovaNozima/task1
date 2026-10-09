@@ -3,6 +3,7 @@ from uuid import UUID
 
 from psycopg_pool import ConnectionPool
 
+from app.adapters.pg_connection import connect
 from app.domain.models import Answer, QARecord, Question
 
 SCHEMA = """
@@ -27,10 +28,10 @@ INSERT INTO questions (id, answer_id, text) VALUES (%s, %s, %s)
 ON CONFLICT (id) DO UPDATE SET answer_id = EXCLUDED.answer_id, text = EXCLUDED.text
 """
 
-SELECT_RECORD = """
-SELECT q.text, a.text
+SELECT_RECORDS = """
+SELECT q.id, q.text, a.text
 FROM questions q JOIN answers a ON a.id = q.answer_id
-WHERE q.id = %s
+WHERE q.id = ANY(%s)
 """
 
 
@@ -38,19 +39,20 @@ class PostgresRepository:
     def __init__(self, pool: ConnectionPool) -> None:
         self._pool = pool
 
+    def ping(self) -> None:
+        with connect(self._pool) as connection:
+            connection.execute("SELECT 1")
+
     def create_schema(self) -> None:
-        with self._pool.connection() as connection:
+        with connect(self._pool) as connection:
             connection.execute(SCHEMA)
 
     def upsert(self, answers: Sequence[Answer], questions: Sequence[Question]) -> None:
-        with self._pool.connection() as connection, connection.cursor() as cursor:
+        with connect(self._pool) as connection, connection.cursor() as cursor:
             cursor.executemany(UPSERT_ANSWER, [(a.id, a.text) for a in answers])
             cursor.executemany(UPSERT_QUESTION, [(q.id, q.answer_id, q.text) for q in questions])
 
-    def get(self, question_id: UUID) -> QARecord | None:
-        with self._pool.connection() as connection:
-            row = connection.execute(SELECT_RECORD, (question_id,)).fetchone()
-        if row is None:
-            return None
-        question, answer = row
-        return QARecord(question=question, answer=answer)
+    def get_many(self, question_ids: Sequence[UUID]) -> dict[UUID, QARecord]:
+        with connect(self._pool) as connection:
+            rows = connection.execute(SELECT_RECORDS, (list(question_ids),)).fetchall()
+        return {question_id: QARecord(question=question, answer=answer) for question_id, question, answer in rows}

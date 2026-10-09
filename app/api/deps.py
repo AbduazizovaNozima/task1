@@ -4,8 +4,8 @@ from fastapi import Depends, Request
 
 from app.config import Settings
 from app.container import Container
+from app.services.conversation import ConversationService
 from app.services.ingestion import IngestionService
-from app.services.search import SearchService
 
 
 def get_container(request: Request) -> Container:
@@ -18,8 +18,8 @@ def get_settings(request: Request) -> Settings:
     return settings
 
 
-def get_search(container: Annotated[Container, Depends(get_container)]) -> SearchService:
-    return container.search
+def get_conversation(container: Annotated[Container, Depends(get_container)]) -> ConversationService:
+    return container.conversation
 
 
 def get_ingestion(container: Annotated[Container, Depends(get_container)]) -> IngestionService:

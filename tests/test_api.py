@@ -8,21 +8,31 @@ from openpyxl import Workbook
 from app.api.main import create_app
 from app.config import Settings
 from app.container import Container
-from app.services.ingestion import IngestionService
-from app.services.search import SearchService
-from tests.fakes import FakeEmbedder, InMemoryIndex, InMemoryRepository
+from app.domain.errors import StorageUnavailableError
+from tests.fakes import build_services
+
+
+def make_client(check_fails: bool = False) -> TestClient:
+    services = build_services()
+
+    def check() -> None:
+        if check_fails:
+            raise StorageUnavailableError("PostgreSQL bilan aloqa yo'q.")
+
+    container = Container(
+        search=services.search,
+        conversation=services.conversation,
+        ingestion=services.ingestion,
+        check=check,
+        warm_up=lambda: None,
+        close=lambda: None,
+    )
+    return TestClient(create_app(Settings(max_upload_mb=1), container_factory=lambda _: container))
 
 
 @pytest.fixture
 def client() -> Iterator[TestClient]:
-    repository, index, embedder = InMemoryRepository(), InMemoryIndex(), FakeEmbedder()
-    container = Container(
-        search=SearchService(embedder, index, repository, threshold=0.6, candidates=5),
-        ingestion=IngestionService(repository, index, embedder, batch_size=4),
-        close=lambda: None,
-    )
-    app = create_app(Settings(max_upload_mb=1), container_factory=lambda _: container)
-    with TestClient(app) as test_client:
+    with make_client() as test_client:
         yield test_client
 
 
@@ -42,6 +52,13 @@ def upload(client: TestClient, content: bytes, name: str = "qa.xlsx") -> dict[st
 
 def test_health(client: TestClient) -> None:
     assert client.get("/health").json() == {"status": "ok"}
+
+
+def test_health_reports_unavailable_storage() -> None:
+    with make_client(check_fails=True) as client:
+        response = client.get("/health")
+
+    assert response.status_code == 503
 
 
 def test_ingest_then_ask_finds_answer(client: TestClient) -> None:
@@ -89,3 +106,14 @@ def test_ingest_rejects_non_xlsx(client: TestClient) -> None:
 
 def test_ingest_rejects_too_large_file(client: TestClient) -> None:
     assert upload(client, b"x" * (1024 * 1024 + 1))["status"] == 422
+
+
+def test_ask_with_session_and_reset(client: TestClient) -> None:
+    upload(client, xlsx([["question", "answer"], ["Pasport qanday olinadi", "DXM orqali."]]))
+
+    body = client.post("/ask", json={"question": "pasport qanday olinadi", "session_id": "telegram-1"}).json()
+
+    assert body["found"] is True
+    assert body["context_used"] is False
+    assert body["suggestions"] == []
+    assert client.delete("/sessions/telegram-1").status_code == 204

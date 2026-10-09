@@ -14,5 +14,9 @@ class IndexNotReadyError(DomainError):
     pass
 
 
+class StorageUnavailableError(DomainError):
+    pass
+
+
 class DataInconsistencyError(DomainError):
     pass

@@ -14,6 +14,7 @@ from app.domain.errors import (
     EmptyQueryError,
     IndexNotReadyError,
     InvalidSpreadsheetError,
+    StorageUnavailableError,
 )
 from app.log import configure_logging
 
@@ -23,6 +24,7 @@ ERROR_STATUS: dict[type[DomainError], int] = {
     EmptyQueryError: status.HTTP_422_UNPROCESSABLE_ENTITY,
     InvalidSpreadsheetError: status.HTTP_422_UNPROCESSABLE_ENTITY,
     IndexNotReadyError: status.HTTP_503_SERVICE_UNAVAILABLE,
+    StorageUnavailableError: status.HTTP_503_SERVICE_UNAVAILABLE,
     DataInconsistencyError: status.HTTP_500_INTERNAL_SERVER_ERROR,
 }
 
@@ -37,6 +39,7 @@ def create_app(
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         container = container_factory(app_settings)
+        container.warm_up()
         app.state.settings = app_settings
         app.state.container = container
         try:

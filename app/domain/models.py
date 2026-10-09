@@ -44,11 +44,27 @@ class VectorHit(_Frozen):
     score: float
 
 
+class Candidate(_Frozen):
+    answer_id: UUID
+    question: str
+    answer: str
+    score: float
+
+
 class SearchResult(_Frozen):
     found: bool
     score: float | None
+    answer_id: UUID | None = None
     answer: str | None = None
     matched_question: str | None = None
+    suggestions: list[str] = []
+    context_used: bool = False
+    candidates: list[Candidate] = []
+
+
+class ChatTurn(_Frozen):
+    topic: str
+    answer_id: UUID | None
 
 
 class IngestReport(_Frozen):
