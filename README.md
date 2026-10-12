@@ -31,6 +31,7 @@ tests/         unit testlar (fake'lar bilan) va integratsion testlar
 
 ```bash
 cp .env.example .env            # bot uchun TELEGRAM_BOT_TOKEN ni yozing; API uchun shart emas
+docker volume create "${HF_CACHE_VOLUME:-task1_semantic_qa_hf_cache}"  # model keshi
 docker compose up -d --build    # postgres, qdrant, ingest, api, bot
 docker compose logs -f api bot  # loglarni kuzatish
 ```
@@ -52,7 +53,7 @@ python -m eval.evaluate --dataset eval/dev.jsonl --out eval/results/dev
 # Frozen holdout va bir martalik kalibrovka: EVALUATION.md
 ```
 
-Joriy tekshiruv: **68 test o'tdi**, shu jumladan PostgreSQL/Qdrant bilan 6 integratsion test.
+Joriy tekshiruv: **69 test o'tdi**, shu jumladan PostgreSQL/Qdrant bilan 6 integratsion test.
 
 ## Import va xatolar
 
@@ -61,3 +62,9 @@ Excel importi SQL tranzaksiyasida bajariladi: vektorlar yozilgandan keyingina SQ
 Ingest boshlanishida saqlash servislarining tayyorligi 60 soniyagacha qayta tekshiriladi; oxirgi tarmoq so'rovi o'z timeout'igacha davom etishi mumkin. Buzilgan Excel XML'i 422 beradi. Bot uzun javobni plain-text bo'laklarda to'liq yuboradi; input validatsiyasi bilan servis uzilishini farqlaydi.
 
 `MATCH_THRESHOLD=0.67` yangi, muzlatilgan holdout'da tekshirildi. Bu noto'g'ri javoblarni to'liq yo'qotmaydi; dev/holdout natijalari va cheklovlar [EVALUATION.md](EVALUATION.md) da.
+
+## So'rov loglari
+
+`LOG_QUESTIONS=true` (default) API'da savol, topilgan javob ID'si, ball va javob boshini INFO darajasida yozadi; bot kiruvchi matn uchun faqat Telegram user/chat ID'larini yozadi. Savollar shaxsiy ma'lumotlarni o'z ichiga olishi mumkin. Ushbu loglarni o'chirish uchun `.env` da `LOG_QUESTIONS=false` belgilang va servislarni qayta yarating.
+
+Model keshi tashqi Docker volume'da saqlanadi; yuqoridagi `docker volume create` mavjud keshni saqlaydi va yangi muhitda volume yaratadi. `HF_CACHE_VOLUME` bilan boshqa kesh nomini tanlash mumkin.

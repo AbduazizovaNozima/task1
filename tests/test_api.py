@@ -1,12 +1,19 @@
+import logging
 from collections.abc import Iterator
+from unittest.mock import Mock
+from uuid import UUID
 
 import pytest
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
+from app.api.deps import get_search, get_settings
 from app.api.main import create_app
 from app.config import Settings
 from app.container import Container
 from app.domain.errors import StorageUnavailableError
+from app.domain.models import SearchResult
+from app.services.search import SearchService
 from tests.fakes import build_services, xlsx
 
 
@@ -121,3 +128,39 @@ def test_model_warmup_failure_closes_the_container() -> None:
     ):
         pass
     close.assert_called_once_with()
+
+
+def test_ask_log_format_and_toggle(client: TestClient, caplog: pytest.LogCaptureFixture) -> None:
+    search = Mock(spec=SearchService)
+    search.ask.return_value = SearchResult(
+        found=True,
+        score=0.77549,
+        answer_id=UUID(int=1),
+        answer="ID-karta\n" + "a" * 100,
+    )
+    settings = Settings(_env_file=None)
+    assert isinstance(client.app, FastAPI)
+    client.app.dependency_overrides[get_search] = lambda: search
+    client.app.dependency_overrides[get_settings] = lambda: settings
+    caplog.set_level(logging.INFO, logger="app.api.routes")
+
+    response = client.post("/ask", json={"question": "id karta\u2028" + "x" * 210})
+
+    assert response.status_code == 200
+    lines = [record.getMessage() for record in caplog.records if record.name == "app.api.routes"]
+    assert lines == [
+        f'ask question="id karta {"x" * 191}" found=true score=0.775 '
+        f'answer_id=00000000-0000-0000-0000-000000000001 answer="ID-karta {"a" * 71}"'
+    ]
+
+    caplog.clear()
+    search.ask.return_value = SearchResult(found=False, score=None)
+    assert client.post("/ask", json={"question": "unknown"}).status_code == 200
+    assert [record.getMessage() for record in caplog.records if record.name == "app.api.routes"] == [
+        'ask question="unknown" found=false score=null answer_id=null answer=""'
+    ]
+
+    caplog.clear()
+    settings.log_questions = False
+    assert client.post("/ask", json={"question": "private"}).status_code == 200
+    assert not [record for record in caplog.records if record.name == "app.api.routes"]

@@ -1,3 +1,5 @@
+import json
+import logging
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, File, UploadFile
@@ -14,6 +16,7 @@ from app.services.search import SearchService
 BYTES_IN_MB = 1024 * 1024
 XLSX_SUFFIX = ".xlsx"
 
+logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
@@ -24,8 +27,21 @@ def health(container: Annotated[Container, Depends(get_container)]) -> HealthRes
 
 
 @router.post("/ask")
-def ask(payload: AskRequest, search: Annotated[SearchService, Depends(get_search)]) -> AskResponse:
+def ask(
+    payload: AskRequest,
+    search: Annotated[SearchService, Depends(get_search)],
+    settings: Annotated[Settings, Depends(get_settings)],
+) -> AskResponse:
     result = search.ask(payload.question)
+    if settings.log_questions:
+        logger.info(
+            "ask question=%s found=%s score=%s answer_id=%s answer=%s",
+            json.dumps(" ".join(payload.question.splitlines())[:200], ensure_ascii=False),
+            str(result.found).lower(),
+            f"{result.score:.3f}" if result.score is not None else "null",
+            result.answer_id or "null",
+            json.dumps(" ".join((result.answer or "").splitlines())[:80], ensure_ascii=False),
+        )
     return AskResponse.model_validate(result.model_dump())
 
 

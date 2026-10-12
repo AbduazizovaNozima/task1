@@ -64,3 +64,5 @@ volumes:
   postgres_data:
   qdrant_storage:
   hf_cache:
+    external: true
+    name: ${HF_CACHE_VOLUME:-task1_semantic_qa_hf_cache}

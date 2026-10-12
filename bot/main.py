@@ -1,9 +1,11 @@
 import asyncio
 import logging
+from collections.abc import Awaitable, Callable
+from typing import Any
 
 from aiogram import Bot, Dispatcher, F, Router
 from aiogram.filters import Command, CommandStart
-from aiogram.types import Message
+from aiogram.types import Message, TelegramObject
 
 from bot.api_client import AskReply, QAApiClient, QAApiError, QAApiValidationError
 from bot.config import BotSettings
@@ -37,8 +39,23 @@ def format_reply(reply: AskReply) -> str:
     return NOT_FOUND
 
 
-def build_router(api: QAApiClient) -> Router:
+def build_router(api: QAApiClient, log_questions: bool = True) -> Router:
     router = Router()
+
+    async def log_incoming_text(
+        handler: Callable[[TelegramObject, dict[str, Any]], Awaitable[Any]],
+        event: TelegramObject,
+        data: dict[str, Any],
+    ) -> Any:
+        if log_questions and isinstance(event, Message) and event.text is not None:
+            logger.info(
+                "telegram user_id=%s chat_id=%s",
+                event.from_user.id if event.from_user else "null",
+                event.chat.id,
+            )
+        return await handler(event, data)
+
+    router.message.outer_middleware(log_incoming_text)
 
     @router.message(CommandStart())
     async def on_start(message: Message) -> None:
@@ -80,7 +97,7 @@ async def run() -> None:
         api = QAApiClient(settings.api_base_url, settings.api_timeout_seconds)
         try:
             dispatcher = Dispatcher()
-            dispatcher.include_router(build_router(api))
+            dispatcher.include_router(build_router(api, settings.log_questions))
             logger.info("Bot started, API: %s", settings.api_base_url)
             await dispatcher.start_polling(bot)
         finally:

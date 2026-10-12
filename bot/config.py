@@ -9,3 +9,4 @@ class BotSettings(BaseSettings):
     api_base_url: str = "http://localhost:8000"
     api_timeout_seconds: float = Field(default=30.0, gt=0)
     log_level: str = "INFO"
+    log_questions: bool = True
