@@ -1,0 +1,46 @@
+$ docker exec -e PYTHONPATH=/tmp:/srv task1_adversarial_qa-api-1 python -m eval.calibration holdout --out /tmp/qa-holdout-replay
+{
+  "baseline": {
+    "threshold": 0.64,
+    "queries": 120,
+    "in_domain": 80,
+    "ood": 40,
+    "correct_accepted": 72,
+    "wrong_accepted": 29,
+    "false_acceptances": 21,
+    "false_rejections": 0,
+    "decision_accuracy": 0.7583333333333333,
+    "in_domain_correct_rate": 0.9,
+    "accepted_precision": 0.7128712871287128,
+    "ood_rejection_f1": 0.6440677966101694,
+    "recall_at_1": 0.9,
+    "recall_at_3": 0.95,
+    "mrr": 0.9255208333333333
+  },
+  "candidate": {
+    "threshold": 0.67,
+    "queries": 120,
+    "in_domain": 80,
+    "ood": 40,
+    "correct_accepted": 72,
+    "wrong_accepted": 24,
+    "false_acceptances": 16,
+    "false_rejections": 0,
+    "decision_accuracy": 0.8,
+    "in_domain_correct_rate": 0.9,
+    "accepted_precision": 0.75,
+    "ood_rejection_f1": 0.75,
+    "recall_at_1": 0.9,
+    "recall_at_3": 0.95,
+    "mrr": 0.9255208333333333
+  },
+  "accepted": true,
+  "changed_correctness": {
+    "improved": 5,
+    "worsened": 0
+  },
+  "holdout_sha256": "cb66e461bb8e4bf48f0f7559c45fe763b55b89a4c7a9d7cd8c7a70dc3120e154",
+  "candidate_plan_sha256": "19b7bd4884c6dd267136631c4ef9b4d45a000621c6213384bc08287e26484fbd"
+}
+
+EXIT=0 ELAPSED=24.69s

@@ -1,0 +1,21 @@
+time="2026-10-11T13:43:14+05:00" level=warning msg="No services to build"
+ Container task1_adversarial_qa-qdrant-1 Recreate 
+ Container task1_adversarial_qa-postgres-1 Recreate 
+ Container task1_adversarial_qa-qdrant-1 Recreated 
+ Container task1_adversarial_qa-postgres-1 Recreated 
+ Container task1_adversarial_qa-api-1 Recreate 
+ Container task1_adversarial_qa-api-1 Recreated 
+ Container task1_adversarial_qa-qdrant-1 Starting 
+ Container task1_adversarial_qa-postgres-1 Starting 
+ Container task1_adversarial_qa-postgres-1 Started 
+ Container task1_adversarial_qa-qdrant-1 Started 
+ Container task1_adversarial_qa-postgres-1 Waiting 
+ Container task1_adversarial_qa-postgres-1 Healthy 
+ Container task1_adversarial_qa-ingest-1 Starting 
+ Container task1_adversarial_qa-ingest-1 Started 
+ Container task1_adversarial_qa-ingest-1 Waiting 
+ Container task1_adversarial_qa-ingest-1 Exited 
+ Container task1_adversarial_qa-api-1 Starting 
+ Container task1_adversarial_qa-api-1 Started 
+
+EXIT=0 ELAPSED=394.73s

@@ -1,0 +1,7 @@
+clean-clone/
+clean-venv/
+__pycache__/
+.pytest_cache/
+
+phase2/clone/
+phase2/venv/

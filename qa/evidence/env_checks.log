@@ -1,0 +1,31 @@
+missing token: exit=1
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/nozima/Music/task1_semantic_qa/.venv/lib/python3.12/site-packages/pydantic_settings/main.py", line 167, in __init__
+    super().__init__(
+  File "/home/nozima/Music/task1_semantic_qa/.venv/lib/python3.12/site-packages/pydantic/main.py", line 212, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for BotSettings
+telegram_bot_token
+  Field required [type=missing, input_value={}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+
+empty token: exit=1
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/nozima/Music/task1_semantic_qa/.venv/lib/python3.12/site-packages/pydantic_settings/main.py", line 167, in __init__
+    super().__init__(
+  File "/home/nozima/Music/task1_semantic_qa/.venv/lib/python3.12/site-packages/pydantic/main.py", line 212, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for BotSettings
+telegram_bot_token
+  String should have at least 1 character [type=string_too_short, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_too_short
+
+empty database URL: exit=0
+''
+
+missing .env: exit=1
+env file /tmp/tmpwx18vrn4/nonexistent.env not found: stat /tmp/tmpwx18vrn4/nonexistent.env: no such file or directory

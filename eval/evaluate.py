@@ -183,11 +183,14 @@ def _share(ranks: list[int | None], hit: Callable[[int | None], bool]) -> float:
 
 def main() -> None:
     parser = argparse.ArgumentParser(prog="python -m eval.evaluate")
-    parser.add_argument("--dataset", type=Path, default=EVAL_DIR / "dataset.jsonl")
+    parser.add_argument("--dataset", type=Path, default=EVAL_DIR / "dev.jsonl")
     parser.add_argument("--conversations", type=Path, default=EVAL_DIR / "conversations.jsonl")
     parser.add_argument("--sheet", type=Path, default=Path("data/qa.xlsx"))
     parser.add_argument("--out", type=Path, default=EVAL_DIR / "results")
     args = parser.parse_args()
+
+    if args.dataset.resolve() == (EVAL_DIR / "holdout.jsonl").resolve():
+        parser.error("Use eval.calibration holdout; threshold sweeps on the holdout are forbidden")
 
     configure_logging("WARNING")
     lines = args.dataset.read_text(encoding="utf-8").splitlines()

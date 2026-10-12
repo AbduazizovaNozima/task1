@@ -1,0 +1,247 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________ test_ingest_rejects_malformed_xml[xl/workbook.xml] ______________
+
+client = <starlette.testclient.TestClient object at 0x740fd4c55f10>
+member = 'xl/workbook.xml'
+
+    @pytest.mark.parametrize("member", ["xl/workbook.xml", "xl/worksheets/sheet1.xml"])
+    def test_ingest_rejects_malformed_xml(client: TestClient, member: str) -> None:
+        from zipfile import ZipFile
+    
+        source = xlsx([["question", "answer"]])
+        malformed = io.BytesIO()
+        with ZipFile(io.BytesIO(source)) as original, ZipFile(malformed, "w") as result:
+            for name in original.namelist():
+                result.writestr(name, b"<broken" if name == member else original.read(name))
+>       response = client.post("/ingest", files={"file": ("broken.xlsx", malformed.getvalue())})
+
+tests/test_api.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/starlette/testclient.py:593: in post
+    return super().post(
+.venv/lib/python3.12/site-packages/httpx/_client.py:1157: in post
+    return self.request(
+.venv/lib/python3.12/site-packages/starlette/testclient.py:484: in request
+    return super().request(
+.venv/lib/python3.12/site-packages/httpx/_client.py:837: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.12/site-packages/httpx/_client.py:926: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.12/site-packages/httpx/_client.py:954: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.12/site-packages/httpx/_client.py:991: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.12/site-packages/httpx/_client.py:1027: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.12/site-packages/starlette/testclient.py:377: in handle_request
+    raise exc
+.venv/lib/python3.12/site-packages/starlette/testclient.py:374: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.12/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/usr/lib/python3.12/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+/usr/lib/python3.12/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+.venv/lib/python3.12/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.12/site-packages/fastapi/applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:187: in __call__
+    raise exc
+.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.12/site-packages/starlette/routing.py:715: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/routing.py:735: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/routing.py:288: in handle
+    await self.app(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.12/site-packages/starlette/routing.py:73: in app
+    response = await f(request)
+.venv/lib/python3.12/site-packages/fastapi/routing.py:301: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.12/site-packages/fastapi/routing.py:214: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+.venv/lib/python3.12/site-packages/starlette/concurrency.py:39: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+.venv/lib/python3.12/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py:1100: in run
+    result = context.run(func, *args)
+app/api/routes.py:44: in ingest
+    report = ingestion.ingest(read_qa_sheet(file.file))
+app/adapters/excel_reader.py:22: in read_qa_sheet
+    workbook = load_workbook(source, read_only=True, data_only=True)
+.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:348: in load_workbook
+    reader.read()
+.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:293: in read
+    self.read_workbook()
+.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:153: in read_workbook
+    self.parser.parse()
+.venv/lib/python3.12/site-packages/openpyxl/reader/workbook.py:45: in parse
+    node = fromstring(src)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = b'<broken'
+parser = <xml.etree.ElementTree.XMLParser object at 0x740fd4c5d4e0>
+
+    def XML(text, parser=None):
+        """Parse XML document from string constant.
+    
+        This function can be used to embed "XML Literals" in Python code.
+    
+        *text* is a string containing XML data, *parser* is an
+        optional parser instance, defaulting to the standard XMLParser.
+    
+        Returns an Element instance.
+    
+        """
+        if not parser:
+            parser = XMLParser(target=TreeBuilder())
+        parser.feed(text)
+>       return parser.close()
+E       xml.etree.ElementTree.ParseError: unclosed token: line 1, column 0
+
+/usr/lib/python3.12/xml/etree/ElementTree.py:1336: ParseError
+_________ test_ingest_rejects_malformed_xml[xl/worksheets/sheet1.xml] __________
+
+client = <starlette.testclient.TestClient object at 0x740fd4c91070>
+member = 'xl/worksheets/sheet1.xml'
+
+    @pytest.mark.parametrize("member", ["xl/workbook.xml", "xl/worksheets/sheet1.xml"])
+    def test_ingest_rejects_malformed_xml(client: TestClient, member: str) -> None:
+        from zipfile import ZipFile
+    
+        source = xlsx([["question", "answer"]])
+        malformed = io.BytesIO()
+        with ZipFile(io.BytesIO(source)) as original, ZipFile(malformed, "w") as result:
+            for name in original.namelist():
+                result.writestr(name, b"<broken" if name == member else original.read(name))
+>       response = client.post("/ingest", files={"file": ("broken.xlsx", malformed.getvalue())})
+
+tests/test_api.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/starlette/testclient.py:593: in post
+    return super().post(
+.venv/lib/python3.12/site-packages/httpx/_client.py:1157: in post
+    return self.request(
+.venv/lib/python3.12/site-packages/starlette/testclient.py:484: in request
+    return super().request(
+.venv/lib/python3.12/site-packages/httpx/_client.py:837: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.12/site-packages/httpx/_client.py:926: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.12/site-packages/httpx/_client.py:954: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.12/site-packages/httpx/_client.py:991: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.12/site-packages/httpx/_client.py:1027: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.12/site-packages/starlette/testclient.py:377: in handle_request
+    raise exc
+.venv/lib/python3.12/site-packages/starlette/testclient.py:374: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.12/site-packages/anyio/from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/usr/lib/python3.12/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+/usr/lib/python3.12/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+.venv/lib/python3.12/site-packages/anyio/from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.12/site-packages/fastapi/applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:187: in __call__
+    raise exc
+.venv/lib/python3.12/site-packages/starlette/middleware/errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.12/site-packages/starlette/routing.py:715: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/routing.py:735: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/routing.py:288: in handle
+    await self.app(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.12/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.12/site-packages/starlette/routing.py:73: in app
+    response = await f(request)
+.venv/lib/python3.12/site-packages/fastapi/routing.py:301: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.12/site-packages/fastapi/routing.py:214: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+.venv/lib/python3.12/site-packages/starlette/concurrency.py:39: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+.venv/lib/python3.12/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py:1100: in run
+    result = context.run(func, *args)
+app/api/routes.py:44: in ingest
+    report = ingestion.ingest(read_qa_sheet(file.file))
+app/adapters/excel_reader.py:22: in read_qa_sheet
+    workbook = load_workbook(source, read_only=True, data_only=True)
+.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:348: in load_workbook
+    reader.read()
+.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:303: in read
+    self.read_worksheets()
+.venv/lib/python3.12/site-packages/openpyxl/reader/excel.py:228: in read_worksheets
+    ws = ReadOnlyWorksheet(self.wb, sheet.name, rel.target, self.shared_strings)
+.venv/lib/python3.12/site-packages/openpyxl/worksheet/_read_only.py:42: in __init__
+    self._get_size()
+.venv/lib/python3.12/site-packages/openpyxl/worksheet/_read_only.py:49: in _get_size
+    dimensions = parser.parse_dimensions()
+.venv/lib/python3.12/site-packages/openpyxl/worksheet/_reader.py:178: in parse_dimensions
+    for _event, element in it:
+/usr/lib/python3.12/xml/etree/ElementTree.py:1242: in iterator
+    root = pullparser._close_and_return_root()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <xml.etree.ElementTree.XMLPullParser object at 0x740fcf28e2d0>
+
+    def _close_and_return_root(self):
+        # iterparse needs this to set its root attribute properly :(
+>       root = self._parser.close()
+E       xml.etree.ElementTree.ParseError: unclosed token: line 1, column 0
+
+/usr/lib/python3.12/xml/etree/ElementTree.py:1290: ParseError
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/starlette/testclient.py:40
+  /home/nozima/Music/task1_semantic_qa/.venv/lib/python3.12/site-packages/starlette/testclient.py:40: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_api.py::test_ingest_rejects_malformed_xml[xl/workbook.xml]
+FAILED tests/test_api.py::test_ingest_rejects_malformed_xml[xl/worksheets/sheet1.xml]
+2 failed, 10 deselected, 1 warning in 4.21s

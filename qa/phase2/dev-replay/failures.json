@@ -1,0 +1,332 @@
+{
+  "wrong_top1": [
+    {
+      "query": "ЗАГСда никоҳдан ўтиш учун нималар керак?",
+      "score": 0.6415,
+      "rank": null,
+      "top_match": "Ajrashish uchun FHDYOga qanaqa hujjatlar kerak?"
+    },
+    {
+      "query": "universitetga hujjat topshirish qanday bo'ladi",
+      "score": 0.7075,
+      "rank": 3,
+      "top_match": "Chet elda o'qish uchun ta'lim hujjatini qanday tayyorlanadi?"
+    },
+    {
+      "query": "ish joyimda 3 oydan beri oylik bermayapti",
+      "score": 0.6982,
+      "rank": 2,
+      "top_match": "Menga ish beruvchi mehnat ta'tilini bermasa haqida ayting"
+    },
+    {
+      "query": "ERI kalitimning muddati tugab qolibdi",
+      "score": 0.6518,
+      "rank": 2,
+      "top_match": "Menga id-karta amal muddati tugaganini bilaman haqida ayting"
+    },
+    {
+      "query": "OSAGO polis qanday olinadi",
+      "score": 0.492,
+      "rank": null,
+      "top_match": "Ota-onasi noma'lum (tashlab ketilgan) bola qanaqa ro'yxatga olinadi?"
+    },
+    {
+      "query": "armiyaga chaqiruvdan otsrochka olish",
+      "score": 0.697,
+      "rank": 2,
+      "top_match": "Muddatli xizmatdan kechiktirish (otsrochka) kimlarga qanday?"
+    },
+    {
+      "query": "soliqni bo'lib-bo'lib to'lasa bo'ladimi",
+      "score": 0.6596,
+      "rank": 2,
+      "top_match": "Yagona (aylanmadan) soliq to'lovi nima?"
+    },
+    {
+      "query": "dekretda o'tirgan onalarga pul beriladimi",
+      "score": 0.5985,
+      "rank": 3,
+      "top_match": "Tug'ruqxonani tanlashga ruxsat beriladimi?"
+    },
+    {
+      "query": "eri bilan ajrashmoqchi bo'lgan ayol qayerga boradi",
+      "score": 0.6648,
+      "rank": 2,
+      "top_match": "Turmush o'rtoqlardan biri chet elda bo'lsa ajrashish qanday qilinadi?"
+    },
+    {
+      "query": "ажралиш қандай расмийлаштирилади",
+      "score": 0.7897,
+      "rank": 5,
+      "top_match": "Uy-joyni bo'lish yoki qo'shish (ajratish) qanday rasmiylashtiriladi?"
+    },
+    {
+      "query": "ishonchnoma yozdirish uchun notariusga boramanmi",
+      "score": 0.7568,
+      "rank": 2,
+      "top_match": "Iltimos, ayting: notariusda kelishuvni imzolashda guvoh kerakmi?"
+    },
+    {
+      "query": "voenkomatga qachon borish kerak",
+      "score": 0.6798,
+      "rank": 3,
+      "top_match": "Harbiy ro'yxatga olish guvohnomasi qachon bo'yicha ma'lumot kerak"
+    },
+    {
+      "query": "guvohnomadagi xatoni to'g'irlash",
+      "score": 0.7861,
+      "rank": null,
+      "top_match": "Guvohnomadagi sana yoki ma'lumotni tuzatish mumkinmi?"
+    },
+    {
+      "query": "туғилганлик гувоҳномасидаги хатони қандай тузатаман",
+      "score": 0.789,
+      "rank": null,
+      "top_match": "Tug'ilganlik guvohnomasi qanday olsa bo'ladi?"
+    },
+    {
+      "query": "kvartirani akamga sovg'a qilmoqchiman qanday rasmiylashtiraman",
+      "score": 0.6923,
+      "rank": null,
+      "top_match": "Uy oldi-sotdisi (shartnoma) qanday rasmiylashtirsa bo'ladi?"
+    },
+    {
+      "query": "firmani qanday yopaman",
+      "score": 0.756,
+      "rank": 2,
+      "top_match": "Firma nomini o'zgartirish qanday qilinadi?"
+    },
+    {
+      "query": "ЯТТни қандай ёпаман",
+      "score": 0.6285,
+      "rank": null,
+      "top_match": "Yakka tartibdagi tadbirkor (YaTT) ro'yxatdan o'tadi qanday?"
+    },
+    {
+      "query": "bola tug'ildi endi qanday hujjat qilish kerak",
+      "score": 0.7986,
+      "rank": 2,
+      "top_match": "Farzandlikka olishni rasmiylashtirish uchun qanday hujjatlar kerak?"
+    },
+    {
+      "query": "mashinani hisobdan chiqarish",
+      "score": 0.747,
+      "rank": 2,
+      "top_match": "Transport vositasini vaqtincha hisobdan chiqarish haqida ma'lumot bering"
+    },
+    {
+      "query": "машинани ҳисобдан чиқариш",
+      "score": 0.747,
+      "rank": 2,
+      "top_match": "Transport vositasini vaqtincha hisobdan chiqarish haqida ma'lumot bering"
+    },
+    {
+      "query": "apatrid hujjatlari",
+      "score": 0.6449,
+      "rank": null,
+      "top_match": "Chet elda vafot etgan fuqaro hujjatlari qanday?"
+    },
+    {
+      "query": "uzumda sotsam soliq to'laymanmi",
+      "score": 0.6835,
+      "rank": null,
+      "top_match": "Menga avtomobil yoki mulk sotganda soliq to'lanadimi haqida ayting"
+    },
+    {
+      "query": "dekret ta'tiliga chiqish",
+      "score": 0.5225,
+      "rank": 2,
+      "top_match": "Ma'muriy jarimaga e'tiroz bildiriladi haqida ma'lumot bering"
+    },
+    {
+      "query": "tug'ruq ta'tilini rasmiylashtirish",
+      "score": 0.7661,
+      "rank": 2,
+      "top_match": "Farzandlikka olishni rasmiylashtirish haqida ma'lumot bering"
+    },
+    {
+      "query": "ispolnitelniy list qayerdan olinadi",
+      "score": 0.6836,
+      "rank": null,
+      "top_match": "Iltimos, ayting: muayyan xizmat uchun kerakli hujjatlar ro'yxatini qayerdan bilaman?"
+    },
+    {
+      "query": "ishonchnoma bilan pasportni olish mumkinmi",
+      "score": 0.7813,
+      "rank": null,
+      "top_match": "Chet elda ishlatiladigan ishonchnoma qanday amalga oshiriladi?"
+    },
+    {
+      "query": "chetdagi o'zbeklar fuqarolikni oson olishi",
+      "score": 0.7216,
+      "rank": 2,
+      "top_match": "O'zbekiston fuqaroligini olish qanday amalga oshiriladi?"
+    },
+    {
+      "query": "uyni aka-ukalar o'rtasida bo'lish",
+      "score": 0.6539,
+      "rank": 2,
+      "top_match": "Uy-joyni bo'lish yoki qo'shish (ajratish) qanday?"
+    },
+    {
+      "query": "mulkdan ulushimni ajratib olmoqchiman",
+      "score": 0.6775,
+      "rank": 2,
+      "top_match": "Menga xorijga chiqishga qo'yilgan taqiqni tekshirish bekor qilish haqida ayting"
+    },
+    {
+      "query": "квартирадаги улушни ажратиш",
+      "score": 0.6578,
+      "rank": 3,
+      "top_match": "Menga ko'p kvartirali uy kapital ta'miri hisobidan haqida ayting"
+    },
+    {
+      "query": "ispytatelniy srok necha oy",
+      "score": 0.5464,
+      "rank": 4,
+      "top_match": "Iltimos, ayting: nazariy imtihonda nechta savolga to'g'ri javob berish kerak?"
+    },
+    {
+      "query": "armiyadan qochsa nima bo'ladi",
+      "score": 0.6952,
+      "rank": 4,
+      "top_match": "Fuqarolikdan chiqish qanday?"
+    },
+    {
+      "query": "chet elga sudlanmaganlik ma'lumotnomasi",
+      "score": 0.8034,
+      "rank": 2,
+      "top_match": "Sudlanmaganlik ma'lumotnoma qanday?"
+    },
+    {
+      "query": "vid na jitelstvo yo'qoldi",
+      "score": 0.5477,
+      "rank": null,
+      "top_match": "Nikoh yoshi yosh bo'yicha ma'lumot kerak"
+    },
+    {
+      "query": "bola parvarishi nafaqasi",
+      "score": 0.5469,
+      "rank": 2,
+      "top_match": "Ota-onasi noma'lum (tashlab ketilgan) bola qanaqa ro'yxatga olinadi?"
+    },
+    {
+      "query": "kvartirani ofisga o'tkazish",
+      "score": 0.6556,
+      "rank": 4,
+      "top_match": "Menga ko'p kvartirali uy boshqaruvi masalalari haqida ayting"
+    },
+    {
+      "query": "уй-жойни нотурар жойга ўтказиш",
+      "score": 0.7052,
+      "rank": 6,
+      "top_match": "Uy-joyni bo'lish yoki qo'shish (ajratish) qanday amalga oshiriladi?"
+    },
+    {
+      "query": "my.gov.uz da telefon raqamni o'zgartirish",
+      "score": 0.6909,
+      "rank": 3,
+      "top_match": "Menga davlat raqam belgisini (avtoraqam) olish yoki almashtirish haqida ayting"
+    },
+    {
+      "query": "эримнинг фамилиясини олсам бўладими",
+      "score": 0.6547,
+      "rank": 6,
+      "top_match": "Menga bola familiyasi ota familiyasini olishi haqida ayting"
+    },
+    {
+      "query": "Id karta qanaqa qilib olinadi",
+      "score": 0.8578,
+      "rank": 2,
+      "top_match": "ID-kartaga ma'lumotlar qanday?"
+    }
+  ],
+  "false_rejections": [
+    {
+      "query": "otamdan qolgan merosni aka-ukalar qanday bo'lishadi",
+      "score": 0.6317,
+      "rank": 1,
+      "top_match": "Bir necha merosxo'r bo'lsa meros ulushlari qanday belgilanadi?"
+    },
+    {
+      "query": "OSAGO polis qanday olinadi",
+      "score": 0.492,
+      "rank": null,
+      "top_match": "Ota-onasi noma'lum (tashlab ketilgan) bola qanaqa ro'yxatga olinadi?"
+    },
+    {
+      "query": "dekretda o'tirgan onalarga pul beriladimi",
+      "score": 0.5985,
+      "rank": 3,
+      "top_match": "Tug'ruqxonani tanlashga ruxsat beriladimi?"
+    },
+    {
+      "query": "pinfl nima o'zi",
+      "score": 0.6184,
+      "rank": 1,
+      "top_match": "Iltimos, ayting: jSHSHIR (shaxsiy identifikatsiya raqami) nima?"
+    },
+    {
+      "query": "ЯТТни қандай ёпаман",
+      "score": 0.6285,
+      "rank": null,
+      "top_match": "Yakka tartibdagi tadbirkor (YaTT) ro'yxatdan o'tadi qanday?"
+    },
+    {
+      "query": "dekret ta'tiliga chiqish",
+      "score": 0.5225,
+      "rank": 2,
+      "top_match": "Ma'muriy jarimaga e'tiroz bildiriladi haqida ma'lumot bering"
+    },
+    {
+      "query": "ispytatelniy srok necha oy",
+      "score": 0.5464,
+      "rank": 4,
+      "top_match": "Iltimos, ayting: nazariy imtihonda nechta savolga to'g'ri javob berish kerak?"
+    },
+    {
+      "query": "medkomissiya qayerda",
+      "score": 0.565,
+      "rank": 1,
+      "top_match": "Iltimos, ayting: majburiy tibbiy ko'rik (haydovchi, ovqat sohasi) qayerda o'tkaziladi?"
+    },
+    {
+      "query": "vid na jitelstvo yo'qoldi",
+      "score": 0.5477,
+      "rank": null,
+      "top_match": "Nikoh yoshi yosh bo'yicha ma'lumot kerak"
+    },
+    {
+      "query": "filial ochish",
+      "score": 0.5476,
+      "rank": 1,
+      "top_match": "Filial yoki vakolatxona ochish qanday?"
+    },
+    {
+      "query": "bola parvarishi nafaqasi",
+      "score": 0.5469,
+      "rank": 2,
+      "top_match": "Ota-onasi noma'lum (tashlab ketilgan) bola qanaqa ro'yxatga olinadi?"
+    },
+    {
+      "query": "posilka qancha vaqtda boradi",
+      "score": 0.5757,
+      "rank": 1,
+      "top_match": "Iltimos, ayting: pochta orqali hujjat yuborishda qancha vaqt ketadi?"
+    }
+  ],
+  "false_acceptances": [
+    {
+      "query": "pensiya nechpul",
+      "score": 0.6622,
+      "rank": null,
+      "top_match": "Pensiyani qanday olish mumkin — naqd yoki kartaga?"
+    },
+    {
+      "query": "bazada qanday malumotlar bor",
+      "score": 0.6425,
+      "rank": null,
+      "top_match": "Ish staji yoki ijtimoiy to'lovlar bo'yicha ma'lumotni qayerdan olaman?"
+    }
+  ]
+}

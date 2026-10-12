@@ -1,0 +1,426 @@
+$ docker compose -p task1_adversarial_qa -f /home/nozima/Music/task1_semantic_qa/qa/phase2/clone/docker-compose.yml -f /home/nozima/Music/task1_semantic_qa/qa/phase2/clone/qa-isolated.yml build --no-cache
+ Image task1_adversarial_qa-bot Building 
+ Image task1-adversarial-qa-phase2 Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.12kB done
+#1 DONE 0.0s
+
+#2 [bot internal] load build definition from Dockerfile
+#2 transferring dockerfile:
+#2 transferring dockerfile: 255B done
+#2 DONE 0.0s
+
+#3 [ingest internal] load build definition from Dockerfile
+#3 transferring dockerfile: 529B done
+#3 DONE 0.1s
+
+#4 [ingest internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 0.0s
+
+#5 [bot internal] load .dockerignore
+#5 transferring context: 115B done
+#5 DONE 0.0s
+
+#6 [bot 1/5] FROM docker.io/library/python:3.12-slim
+#6 DONE 0.0s
+
+#7 [ingest 2/5] WORKDIR /srv
+#7 CACHED
+
+#8 [bot internal] load build context
+#8 transferring context: 7.62kB done
+#8 DONE 0.0s
+
+#9 [ingest internal] load build context
+#9 transferring context: 131.34kB done
+#9 DONE 0.0s
+
+#10 [ingest 3/5] COPY pyproject.toml ./
+#10 DONE 0.0s
+
+#11 [ingest 3/7] COPY pyproject.toml ./
+#11 CACHED
+
+#12 [bot 4/5] COPY bot ./bot
+#12 DONE 0.1s
+
+#13 [ingest 4/7] COPY app ./app
+#13 DONE 0.1s
+
+#14 [ingest 5/7] RUN pip install --no-cache-dir ".[api]"
+#14 1.355 Looking in indexes: https://pypi.org/simple, https://download.pytorch.org/whl/cpu
+#14 1.355 Processing /srv
+#14 1.357   Installing build dependencies: started
+#14 5.285   Installing build dependencies: finished with status 'done'
+#14 5.286   Getting requirements to build wheel: started
+#14 5.814   Getting requirements to build wheel: finished with status 'done'
+#14 5.815   Preparing metadata (pyproject.toml): started
+#14 6.266   Preparing metadata (pyproject.toml): finished with status 'done'
+#14 7.566 Collecting pydantic==2.9.2 (from semantic-qa==1.0.0)
+#14 7.904   Downloading pydantic-2.9.2-py3-none-any.whl.metadata (149 kB)
+#14 ...
+
+#15 [bot 5/5] RUN pip install --no-cache-dir ".[bot]"
+#15 1.365 Processing /srv
+#15 1.367   Installing build dependencies: started
+#15 4.701   Installing build dependencies: finished with status 'done'
+#15 4.702   Getting requirements to build wheel: started
+#15 5.143   Getting requirements to build wheel: finished with status 'done'
+#15 5.145   Preparing metadata (pyproject.toml): started
+#15 5.642   Preparing metadata (pyproject.toml): finished with status 'done'
+#15 6.361 Collecting pydantic==2.9.2 (from semantic-qa==1.0.0)
+#15 6.688   Downloading pydantic-2.9.2-py3-none-any.whl.metadata (149 kB)
+#15 7.057 Collecting pydantic-settings==2.6.1 (from semantic-qa==1.0.0)
+#15 7.153   Downloading pydantic_settings-2.6.1-py3-none-any.whl.metadata (3.5 kB)
+#15 7.270 Collecting annotated-types>=0.6.0 (from pydantic==2.9.2->semantic-qa==1.0.0)
+#15 7.366   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#15 8.302 Collecting pydantic-core==2.23.4 (from pydantic==2.9.2->semantic-qa==1.0.0)
+#15 8.406   Downloading pydantic_core-2.23.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+#15 8.528 Collecting typing-extensions>=4.6.1 (from pydantic==2.9.2->semantic-qa==1.0.0)
+#15 8.632   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#15 ...
+
+#14 [ingest 5/7] RUN pip install --no-cache-dir ".[api]"
+#14 8.611 Collecting pydantic-settings==2.6.1 (from semantic-qa==1.0.0)
+#14 8.714   Downloading pydantic_settings-2.6.1-py3-none-any.whl.metadata (3.5 kB)
+#14 9.012 Collecting annotated-types>=0.6.0 (from pydantic==2.9.2->semantic-qa==1.0.0)
+#14 9.111   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#14 10.62 Collecting pydantic-core==2.23.4 (from pydantic==2.9.2->semantic-qa==1.0.0)
+#14 10.72   Downloading pydantic_core-2.23.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+#14 11.01 Collecting typing-extensions>=4.6.1 (from pydantic==2.9.2->semantic-qa==1.0.0)
+#14 11.11   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#14 11.65 Collecting python-dotenv>=0.21.0 (from pydantic-settings==2.6.1->semantic-qa==1.0.0)
+#14 11.75   Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+#14 12.40 Collecting fastapi==0.115.6 (from semantic-qa==1.0.0)
+#14 12.51   Downloading fastapi-0.115.6-py3-none-any.whl.metadata (27 kB)
+#14 13.10 Collecting uvicorn==0.34.0 (from uvicorn[standard]==0.34.0; extra == "api"->semantic-qa==1.0.0)
+#14 13.20   Downloading uvicorn-0.34.0-py3-none-any.whl.metadata (6.5 kB)
+#14 13.73 Collecting python-multipart==0.0.20 (from semantic-qa==1.0.0)
+#14 13.83   Downloading python_multipart-0.0.20-py3-none-any.whl.metadata (1.8 kB)
+#14 14.37 Collecting openpyxl==3.1.5 (from semantic-qa==1.0.0)
+#14 14.47   Downloading openpyxl-3.1.5-py2.py3-none-any.whl.metadata (2.5 kB)
+#14 14.99 Collecting psycopg==3.2.3 (from psycopg[binary]==3.2.3; extra == "api"->semantic-qa==1.0.0)
+#14 15.09   Downloading psycopg-3.2.3-py3-none-any.whl.metadata (4.3 kB)
+#14 15.40 Collecting psycopg-pool==3.2.4 (from semantic-qa==1.0.0)
+#14 15.50   Downloading psycopg_pool-3.2.4-py3-none-any.whl.metadata (2.6 kB)
+#14 ...
+
+#15 [bot 5/5] RUN pip install --no-cache-dir ".[bot]"
+#15 8.756 Collecting python-dotenv>=0.21.0 (from pydantic-settings==2.6.1->semantic-qa==1.0.0)
+#15 8.851   Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+#15 8.992 Collecting aiogram==3.15.0 (from semantic-qa==1.0.0)
+#15 9.086   Downloading aiogram-3.15.0-py3-none-any.whl.metadata (7.5 kB)
+#15 9.208 Collecting httpx==0.27.2 (from semantic-qa==1.0.0)
+#15 9.302   Downloading httpx-0.27.2-py3-none-any.whl.metadata (7.1 kB)
+#15 9.412 Collecting aiofiles<24.2,>=23.2.1 (from aiogram==3.15.0->semantic-qa==1.0.0)
+#15 9.506   Downloading aiofiles-24.1.0-py3-none-any.whl.metadata (10 kB)
+#15 10.08 Collecting aiohttp<3.11,>=3.9.0 (from aiogram==3.15.0->semantic-qa==1.0.0)
+#15 10.17   Downloading aiohttp-3.10.11-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.7 kB)
+#15 10.30 Collecting certifi>=2023.7.22 (from aiogram==3.15.0->semantic-qa==1.0.0)
+#15 10.39   Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+#15 10.51 Collecting magic-filter<1.1,>=1.0.12 (from aiogram==3.15.0->semantic-qa==1.0.0)
+#15 10.61   Downloading magic_filter-1.0.12-py3-none-any.whl.metadata (1.5 kB)
+#15 10.75 Collecting anyio (from httpx==0.27.2->semantic-qa==1.0.0)
+#15 10.84   Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+#15 10.96 Collecting httpcore==1.* (from httpx==0.27.2->semantic-qa==1.0.0)
+#15 11.06   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+#15 11.18 Collecting idna (from httpx==0.27.2->semantic-qa==1.0.0)
+#15 11.27   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#15 11.38 Collecting sniffio (from httpx==0.27.2->semantic-qa==1.0.0)
+#15 11.48   Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+#15 11.59 Collecting h11>=0.16 (from httpcore==1.*->httpx==0.27.2->semantic-qa==1.0.0)
+#15 11.69   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#15 11.80 Collecting aiohappyeyeballs>=2.3.0 (from aiohttp<3.11,>=3.9.0->aiogram==3.15.0->semantic-qa==1.0.0)
+#15 11.90   Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl.metadata (5.9 kB)
+#15 12.01 Collecting aiosignal>=1.1.2 (from aiohttp<3.11,>=3.9.0->aiogram==3.15.0->semantic-qa==1.0.0)
+#15 12.10   Downloading aiosignal-1.4.0-py3-none-any.whl.metadata (3.7 kB)
+#15 12.22 Collecting attrs>=17.3.0 (from aiohttp<3.11,>=3.9.0->aiogram==3.15.0->semantic-qa==1.0.0)
+#15 12.31   Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+#15 12.48 Collecting frozenlist>=1.1.1 (from aiohttp<3.11,>=3.9.0->aiogram==3.15.0->semantic-qa==1.0.0)
+#15 12.58   Downloading frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (20 kB)
+#15 12.92 Collecting multidict<7.0,>=4.5 (from aiohttp<3.11,>=3.9.0->aiogram==3.15.0->semantic-qa==1.0.0)
+#15 13.02   Downloading multidict-6.9.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.3 kB)
+#15 13.31 Collecting yarl<2.0,>=1.12.0 (from aiohttp<3.11,>=3.9.0->aiogram==3.15.0->semantic-qa==1.0.0)
+#15 13.41   Downloading yarl-1.25.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (111 kB)
+#15 13.64 Collecting propcache>=0.2.1 (from yarl<2.0,>=1.12.0->aiohttp<3.11,>=3.9.0->aiogram==3.15.0->semantic-qa==1.0.0)
+#15 13.73   Downloading propcache-0.5.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (25 kB)
+#15 13.84 Downloading pydantic-2.9.2-py3-none-any.whl (434 kB)
+#15 14.12 Downloading pydantic_settings-2.6.1-py3-none-any.whl (28 kB)
+#15 14.22 Downloading pydantic_core-2.23.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+#15 14.56    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 5.7 MB/s eta 0:00:00
+#15 14.66 Downloading aiogram-3.15.0-py3-none-any.whl (603 kB)
+#15 14.71    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 603.9/603.9 kB 12.1 MB/s eta 0:00:00
+#15 14.81 Downloading httpx-0.27.2-py3-none-any.whl (76 kB)
+#15 14.91 Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+#15 15.02 Downloading aiofiles-24.1.0-py3-none-any.whl (15 kB)
+#15 15.12 Downloading aiohttp-3.10.11-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.3 MB)
+#15 15.30    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 6.5 MB/s eta 0:00:00
+#15 15.40 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#15 15.50 Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+#15 15.61 Downloading magic_filter-1.0.12-py3-none-any.whl (11 kB)
+#15 15.71 Downloading python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+#15 15.81 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#15 15.91 Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+#15 ...
+
+#14 [ingest 5/7] RUN pip install --no-cache-dir ".[api]"
+#14 15.84 Collecting qdrant-client==1.12.1 (from semantic-qa==1.0.0)
+#14 15.94   Downloading qdrant_client-1.12.1-py3-none-any.whl.metadata (10 kB)
+#14 16.25 Collecting sentence-transformers==3.3.1 (from semantic-qa==1.0.0)
+#14 16.35   Downloading sentence_transformers-3.3.1-py3-none-any.whl.metadata (10 kB)
+#14 16.70 Collecting transformers==4.47.1 (from semantic-qa==1.0.0)
+#14 16.80   Downloading transformers-4.47.1-py3-none-any.whl.metadata (44 kB)
+#14 17.34 Collecting torch==2.5.1 (from semantic-qa==1.0.0)
+#14 17.75   Downloading https://download-r2.pytorch.org/whl/cpu/torch-2.5.1%2Bcpu-cp312-cp312-linux_x86_64.whl (174.6 MB)
+#14 ...
+
+#15 [bot 5/5] RUN pip install --no-cache-dir ".[bot]"
+#15 16.02 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#15 16.13 Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+#15 16.22 Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl (15 kB)
+#15 16.32 Downloading aiosignal-1.4.0-py3-none-any.whl (7.5 kB)
+#15 16.42 Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+#15 16.52 Downloading frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (242 kB)
+#15 16.65 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#15 16.75 Downloading multidict-6.9.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (336 kB)
+#15 16.90 Downloading yarl-1.25.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (117 kB)
+#15 17.02 Downloading propcache-0.5.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (250 kB)
+#15 17.10 Building wheels for collected packages: semantic-qa
+#15 17.10   Building wheel for semantic-qa (pyproject.toml): started
+#15 17.54   Building wheel for semantic-qa (pyproject.toml): finished with status 'done'
+#15 17.54   Created wheel for semantic-qa: filename=semantic_qa-1.0.0-py3-none-any.whl size=4341 sha256=8a5e4acc069a291b0bf205cb95f9671027803444dc5bae629f37060b7d888427
+#15 17.54   Stored in directory: /tmp/pip-ephem-wheel-cache-a7o2ulsr/wheels/6a/79/8d/96fbcd80441b457a24021176110198bf26c1844764981f0664
+#15 17.54 Successfully built semantic-qa
+#15 17.57 Installing collected packages: typing-extensions, sniffio, python-dotenv, propcache, multidict, magic-filter, idna, h11, frozenlist, certifi, attrs, annotated-types, aiohappyeyeballs, aiofiles, yarl, pydantic-core, httpcore, anyio, aiosignal, pydantic, httpx, aiohttp, pydantic-settings, aiogram, semantic-qa
+#15 18.70 Successfully installed aiofiles-24.1.0 aiogram-3.15.0 aiohappyeyeballs-2.7.1 aiohttp-3.10.11 aiosignal-1.4.0 annotated-types-0.8.0 anyio-4.15.1 attrs-26.1.0 certifi-2026.7.22 frozenlist-1.8.0 h11-0.16.0 httpcore-1.0.9 httpx-0.27.2 idna-3.20 magic-filter-1.0.12 multidict-6.9.1 propcache-0.5.4 pydantic-2.9.2 pydantic-core-2.23.4 pydantic-settings-2.6.1 python-dotenv-1.2.4 semantic-qa-1.0.0 sniffio-1.3.1 typing-extensions-4.16.0 yarl-1.25.1
+#15 18.70 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#15 20.29 
+#15 20.29 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#15 20.29 [notice] To update, run: pip install --upgrade pip
+#15 DONE 20.6s
+
+#16 [bot] exporting to image
+#16 exporting layers
+#16 exporting layers 0.2s done
+#16 writing image sha256:c4c384707ff2b6866ca1f42e7e98eda4106e4f3acb371b642794f8c5d844e2c7 done
+#16 naming to docker.io/library/task1_adversarial_qa-bot done
+#16 DONE 0.3s
+
+#17 [bot] resolving provenance for metadata file
+#17 DONE 0.0s
+
+#14 [ingest 5/7] RUN pip install --no-cache-dir ".[api]"
+#14 34.47      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 174.6/174.6 MB 10.6 MB/s eta 0:00:00
+#14 35.23 Collecting starlette<0.42.0,>=0.40.0 (from fastapi==0.115.6->semantic-qa==1.0.0)
+#14 35.33   Downloading starlette-0.41.3-py3-none-any.whl.metadata (6.0 kB)
+#14 35.70 Collecting et-xmlfile (from openpyxl==3.1.5->semantic-qa==1.0.0)
+#14 35.80   Downloading et_xmlfile-2.0.0-py3-none-any.whl.metadata (2.7 kB)
+#14 36.55 Collecting psycopg-binary==3.2.3 (from psycopg[binary]==3.2.3; extra == "api"->semantic-qa==1.0.0)
+#14 36.65   Downloading psycopg_binary-3.2.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.8 kB)
+#14 38.10 Collecting grpcio>=1.41.0 (from qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 38.19   Downloading grpcio-1.84.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (3.8 kB)
+#14 39.15 Collecting grpcio-tools>=1.41.0 (from qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 39.25   Downloading grpcio_tools-1.84.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.3 kB)
+#14 39.78 Collecting httpx>=0.20.0 (from httpx[http2]>=0.20.0->qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 39.88   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+#14 40.77 Collecting numpy>=1.26 (from qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 40.86   Downloading numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+#14 41.06 Collecting portalocker<3.0.0,>=2.7.0 (from qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 41.13   Downloading https://download.pytorch.org/whl/portalocker-2.10.1-py3-none-any.whl (18 kB)
+#14 41.41 Collecting urllib3<3,>=1.26.14 (from qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 41.51   Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+#14 41.73 Collecting tqdm (from sentence-transformers==3.3.1->semantic-qa==1.0.0)
+#14 41.83   Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+#14 42.21 Collecting scikit-learn (from sentence-transformers==3.3.1->semantic-qa==1.0.0)
+#14 42.33   Downloading scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.3 kB)
+#14 42.81 Collecting scipy (from sentence-transformers==3.3.1->semantic-qa==1.0.0)
+#14 42.91   Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+#14 43.28 Collecting huggingface-hub>=0.20.0 (from sentence-transformers==3.3.1->semantic-qa==1.0.0)
+#14 43.37   Downloading huggingface_hub-2.2.0-py3-none-any.whl.metadata (16 kB)
+#14 44.23 Collecting Pillow (from sentence-transformers==3.3.1->semantic-qa==1.0.0)
+#14 44.34   Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
+#14 44.57 Collecting filelock (from torch==2.5.1->semantic-qa==1.0.0)
+#14 44.67   Downloading filelock-4.1.0-py3-none-any.whl.metadata (2.0 kB)
+#14 44.88 Collecting networkx (from torch==2.5.1->semantic-qa==1.0.0)
+#14 44.98   Downloading networkx-3.7-py3-none-any.whl.metadata (6.7 kB)
+#14 45.16 Collecting jinja2 (from torch==2.5.1->semantic-qa==1.0.0)
+#14 45.24   Downloading https://download.pytorch.org/whl/jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+#14 45.44 Collecting fsspec (from torch==2.5.1->semantic-qa==1.0.0)
+#14 45.54   Downloading fsspec-2026.9.0-py3-none-any.whl.metadata (10 kB)
+#14 45.84 Collecting setuptools (from torch==2.5.1->semantic-qa==1.0.0)
+#14 45.94   Downloading setuptools-84.0.0-py3-none-any.whl.metadata (6.6 kB)
+#14 46.16 Collecting sympy==1.13.1 (from torch==2.5.1->semantic-qa==1.0.0)
+#14 46.26   Downloading sympy-1.13.1-py3-none-any.whl.metadata (12 kB)
+#14 46.29 Collecting huggingface-hub>=0.20.0 (from sentence-transformers==3.3.1->semantic-qa==1.0.0)
+#14 46.39   Downloading huggingface_hub-0.36.2-py3-none-any.whl.metadata (15 kB)
+#14 46.61 Collecting packaging>=20.0 (from transformers==4.47.1->semantic-qa==1.0.0)
+#14 46.71   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+#14 47.28 Collecting pyyaml>=5.1 (from transformers==4.47.1->semantic-qa==1.0.0)
+#14 47.38   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+#14 48.58 Collecting regex!=2019.12.17 (from transformers==4.47.1->semantic-qa==1.0.0)
+#14 48.68   Downloading regex-2026.9.29-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)
+#14 48.89 Collecting requests (from transformers==4.47.1->semantic-qa==1.0.0)
+#14 48.99   Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+#14 49.67 Collecting tokenizers<0.22,>=0.21 (from transformers==4.47.1->semantic-qa==1.0.0)
+#14 49.77   Downloading tokenizers-0.21.4-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+#14 50.43 Collecting safetensors>=0.4.1 (from transformers==4.47.1->semantic-qa==1.0.0)
+#14 50.53   Downloading safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.2 kB)
+#14 51.07 Collecting click>=7.0 (from uvicorn==0.34.0->uvicorn[standard]==0.34.0; extra == "api"->semantic-qa==1.0.0)
+#14 51.17   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+#14 51.82 Collecting h11>=0.8 (from uvicorn==0.34.0->uvicorn[standard]==0.34.0; extra == "api"->semantic-qa==1.0.0)
+#14 51.92   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#14 52.25 Collecting httptools>=0.6.3 (from uvicorn[standard]==0.34.0; extra == "api"->semantic-qa==1.0.0)
+#14 52.35   Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+#14 52.91 Collecting uvloop!=0.15.0,!=0.15.1,>=0.14.0 (from uvicorn[standard]==0.34.0; extra == "api"->semantic-qa==1.0.0)
+#14 53.02   Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.1 kB)
+#14 53.62 Collecting watchfiles>=0.13 (from uvicorn[standard]==0.34.0; extra == "api"->semantic-qa==1.0.0)
+#14 53.72   Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+#14 54.43 Collecting websockets>=10.4 (from uvicorn[standard]==0.34.0; extra == "api"->semantic-qa==1.0.0)
+#14 54.53   Downloading websockets-17.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+#14 54.73 Collecting mpmath<1.4,>=1.1.0 (from sympy==1.13.1->torch==2.5.1->semantic-qa==1.0.0)
+#14 54.83   Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+#14 55.49 Collecting protobuf<8.0.0,>=7.35.1 (from grpcio-tools>=1.41.0->qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 55.59   Downloading protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl.metadata (595 bytes)
+#14 56.22 Collecting anyio (from httpx>=0.20.0->httpx[http2]>=0.20.0->qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 56.32   Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+#14 56.53 Collecting certifi (from httpx>=0.20.0->httpx[http2]>=0.20.0->qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 56.63   Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+#14 57.25 Collecting httpcore==1.* (from httpx>=0.20.0->httpx[http2]>=0.20.0->qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 57.44   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+#14 57.63 Collecting idna (from httpx>=0.20.0->httpx[http2]>=0.20.0->qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 57.73   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#14 58.37 Collecting h2<5,>=3 (from httpx[http2]>=0.20.0->qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 58.47   Downloading h2-4.4.1-py3-none-any.whl.metadata (3.8 kB)
+#14 59.06 Collecting hf-xet<2.0.0,>=1.1.3 (from huggingface-hub>=0.20.0->sentence-transformers==3.3.1->semantic-qa==1.0.0)
+#14 59.16   Downloading hf_xet-1.7.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (4.9 kB)
+#14 59.50 Collecting MarkupSafe>=2.0 (from jinja2->torch==2.5.1->semantic-qa==1.0.0)
+#14 59.60   Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+#14 59.86 Collecting charset_normalizer<4,>=2 (from requests->transformers==4.47.1->semantic-qa==1.0.0)
+#14 59.96   Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (46 kB)
+#14 60.56 Collecting joblib>=1.4.0 (from scikit-learn->sentence-transformers==3.3.1->semantic-qa==1.0.0)
+#14 60.67   Downloading joblib-1.6.0-py3-none-any.whl.metadata (6.5 kB)
+#14 61.25 Collecting narwhals>=2.0.1 (from scikit-learn->sentence-transformers==3.3.1->semantic-qa==1.0.0)
+#14 61.35   Downloading narwhals-2.27.1-py3-none-any.whl.metadata (15 kB)
+#14 61.92 Collecting threadpoolctl>=3.5.0 (from scikit-learn->sentence-transformers==3.3.1->semantic-qa==1.0.0)
+#14 62.01   Downloading threadpoolctl-3.7.0-py3-none-any.whl.metadata (24 kB)
+#14 62.58 Collecting hyperframe<7,>=6.1 (from h2<5,>=3->httpx[http2]>=0.20.0->qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 62.68   Downloading hyperframe-6.1.0-py3-none-any.whl.metadata (4.3 kB)
+#14 63.20 Collecting hpack<5,>=4.2 (from h2<5,>=3->httpx[http2]>=0.20.0->qdrant-client==1.12.1->semantic-qa==1.0.0)
+#14 63.30   Downloading hpack-4.2.0-py3-none-any.whl.metadata (3.3 kB)
+#14 63.61 Collecting cloudpickle>=3.0 (from joblib>=1.4.0->scikit-learn->sentence-transformers==3.3.1->semantic-qa==1.0.0)
+#14 63.71   Downloading cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
+#14 63.83 Downloading pydantic-2.9.2-py3-none-any.whl (434 kB)
+#14 64.15 Downloading pydantic_settings-2.6.1-py3-none-any.whl (28 kB)
+#14 64.25 Downloading pydantic_core-2.23.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+#14 64.66    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 4.8 MB/s eta 0:00:00
+#14 64.76 Downloading fastapi-0.115.6-py3-none-any.whl (94 kB)
+#14 64.87 Downloading openpyxl-3.1.5-py2.py3-none-any.whl (250 kB)
+#14 64.99 Downloading psycopg-3.2.3-py3-none-any.whl (197 kB)
+#14 65.11 Downloading psycopg_pool-3.2.4-py3-none-any.whl (38 kB)
+#14 65.21 Downloading python_multipart-0.0.20-py3-none-any.whl (24 kB)
+#14 65.31 Downloading qdrant_client-1.12.1-py3-none-any.whl (267 kB)
+#14 65.43 Downloading sentence_transformers-3.3.1-py3-none-any.whl (268 kB)
+#14 65.56 Downloading transformers-4.47.1-py3-none-any.whl (10.1 MB)
+#14 66.75    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 8.5 MB/s eta 0:00:00
+#14 66.85 Downloading uvicorn-0.34.0-py3-none-any.whl (62 kB)
+#14 66.96 Downloading psycopg_binary-3.2.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.2 MB)
+#14 67.92    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.2/4.2 MB 4.3 MB/s eta 0:00:00
+#14 68.02 Downloading sympy-1.13.1-py3-none-any.whl (6.2 MB)
+#14 69.70    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.2/6.2 MB 3.7 MB/s eta 0:00:00
+#14 69.82 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#14 69.95 Downloading click-8.5.0-py3-none-any.whl (125 kB)
+#14 70.09 Downloading grpcio-1.84.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (7.2 MB)
+#14 72.26    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.2/7.2 MB 3.3 MB/s eta 0:00:00
+#14 72.36 Downloading grpcio_tools-1.84.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.8 MB)
+#14 73.87    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.8/2.8 MB 1.7 MB/s eta 0:00:00
+#14 73.97 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#14 74.09 Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (552 kB)
+#14 74.49    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 552.8/552.8 kB 1.5 MB/s eta 0:00:00
+#14 74.59 Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+#14 74.74 Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+#14 74.88 Downloading huggingface_hub-0.36.2-py3-none-any.whl (566 kB)
+#14 75.27    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 566.4/566.4 kB 1.4 MB/s eta 0:00:00
+#14 75.37 Downloading fsspec-2026.9.0-py3-none-any.whl (221 kB)
+#14 75.62 Downloading numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
+#14 84.63    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.7/16.7 MB 1.9 MB/s eta 0:00:00
+#14 84.73 Downloading packaging-26.3-py3-none-any.whl (129 kB)
+#14 84.86 Downloading python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+#14 84.96 Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+#14 85.18    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 3.6 MB/s eta 0:00:00
+#14 85.28 Downloading regex-2026.9.29-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+#14 85.48    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.8/807.8 kB 3.7 MB/s eta 0:00:00
+#14 85.59 Downloading safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (516 kB)
+#14 85.81 Downloading setuptools-84.0.0-py3-none-any.whl (818 kB)
+#14 85.98    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 818.2/818.2 kB 4.5 MB/s eta 0:00:00
+#14 86.08 Downloading starlette-0.41.3-py3-none-any.whl (73 kB)
+#14 86.20 Downloading tokenizers-0.21.4-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.1 MB)
+#14 86.85    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 4.8 MB/s eta 0:00:00
+#14 86.95 Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+#14 87.06 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#14 87.16 Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+#14 87.28 Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.5 MB)
+#14 88.07    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 5.7 MB/s eta 0:00:00
+#14 88.17 Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+#14 88.33 Downloading websockets-17.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (225 kB)
+#14 88.46 Downloading et_xmlfile-2.0.0-py3-none-any.whl (18 kB)
+#14 88.56 Downloading filelock-4.1.0-py3-none-any.whl (133 kB)
+#14 88.65 Downloading https://download.pytorch.org/whl/jinja2-3.1.6-py3-none-any.whl (134 kB)
+#14 88.76 Downloading networkx-3.7-py3-none-any.whl (2.1 MB)
+#14 89.31    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 4.9 MB/s eta 0:00:00
+#14 89.41 Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.9 MB)
+#14 91.34    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 3.6 MB/s eta 0:00:00
+#14 91.44 Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+#14 91.56 Downloading scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (9.2 MB)
+#14 93.92    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.2/9.2 MB 3.9 MB/s eta 0:00:00
+#14 94.02 Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+#14 101.9    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 4.5 MB/s eta 0:00:00
+#14 102.0 Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+#14 102.1 Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+#14 102.2 Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (257 kB)
+#14 102.4 Downloading h2-4.4.1-py3-none-any.whl (62 kB)
+#14 102.5 Downloading hf_xet-1.7.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.2 MB)
+#14 103.1    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.2/4.2 MB 6.7 MB/s eta 0:00:00
+#14 103.2 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#14 103.3 Downloading joblib-1.6.0-py3-none-any.whl (306 kB)
+#14 103.5 Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+#14 103.6 Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+#14 103.6    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 9.0 MB/s eta 0:00:00
+#14 103.7 Downloading narwhals-2.27.1-py3-none-any.whl (483 kB)
+#14 103.9 Downloading protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl (343 kB)
+#14 104.0 Downloading threadpoolctl-3.7.0-py3-none-any.whl (26 kB)
+#14 104.1 Downloading cloudpickle-3.1.2-py3-none-any.whl (22 kB)
+#14 104.2 Downloading hpack-4.2.0-py3-none-any.whl (34 kB)
+#14 104.3 Downloading hyperframe-6.1.0-py3-none-any.whl (13 kB)
+#14 104.5 Building wheels for collected packages: semantic-qa
+#14 104.5   Building wheel for semantic-qa (pyproject.toml): started
+#14 105.2   Building wheel for semantic-qa (pyproject.toml): finished with status 'done'
+#14 105.2   Created wheel for semantic-qa: filename=semantic_qa-1.0.0-py3-none-any.whl size=19820 sha256=5a0199f35230ec15b8a9e88b8553812fe9d1669f845d068aa67ba900e56991b1
+#14 105.2   Stored in directory: /tmp/pip-ephem-wheel-cache-ut2sghhl/wheels/6a/79/8d/96fbcd80441b457a24021176110198bf26c1844764981f0664
+#14 105.2 Successfully built semantic-qa
+#14 105.5 Installing collected packages: mpmath, websockets, uvloop, urllib3, typing-extensions, tqdm, threadpoolctl, sympy, setuptools, safetensors, regex, pyyaml, python-multipart, python-dotenv, psycopg-binary, protobuf, portalocker, Pillow, packaging, numpy, networkx, narwhals, MarkupSafe, idna, hyperframe, httptools, hpack, hf-xet, h11, fsspec, filelock, et-xmlfile, cloudpickle, click, charset_normalizer, certifi, annotated-types, uvicorn, scipy, requests, pydantic-core, psycopg-pool, psycopg, openpyxl, joblib, jinja2, httpcore, h2, grpcio, anyio, watchfiles, torch, starlette, scikit-learn, pydantic, huggingface-hub, httpx, grpcio-tools, tokenizers, pydantic-settings, fastapi, transformers, semantic-qa, qdrant-client, sentence-transformers
+#14 138.4 Successfully installed MarkupSafe-3.0.4 Pillow-12.3.0 annotated-types-0.8.0 anyio-4.15.1 certifi-2026.7.22 charset_normalizer-3.5.2 click-8.5.0 cloudpickle-3.1.2 et-xmlfile-2.0.0 fastapi-0.115.6 filelock-4.1.0 fsspec-2026.9.0 grpcio-1.84.0 grpcio-tools-1.84.0 h11-0.16.0 h2-4.4.1 hf-xet-1.7.0 hpack-4.2.0 httpcore-1.0.9 httptools-0.9.0 httpx-0.28.1 huggingface-hub-0.36.2 hyperframe-6.1.0 idna-3.20 jinja2-3.1.6 joblib-1.6.0 mpmath-1.3.0 narwhals-2.27.1 networkx-3.7 numpy-2.5.4 openpyxl-3.1.5 packaging-26.3 portalocker-2.10.1 protobuf-7.36.2 psycopg-3.2.3 psycopg-binary-3.2.3 psycopg-pool-3.2.4 pydantic-2.9.2 pydantic-core-2.23.4 pydantic-settings-2.6.1 python-dotenv-1.2.4 python-multipart-0.0.20 pyyaml-6.0.3 qdrant-client-1.12.1 regex-2026.9.29 requests-2.34.2 safetensors-0.8.0 scikit-learn-1.9.1 scipy-1.18.1 semantic-qa-1.0.0 sentence-transformers-3.3.1 setuptools-84.0.0 starlette-0.41.3 sympy-1.13.1 threadpoolctl-3.7.0 tokenizers-0.21.4 torch-2.5.1+cpu tqdm-4.70.1 transformers-4.47.1 typing-extensions-4.16.0 urllib3-2.8.0 uvicorn-0.34.0 uvloop-0.23.0 watchfiles-1.3.0 websockets-17.2
+#14 138.4 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#14 140.5 
+#14 140.5 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#14 140.5 [notice] To update, run: pip install --upgrade pip
+#14 DONE 141.0s
+
+#18 [ingest 6/7] COPY data/qa.xlsx ./data/qa.xlsx
+#18 DONE 0.1s
+
+#19 [ingest 7/7] RUN useradd --create-home qa && mkdir /models && chown qa /models
+#19 DONE 0.2s
+
+#20 [ingest] exporting to image
+#20 exporting layers
+#20 exporting layers 6.2s done
+#20 writing image sha256:1c3cabab31075ec537550c0683dd30101efeee48268ed01f0597c0f3a80cc7e5 done
+#20 naming to docker.io/library/task1-adversarial-qa-phase2 done
+#20 DONE 6.2s
+
+#21 [ingest] resolving provenance for metadata file
+#21 DONE 0.0s
+ Image task1_adversarial_qa-bot Built 
+ Image task1-adversarial-qa-phase2 Built 
+
+EXIT=0 ELAPSED=148.02s

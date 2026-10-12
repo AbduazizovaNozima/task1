@@ -1,0 +1,7 @@
+{"file": "malformed-xml.xlsx", "size": 17077, "status": 422, "body": "{\"detail\":\"Fayl .xlsx formatida emas yoki buzilgan.\"}"}
+{"file": "malformed-sheet.xlsx", "size": 17044, "status": 422, "body": "{\"detail\":\"Fayl .xlsx formatida emas yoki buzilgan.\"}"}
+{"file": "empty.xlsx", "size": 0, "status": 422, "body": "{\"detail\":\"Fayl .xlsx formatida emas yoki buzilgan.\"}"}
+{"file": "renamed.xlsx", "size": 9, "status": 422, "body": "{\"detail\":\"Fayl .xlsx formatida emas yoki buzilgan.\"}"}
+{"file": "wrong.pdf", "size": 7, "status": 422, "body": "{\"detail\":\"Faqat .xlsx fayl qabul qilinadi.\"}"}
+{"file": "large.xlsx", "size": 10485761, "status": 422, "body": "{\"detail\":\"Fayl hajmi 10 MB dan oshmasligi kerak.\"}"}
+{"file": "unicode-ўзбек.xlsx", "size": 9, "status": 422, "body": "{\"detail\":\"Fayl .xlsx formatida emas yoki buzilgan.\"}"}

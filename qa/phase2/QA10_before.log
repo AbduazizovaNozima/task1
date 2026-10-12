@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_evaluation_has_a_disjoint_holdout_dataset ________________
+
+    def test_evaluation_has_a_disjoint_holdout_dataset():
+        import json
+    
+        from app.domain.text import normalize
+    
+        directory = Path(__file__).resolve().parents[1] / "eval"
+    
+        def queries(path):
+            found = set()
+            for line in path.read_text().splitlines():
+                if not line.strip():
+                    continue
+                row = json.loads(line)
+                turns = row.get("turns", [row])
+                found.update(normalize(turn["query"]) for turn in turns)
+            return found
+    
+        # evaluate.main sweeps and chooses the threshold on dataset.jsonl itself.
+        tuning = queries(directory / "dataset.jsonl")
+        candidates = [path for path in directory.glob("*.jsonl") if path.name != "dataset.jsonl"]
+        independent = [path.name for path in candidates if queries(path) and not queries(path) & tuning]
+>       assert independent, "No separate query-disjoint evaluation dataset; calibration and reported evaluation reuse data"
+E       AssertionError: No separate query-disjoint evaluation dataset; calibration and reported evaluation reuse data
+E       assert []
+
+qa/test_regressions.py:157: AssertionError
+=========================== short test summary info ============================
+FAILED qa/test_regressions.py::test_evaluation_has_a_disjoint_holdout_dataset
+1 failed, 13 deselected in 1.56s

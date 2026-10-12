@@ -1,0 +1,71 @@
+$ /home/nozima/Music/task1_semantic_qa/.venv/bin/python -m pytest qa/test_regressions.py -q
+..FF.F......F.                                                           [100%]
+=================================== FAILURES ===================================
+___________________ test_null_bytes_are_rejected[session_id] ___________________
+
+field = 'session_id'
+
+    @pytest.mark.parametrize("field", ["session_id", "question"])
+    def test_null_bytes_are_rejected(field):
+        payload = {"question": "ID karta olish uchun nima kerak?", "session_id": "qa-null-test"}
+        payload[field] += "\x00"
+        response = httpx.post(BASE + "/ask", json=payload, timeout=60)
+>       assert response.status_code == 422, (response.status_code, response.text)
+E       AssertionError: (500, 'Internal Server Error')
+E       assert 500 == 422
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+qa/test_regressions.py:32: AssertionError
+____________________ test_null_bytes_are_rejected[question] ____________________
+
+field = 'question'
+
+    @pytest.mark.parametrize("field", ["session_id", "question"])
+    def test_null_bytes_are_rejected(field):
+        payload = {"question": "ID karta olish uchun nima kerak?", "session_id": "qa-null-test"}
+        payload[field] += "\x00"
+        response = httpx.post(BASE + "/ask", json=payload, timeout=60)
+>       assert response.status_code == 422, (response.status_code, response.text)
+E       AssertionError: (500, 'Internal Server Error')
+E       assert 500 == 422
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+qa/test_regressions.py:32: AssertionError
+______ test_unrelated_answer_is_not_presented_as_correct[ID-karta narxi] _______
+
+question = 'ID-karta narxi'
+
+    @pytest.mark.parametrize("question", ["pensiya nechpul", "ID-karta narxi"])
+    def test_unrelated_answer_is_not_presented_as_correct(question):
+        response = httpx.post(BASE + "/ask", json={"question": question}, timeout=60)
+        assert response.status_code == 200
+        body = response.json()
+        # No pension amount is in the supplied corpus. ID-card price must mention price/fee,
+        # not the fields printed on the card. Abstention is safer than a wrong answer.
+        if question == "pensiya nechpul":
+            assert not body["found"], body
+        else:
+>           assert not body["found"] or any(s in body["answer"].lower() for s in ("narx", "boj", "to'lov", "bhm")), body
+E           AssertionError: {'answer': "ID-kartada egasining rasmi, F.I.Sh., tug'ilgan sanasi, JSHSHIR va boshqa shaxsiy ma'lumotlar hamda chipda ...t chipga kiritiladi.", 'context_used': False, 'found': True, 'matched_question': "ID-kartaga ma'lumotlar qanday?", ...}
+E           assert (not True or False)
+E            +  where False = any(<generator object test_unrelated_answer_is_not_presented_as_correct.<locals>.<genexpr> at 0x71d4bb29c2e0>)
+
+qa/test_regressions.py:45: AssertionError
+_____________________ test_null_session_delete_is_rejected _____________________
+
+    def test_null_session_delete_is_rejected():
+        response = httpx.delete(BASE + "/sessions/qa%00null", timeout=60)
+>       assert response.status_code == 422, (response.status_code, response.text)
+E       AssertionError: (500, 'Internal Server Error')
+E       assert 500 == 422
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+qa/test_regressions.py:133: AssertionError
+=========================== short test summary info ============================
+FAILED qa/test_regressions.py::test_null_bytes_are_rejected[session_id] - Ass...
+FAILED qa/test_regressions.py::test_null_bytes_are_rejected[question] - Asser...
+FAILED qa/test_regressions.py::test_unrelated_answer_is_not_presented_as_correct[ID-karta narxi]
+FAILED qa/test_regressions.py::test_null_session_delete_is_rejected - Asserti...
+4 failed, 10 passed in 2.37s
+
+EXIT=1 ELAPSED=2.87s

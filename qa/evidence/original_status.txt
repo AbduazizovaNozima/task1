@@ -1,0 +1,11 @@
+ M .dockerignore
+ M .gitignore
+ M bot/main.py
+ D data/answers.csv
+ D data/questions.csv
+ M docker-compose.yml
+ D eval/__init__.py
+ D eval/results/conversations.json
+ D eval/results/failures.json
+ D eval/results/metrics.json
+?? qa/

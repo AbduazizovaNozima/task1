@@ -1,0 +1,120 @@
+{"query": "ID-kartamdagi ma'lumotni xato kiritishgan, tuzatib berishadimi?", "expected": ["ID-kartada xatolik chiqsa nima qilinadi?"]}
+{"query": "Йиғиш пункти ID картамни хато тўлдирган бўлса, қайта бериш пуллими?", "expected": ["ID-kartada xatolik chiqsa nima qilinadi?"]}
+{"query": "Yangi manzilga doimiy propiska qilishning amaldagi tartibini tushuntiring", "expected": ["Yashash joyi bo'yicha doimiy ro'yxatga olish (propiska) qanday amalga oshiriladi?"]}
+{"query": "Доимий яшаш манзилимни рўйхатга қўйдиришни нимадан бошлайман?", "expected": ["Yashash joyi bo'yicha doimiy ro'yxatga olish (propiska) qanday amalga oshiriladi?"]}
+{"query": "Davlat idorasi ustidan yozgan shikoyatimni kimga yuborsam bo'ladi?", "expected": ["Murojaat yoki shikoyatni qayerga topshirish mumkin?"]}
+{"query": "Арзимни халқ қабулхонасига электрон тарзда юбориш мумкинми?", "expected": ["Murojaat yoki shikoyatni qayerga topshirish mumkin?"]}
+{"query": "Otamdan qolgan merosni rasmiy qilishga qanday qog'ozlar olib boraman?", "expected": ["Meros ishini rasmiylashtirish uchun qanday hujjatlar kerak?"]}
+{"query": "Меросхўр нотариусга қайси ҳужжатларни тайёрлаб бориши лозим?", "expected": ["Meros ishini rasmiylashtirish uchun qanday hujjatlar kerak?"]}
+{"query": "Soliqdan qarzdor bo'lib qolganimni internetdan ko'rsam bo'ladimi?", "expected": ["Soliq qarzini yoki hisobini qanday tekshirish mumkin?"]}
+{"query": "Солиқ ҳисобимдаги қарзни қаерда текшираман?", "expected": ["Soliq qarzini yoki hisobini qanday tekshirish mumkin?"]}
+{"query": "Shifoxonadagi xizmatdan noroziman, shikoyatni kim qabul qiladi?", "expected": ["Tibbiy xizmat bo'yicha shikoyat qayerga bildiriladi?"]}
+{"query": "Тиббий хизмат сифатидан арз қилмоқчиман, қаерга ёзаман?", "expected": ["Tibbiy xizmat bo'yicha shikoyat qayerga bildiriladi?"]}
+{"query": "ID-kartaning yuzida va chipida egasi haqida nimalar bo'ladi?", "expected": ["ID-kartaga qanday ma'lumotlar yoziladi?"]}
+{"query": "Шахсни тасдиқловчи ID картада қайси маълумотлар акс этади?", "expected": ["ID-kartaga qanday ma'lumotlar yoziladi?"]}
+{"query": "Menga chetga chiqish cheklovi qo'yilganmi, qanday aniqlab olib tashlayman?", "expected": ["Xorijga chiqishga qo'yilgan taqiqni qanday tekshirish va bekor qilish mumkin?"]}
+{"query": "Хорижга чиқишимга қўйилган тақиқни бекор қилдириш йўли қандай?", "expected": ["Xorijga chiqishga qo'yilgan taqiqni qanday tekshirish va bekor qilish mumkin?"]}
+{"query": "Uyimning kadastr ma'lumotlari xato ekan, kimga tuzatishga beraman?", "expected": ["Ko'chmas mulk ma'lumotidagi xatoni qanday tuzatish mumkin?"]}
+{"query": "Кўчмас мулк ҳақидаги ёзувни тўғрилаш учун қаерга ариза бераман?", "expected": ["Ko'chmas mulk ma'lumotidagi xatoni qanday tuzatish mumkin?"]}
+{"query": "Qaysi toifadagi odamlarga soliq bo'yicha yengillik bor?", "expected": ["Soliq imtiyozlari kimlarga beriladi?"]}
+{"query": "Солиқ имтиёзига кимлар ҳақли бўлади?", "expected": ["Soliq imtiyozlari kimlarga beriladi?"]}
+{"query": "Nogironlik bo'yicha pensiya belgilash nimaga asoslanadi?", "expected": ["Nogironlik pensiyasi qanday tayinlanadi?"]}
+{"query": "Ногиронлик пенсияси тайинланишида қайси комиссия хулосаси керак?", "expected": ["Nogironlik pensiyasi qanday tayinlanadi?"]}
+{"query": "Universitet yotoqxonasidan joy olish uchun kimga ariza yozaman?", "expected": ["Talaba turar joyi (yotoqxona) qanday beriladi?"]}
+{"query": "Талабаларга ётоқхона ўринлари қандай тақсимланади?", "expected": ["Talaba turar joyi (yotoqxona) qanday beriladi?"]}
+{"query": "Sotuvchi iste'molchi sifatidagi huquqimni buzdi, endi kimga arz qilaman?", "expected": ["Iste'molchi huquqlari buzilsa qayerga murojaat qilinadi?"]}
+{"query": "Харидорнинг ҳуқуқи бузилганда биринчи қаерга даъво берилади?", "expected": ["Iste'molchi huquqlari buzilsa qayerga murojaat qilinadi?"]}
+{"query": "Alimentdan qarzi bor kishini chegaradan o'tkazmasliklari mumkinmi?", "expected": ["Aliment to'lamaslik uchun xorijga chiqishga taqiq qo'yiladimi?"]}
+{"query": "Алимент тўланмагани учун хорижга чиқиш чекланадими?", "expected": ["Aliment to'lamaslik uchun xorijga chiqishga taqiq qo'yiladimi?"]}
+{"query": "Davlat xizmati uchun talablar va hujjatlar ro'yxatini qaysi saytdan ko'raman?", "expected": ["Davlat xizmatlari haqidagi to'liq ma'lumotni qayerdan topaman?", "Davlat xizmatlari haqidagi barcha ma'lumotni qayerdan topaman?"]}
+{"query": "Давлат хизматлари шартлари жамланган расмий портал қайси?", "expected": ["Davlat xizmatlari haqidagi to'liq ma'lumotni qayerdan topaman?", "Davlat xizmatlari haqidagi barcha ma'lumotni qayerdan topaman?"]}
+{"query": "Tug'ilganlik guvohnomamni chet davlatda ishlatishga apostilni qanday qo'ydiraman?", "expected": ["Nikoh yoki tug'ilganlik guvohnomasini xorij uchun apostil bilan qanday tayyorlanadi?"]}
+{"query": "Никоҳ гувоҳномасини хорижга тақдим этиш учун апостил қилиш тартиби керак", "expected": ["Nikoh yoki tug'ilganlik guvohnomasini xorij uchun apostil bilan qanday tayyorlanadi?"]}
+{"query": "Notariusga to'lanadigan pul qanday qismlardan tashkil topadi?", "expected": ["Notarial harakat uchun qancha to'lov olinadi?"]}
+{"query": "Нотариал хизмат ҳақини нималарга қараб ҳисоблашади?", "expected": ["Notarial harakat uchun qancha to'lov olinadi?"]}
+{"query": "Ishonchnoma bilan minib yurgan mashinani sotish vakolati ham bo'ladimi?", "expected": ["Ishonchnoma asosida boshqarilayotgan avtomobilni sotish mumkinmi?"]}
+{"query": "Ишончнома орқали автомобилни сотишда нималар талаб қилинади?", "expected": ["Ishonchnoma asosida boshqarilayotgan avtomobilni sotish mumkinmi?"]}
+{"query": "Firma uchun bankda hisob ochishga qaysi hujjatlarni tayyorlayman?", "expected": ["Tadbirkor uchun bank hisob raqamini ochish uchun nima kerak?"]}
+{"query": "Тадбиркорлик ҳисобрақамини очишга нима олиб борилади?", "expected": ["Tadbirkor uchun bank hisob raqamini ochish uchun nima kerak?"]}
+{"query": "Menga tayinlangan ijtimoiy yordam miqdorini qayerdan ko'rishim mumkin?", "expected": ["Ijtimoiy nafaqa yoki yordam summasini qayerdan bilish mumkin?"]}
+{"query": "Тайинланган нафақам тўғрисидаги маълумотни қаердан билиб оламан?", "expected": ["Ijtimoiy nafaqa yoki yordam summasini qayerdan bilish mumkin?"]}
+{"query": "Kasallik tufayli armiyaga yaroqsizligimni kim belgilaydi?", "expected": ["Sog'lig'i bo'yicha harbiy xizmatga yaroqsizlik qanday belgilanadi?"]}
+{"query": "Ҳарбий хизматга соғлиқ жиҳатидан яроқлиликни ким текширади?", "expected": ["Sog'lig'i bo'yicha harbiy xizmatga yaroqsizlik qanday belgilanadi?"]}
+{"query": "Boshqa davlatda nikohdan o'tganmiz, bu yerda tan olinishi uchun nima qilamiz?", "expected": ["Chet elda ro'yxatga olingan nikohni O'zbekistonda tan oldirish kerakmi?"]}
+{"query": "Хорижда тузилган никоҳ ҳужжатини Ўзбекистонда қандай тақдим этамиз?", "expected": ["Chet elda ro'yxatga olingan nikohni O'zbekistonda tan oldirish kerakmi?"]}
+{"query": "Davlat xizmatlarining shartlari va bojlari to'plangan manba kerak", "expected": ["Davlat xizmatlari haqidagi to'liq ma'lumotni qayerdan topaman?", "Davlat xizmatlari haqidagi barcha ma'lumotni qayerdan topaman?"]}
+{"query": "Давлат хизматлари ҳақида маслаҳатни қайси портал ёки рақамдан оламан?", "expected": ["Davlat xizmatlari haqidagi to'liq ma'lumotni qayerdan topaman?", "Davlat xizmatlari haqidagi barcha ma'lumotni qayerdan topaman?"]}
+{"query": "Ajrashganimdan keyin ajrim guvohnomasini qayerdan olib ketaman?", "expected": ["Nikohdan ajralganlik (ajrim) guvohnomasi qanday olinadi?"]}
+{"query": "Никоҳ бекор қилингани ҳақида гувоҳнома олишга қаерга бораман?", "expected": ["Nikohdan ajralganlik (ajrim) guvohnomasi qanday olinadi?"]}
+{"query": "Pensiya uchun tirik ekanligimni tasdiqlovchi hujjatni qanday olaman?", "expected": ["Tiriklikni tasdiqlovchi ma'lumotnoma (pensiya uchun) qanday olinadi?"]}
+{"query": "Хориждаги пенсионер тириклик ҳақида маълумотномани қаердан олади?", "expected": ["Tiriklikni tasdiqlovchi ma'lumotnoma (pensiya uchun) qanday olinadi?"]}
+{"query": "Jiddiy yo'l qoidasi buzilishi sabab haydash huquqidan mahrum qilishadimi?", "expected": ["Yo'l qoidasi buzilganda haydovchilik guvohnomasi olib qo'yiladimi?"]}
+{"query": "Қоидабузарликдан кейин ҳайдовчилик гувоҳномасини олиб қўйиш мумкинми?", "expected": ["Yo'l qoidasi buzilganda haydovchilik guvohnomasi olib qo'yiladimi?"]}
+{"query": "Xorijlik sarmoyador shu yerda o'z korxonasini ro'yxatdan o'tkaza oladimi?", "expected": ["Chet el investori O'zbekistonda firma ocha oladimi?"]}
+{"query": "Чет эл фуқароси иштирокида Ўзбекистонда фирма очса бўладими?", "expected": ["Chet el investori O'zbekistonda firma ocha oladimi?"]}
+{"query": "Pensiyamni xato hisoblashgan deb o'ylayman, qayta ko'rishni kimdan so'rayman?", "expected": ["Nafaqa yoki pensiya noto'g'ri hisoblansa qayerga murojaat qilaman?"]}
+{"query": "Нафақа нотўғри ҳисобланганда қайси идора тузатади?", "expected": ["Nafaqa yoki pensiya noto'g'ri hisoblansa qayerga murojaat qilaman?"]}
+{"query": "Harbiy zaxirada turganlarni o'quv yig'inlariga kim chaqiradi?", "expected": ["Zaxiradagi harbiy xizmatchi to'plamlarga qanday chaqiriladi?"]}
+{"query": "Захирадагиларнинг ҳарбий сборга чақирилиши қандай бўлади?", "expected": ["Zaxiradagi harbiy xizmatchi to'plamlarga qanday chaqiriladi?"]}
+{"query": "Sud ishim bo'yicha chiqarilgan qarordan nusxa kerak, qayerdan olaman?", "expected": ["Sud qarorining nusxasini qanday olaman?"]}
+{"query": "Суд қарорининг кўчирмасини қандай сўраб олиш мумкин?", "expected": ["Sud qarorining nusxasini qanday olaman?"]}
+{"query": "Arizada kerak bo'lgan ma'lumotlarni tashkilotlar o'zaro elektron oladimi?", "expected": ["Bir arizada kerakli ma'lumotni idoralar o'zi olib beradimi?"]}
+{"query": "Идоралар маълумотни бир-биридан оладими ёки барчасини ўзим йиғаманми?", "expected": ["Bir arizada kerakli ma'lumotni idoralar o'zi olib beradimi?"]}
+{"query": "Yotib qolgan bemor idoraga bora olmasa ID-kartani qanday oladi?", "expected": ["Harakatlana olmaydigan yoki og'ir kasal shaxsga ID-karta qanday rasmiylashtiriladi?"]}
+{"query": "Ҳаракатлана олмайдиган одамнинг биометрик маълумотларини уйида олишадими?", "expected": ["Harakatlana olmaydigan yoki og'ir kasal shaxsga ID-karta qanday rasmiylashtiriladi?"]}
+{"query": "Uy sotilib ketganidan so'ng undagi doimiy ro'yxatdagilar qayerga yoziladi?", "expected": ["Uy sotilganda unda ro'yxatda turganlar nima qiladi?"]}
+{"query": "Сотилган хонадонда пропискада турганлар қайта рўйхатдан ўтиши керакми?", "expected": ["Uy sotilganda unda ro'yxatda turganlar nima qiladi?"]}
+{"query": "Oldin yozgan vasiyatimni bekor qilmoqchi bo'lsam, nima qilaman?", "expected": ["Vasiyatnomani o'zgartirish yoki bekor qilish qanday?"]}
+{"query": "Васиятнома мазмунини кейинчалик ўзгартирсам бўладими?", "expected": ["Vasiyatnomani o'zgartirish yoki bekor qilish qanday?"]}
+{"query": "Mashinani boshqa rangga bo'yasam bu o'zgarishni qayd ettirish kerakmi?", "expected": ["Avtomobil rangi yoki dvigateli o'zgartirilsa qayd etiladimi?"]}
+{"query": "Автомобиль двигатели алмашса ҳужжатга ўзгартиш киритиладими?", "expected": ["Avtomobil rangi yoki dvigateli o'zgartirilsa qayd etiladimi?"]}
+{"query": "Faoliyat ruxsatnomasining amal qilish vaqti tugadi, endi nima qilishim kerak?", "expected": ["Litsenziya yoki ruxsatnoma muddati tugasa nima qilinadi?"]}
+{"query": "Лицензия муддати ўтгандан кейин уни узайтириш керакми?", "expected": ["Litsenziya yoki ruxsatnoma muddati tugasa nima qilinadi?"]}
+{"query": "Oldin kelib turgan nafaqa to'lovi to'xtadi, qaysi idoraga boraman?", "expected": ["Nafaqa to'lovi to'xtab qolsa qayerga murojaat qilaman?"]}
+{"query": "Нафақам келмай қолса кимга мурожаат қилиш лозим?", "expected": ["Nafaqa to'lovi to'xtab qolsa qayerga murojaat qilaman?"]}
+{"query": "Armiyaga chaqirilayotgan yigit tibbiy ko'rik uchun qayerga boradi?", "expected": ["Chaqiruvchi tibbiy ko'rikdan qayerda o'tadi?"]}
+{"query": "Чақирилувчиларнинг тиббий комиссияси қаерда ташкил қилинади?", "expected": ["Chaqiruvchi tibbiy ko'rikdan qayerda o'tadi?"]}
+{"query": "Yollagan advokatim xizmatidan noroziman, ustidan kimga yozaman?", "expected": ["Advokat xizmatidan norozi bo'lsam qayerga murojaat qilaman?"]}
+{"query": "Адвокатга оид шикоятни қайси ташкилот қабул қилади?", "expected": ["Advokat xizmatidan norozi bo'lsam qayerga murojaat qilaman?"]}
+{"query": "My.gov kabinetimda telefon raqami va bildirishnomalarni qayerdan o'zgartiraman?", "expected": ["Elektron hukumatdagi shaxsiy kabinetni qanday sozlanadi?"]}
+{"query": "Электрон ҳукумат шахсий кабинети тилини қандай созлайман?", "expected": ["Elektron hukumatdagi shaxsiy kabinetni qanday sozlanadi?"]}
+{"query": "Uchburchakning yuzini hisoblash formulasini yozing", "expected": []}
+{"query": "Jupiterning nechta yo'ldoshi bor?", "expected": []}
+{"query": "Menga osh pishirish retseptini ayting", "expected": []}
+{"query": "Python dasturida ro'yxatni qanday saralayman?", "expected": []}
+{"query": "Bugun Barselona o'yinida hisob nechchi bo'ldi?", "expected": []}
+{"query": "Ertangi havo haroratini aytib bering", "expected": []}
+{"query": "Mushugim nima sababdan ovqat yemayapti?", "expected": []}
+{"query": "Kompyuterimga qaysi videokartani olsam yaxshi?", "expected": []}
+{"query": "Qo'shiq matnini menga davom ettirib bering", "expected": []}
+{"query": "Alisher Navoiyning birinchi asari qaysi edi?", "expected": []}
+{"query": "Kvadrat tenglamani yechib bering: x*x-5*x+6=0", "expected": []}
+{"query": "Yangi filmga chipta bron qilib bering", "expected": []}
+{"query": "Ingliz tilidagi fe'llar zamonlarini tushuntiring", "expected": []}
+{"query": "Do'stimning tug'ilgan kuniga tabrik yozing", "expected": []}
+{"query": "Шоколадли тортни қандай пишириш мумкин?", "expected": []}
+{"query": "Ойнинг Ердан узоқлиги неча километр?", "expected": []}
+{"query": "Футбол бўйича жаҳон чемпионатида ким ютган?", "expected": []}
+{"query": "Телефоним батареясини қандай алмаштираман?", "expected": []}
+{"query": "Нега осмоннинг ранги кўк?", "expected": []}
+{"query": "Шахматда от қандай юради?", "expected": []}
+{"query": "Mening pasportimning seriya va raqamini topib ayting", "expected": []}
+{"query": "Hozir shaxsiy bank hisobimdagi qoldiqni tekshirib bering", "expected": []}
+{"query": "Kecha to'lagan jarimamning aniq chek raqamini toping", "expected": []}
+{"query": "Suddagi shaxsiy ishimni bugun qaysi sudya ko'rayotganini ayting", "expected": []}
+{"query": "Uyimning aniq bozor narxini hozir hisoblab bering", "expected": []}
+{"query": "Mening soliq kabinetim parolini tiklab kirib bering", "expected": []}
+{"query": "Yo'qolgan avtomobilim hozir qaysi ko'chada ekanini toping", "expected": []}
+{"query": "Bugun tumanimiz notariusi soat nechada tushlik qiladi?", "expected": []}
+{"query": "Shaxsiy kreditimning qolgan qarzi necha so'mligini ko'rsating", "expected": []}
+{"query": "Kasalligimga aniq tashxis qo'yib dori yozib bering", "expected": []}
+{"query": "Mening arizam navbatda nechanchi o'rinda turganini hozir ko'rsating", "expected": []}
+{"query": "Menga yangi bank kartasi uchun PIN-kod o'ylab bering", "expected": []}
+{"query": "Qo'shnimning kadastr hujjatidagi maxfiy raqamini toping", "expected": []}
+{"query": "Boshqa odamning nikohdagi turmush o'rtog'i ismini aniqlang", "expected": []}
+{"query": "Менинг шахсий идентификация рақамимни айтиб беринг", "expected": []}
+{"query": "Бугун мактабимизда қайси ўқитувчи навбатчи экан?", "expected": []}
+{"query": "Армиядаги акам ҳозир қайси хонада турганини топинг", "expected": []}
+{"query": "Банк картамдан кеча ким пул ечганини аниқлаб беринг", "expected": []}
+{"query": "Ҳозир аэропортда менинг паспортим билан кимдир ўтдими?", "expected": []}
+{"query": "Менга тегишли суд жаримасини ҳозир тўлаб беринг", "expected": []}

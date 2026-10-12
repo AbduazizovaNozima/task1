@@ -1,0 +1,3 @@
+$ docker cp /home/nozima/Music/task1_semantic_qa/qa/phase2/clone/eval task1_adversarial_qa-api-1:/tmp/eval
+
+EXIT=0 ELAPSED=0.03s

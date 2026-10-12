@@ -1,59 +1,65 @@
-# Qidiruv sifatini baholash
+# Qidiruv sifati: development va frozen holdout
 
-```bash
-python -m eval.evaluate   # natijalar: eval/results/{metrics,failures,conversations}.json
-```
+Production threshold: **MATCH_THRESHOLD=0.67**. Hech bir alohida xato misolga mos keyword yoki qoida qo'shilmadi. bge-m3 modeli va uning revision'i o'zgarmadi.
 
-## To'plamlar
+## Ma'lumotlarni ajratish
 
-**`eval/dataset.jsonl`** — 245 ta bitta savollik so'rov:
-- **bazada javobi bor 186 ta savol:** 46 ta javobga 3 tadan parafraz, avvalgi loyihadan 46 ta real uslubdagi savol, bot chatidan 2 ta savol. Ulardan 137 tasi lotin, 49 tasi kirill yozuvida;
-- **bazada javobi yo'q 59 ta savol.**
+- `eval/dev.jsonl`: ilgari `dataset.jsonl` bo'lgan **245 savol** (186 in-domain, 59 OOD). Oldingi lug'at va threshold shu ma'lumotlar bilan sozlangan, shuning uchun eski savollarni holdout deb qayta nomlash halol bo'lmas edi. Ularning hammasi development uchun qoldirildi.
+- `eval/holdout.jsonl`: yangi **120 savol**: ilgari eval'da qamrab olinmagan **40 javob ID** uchun 80 ta lotin/kirill parafraz va 40 ta begona/qo'llab-quvvatlanmaydigan so'rov. Oddiy begona mavzular bilan birga shaxsiy balans, shaxsiy ariza holati kabi bazadagi umumiy yo'riqnoma javob bera olmaydigan so'rovlar ham bor.
+- Holdout model bilan tekshirilishidan oldin muzlatildi. SHA-256 va kelib chiqishi: `eval/holdout_manifest.json`. Test hash o'zgarmaganini va dev bilan so'rovlar kesishmasligini tekshiradi.
+- Savollar inson foydalanuvchilaridan mustaqil yig'ilmagan: developer tomonidan yozilgan. 120 ta sintetik savol ishlab chiqarish muhitidagi aniqlik uchun kafolat emas. Ikki semantik teng xizmat-ma'lumoti manbasi scoringdan oldin birga maqbul javob sifatida belgilangan.
+- `eval/conversations.jsonl` — eski 6 ssenariy/15 xabarli diagnostika; u ham oldin ko'rilgan, mustaqil holdout emas.
 
-Bot faqat o'zbek tilida ishlaydi, shuning uchun ruscha savollar o'zbekcha kirill variantlariga almashtirilgan.
+## Tajriba tartibi
 
-**`eval/conversations.jsonl`** — 6 ta suhbat ssenariysi, jami 15 ta xabar: davomi savollar, mavzu almashishi, noaniq so'rov, xalq iborasi.
+Eng sodda variant — global threshold kalibrovkasi tanlandi. **Faqat dev** bo'yicha 0.30–0.90 oralig'i 0.01 qadamda tekshirildi. Maqsad: `to'g'ri qabul − 2 × noto'g'ri qabul`, bunda to'g'ri qabul baseline'ning kamida 95 foizi bo'lishi kerak. Teng holatda ko'proq to'g'ri javob, keyin baseline'ga yaqin threshold afzal.
 
-**Cheklov:** savollarni real foydalanuvchilar emas, ishlab chiquvchi yozgan. Lug'atdagi bir nechta so'z ("rodom", "lgota", "pinfl") shu to'plamdagi xatolarga qarab qo'shilgan, chegara ham shu to'plamda tanlangan. Shuning uchun raqamlar biroz optimistik.
+Dev **0.67** nomzodini tanladi. Nomzod va qabul sharti holdout ochilishidan oldin `frozen_candidate.json` ga yozildi. Holdout'da faqat shu bitta nomzod **0.64** baseline bilan solishtirildi. Qabul uchun decision accuracy, in-domain correct rate, accepted precision va OOD rejection F1 kamaymasligi, xato qabul sonlari oshmasligi va kamida bitta metrika yaxshilanishi talab qilindi.
+
+Holdout'ning **alohida savol xatolari chiqarilmadi va tuningda ko'rilmadi**. Faqat agregat natijalar olindi. Boshqa nomzodlar bilan holdout'ga qayta moslash qilinmadi.
 
 ## Natijalar
 
-| Ko'rsatkich | Qiymat |
-|---|---|
-| Recall@1 | **0.785** |
-| Recall@3 | **0.909** |
-| MRR | **0.849** |
-| "Topilmadi" qarori, F1 (chegara 0.64) | **0.891** |
-| Suhbat ssenariylari | **12 / 15** xabar to'g'ri |
+Quyidagi metrikalar API'ning threshold va qisqa so'rov ambiguity qarorini hisobga oladi. `wrong accepted` in-domain noto'g'ri javoblarni ham, OOD false acceptance'larni ham o'z ichiga oladi.
 
-## Chegara tanlovi
+| Ko'rsatkich | Dev 0.64 | Dev 0.67 | Holdout 0.64 | Holdout 0.67 |
+|---|---:|---:|---:|---:|
+| To'g'ri qabul | 141/186 | 135/186 | 72/80 | 72/80 |
+| Noto'g'ri qabul | 34 | 24 | 29 | 24 |
+| Shundan OOD false acceptance | 2/59 | 0/59 | 21/40 | 16/40 |
+| In-domain rad etilgan | 13 | 27 | 0 | 0 |
+| Decision accuracy | 0.8082 | 0.7918 | 0.7583 | **0.8000** |
+| In-domain correct rate | 0.7581 | 0.7258 | 0.9000 | **0.9000** |
+| Accepted precision | 0.8057 | 0.8491 | 0.7129 | **0.7500** |
+| OOD rejection F1 | 0.8837 | 0.8138 | 0.6441 | **0.7500** |
+| Recall@1 (ranking) | 0.7849 | 0.7849 | 0.9000 | 0.9000 |
+| Recall@3 (ranking) | 0.9086 | 0.9086 | 0.9500 | 0.9500 |
+| MRR | 0.8492 | 0.8492 | 0.9255 | 0.9255 |
 
-"Ijobiy" sinf — bazada javobi yo'q savolni rad etish.
+Holdout'da **5 qaror yaxshilandi, 0 qaror yomonlashdi**; barcha himoyalangan metrikalar kamaymadi. Shu oldindan belgilangan mezon asosida **0.67 qabul qilindi**. Bu kichik, developer yozgan to'plamdagi kuzatilgan yaxshilanish; statistik yoki production kafolati emas.
 
-| Chegara | Precision | Recall | F1 | To'g'ri javob ulushi | Noto'g'ri rad etilgan | Noto'g'ri qabul qilingan |
-|---|---|---|---|---|---|---|
-| 0.60 | 0.830 | 0.746 | 0.786 | 0.769 | 9 | 15 |
-| 0.62 | 0.844 | 0.915 | 0.878 | 0.763 | 10 | 5 |
-| **0.64** | **0.826** | **0.966** | **0.891** | **0.758** | **12** | **2** |
-| 0.65 | 0.763 | 0.983 | 0.859 | 0.737 | 18 | 1 |
+**Dev'dagi tradeoff yashirilmagan:** 6 ta to'g'ri javob yo'qolgan va decision accuracy hamda OOD F1 pasaygan. Nomzodni qabul qilish mustaqil holdout bo'yicha amalga oshirildi. Global threshold bir xil ma'nodagi so'rovlarni mukammal ajratmaydi.
 
-`MATCH_THRESHOLD=0.64` F1 eng yuqori bo'lgan nuqta: 59 ta begona savoldan 57 tasi rad etiladi. Davlat xizmatlari botida noto'g'ri javob "topilmadi" javobidan qimmatroq tushadi.
+Phase 1 dagi 0.785 Recall@1, 0.909 Recall@3, 0.849 MRR va 0.891 F1 raqamlari qayta takrorlangan edi. Eski F1 faqat threshold bo'yicha hisoblangan; yangi jadval ambiguity rad etishlarini ham qo'shadi, shu sabab dev baseline F1 0.8837. Bu raqamlar turli qaror o'lchovlarini ifodalaydi.
 
-## Qolgan xatolar
+Asl muzlatilgan tajriba artefaktlari: `qa/phase2/calibration/{frozen_candidate,dev_summary,holdout_summary}.json`.
 
-| Savol | Natija | Sabab |
-|---|---|---|
-| `pensiya nechpul` | Pensiya haqidagi boshqa javob (0.662) | Pensiya miqdori bazada yo'q, lekin pensiya mavzusidagi savollar yaqin ball oladi. |
-| `erga tegmoqchiman prava olmayman` | Topilmadi (0.638) | Qisqa so'rov chegaradan biroz past. 0.62 chegarada to'g'ri javob topilardi. |
-| `Pasportni almashtirish...` → `buning uchun qanday hujjatlar kerak` | Chet elda pasport almashtirish | Davomi savolda mavzu so'zlari ustun chiqadi. Vektorlarni aralashtirish ham sinab ko'rildi, umumiy natijani yaxshilamadi. |
-| `Id karta qanaqa qilib olinadi` | To'g'ri javob 2-o'rinda | Bitta mavzudagi o'nlab savol bir-biriga juda yaqin ball oladi. |
-| `guvohnomadagi xatoni to'g'irlash` | Mazmunan bir xil boshqa javob | Bazada deyarli bir xil javoblar bor. Bunday holatlar xatolarning qariyb yarmini tashkil qiladi. |
-| `vid na jitelstvo yo'qoldi`, `OSAGO polis` | Topilmadi | Ruscha ibora lotin harflarida va lug'atda yo'q qisqartma. |
-| "ID-karta narxi" | Topilmaydi | Narx faqat javob matni ichida yozilgan, faqat savollar indekslanadi. |
+## Qayta bajarish
 
-## Keyingi qadamlar
+Ishlayotgan PostgreSQL/Qdrant va yuklangan korpus/model bilan, loyiha ildizidan:
 
-1. **Reranker** (`bge-reranker-v2-m3`, lokal, ~2.3 GB). Nomzodlarni savol bilan birga o'qib qayta tartiblaydi. Bu 2-o'rindagi to'g'ri javoblar va chegara yaqinidagi noto'g'ri qabullar uchun eng katta yaxshilanishni berishi kutiladi.
-2. **Javob matnlarini ham indekslash.**
-3. **Bazani tozalash:** "Menga ... haqida ayting" shablonlarini olib tashlash, mazmunan bir xil javoblarni birlashtirish.
-4. **Real foydalanuvchi savollari logidan to'plam yig'ib, chegarani qayta kalibrovka qilish.**
+```bash
+python -m eval.evaluate --dataset eval/dev.jsonl --out eval/results/dev
+python -m eval.calibration tune --out eval/results/calibration
+python -m eval.calibration holdout --out eval/results/calibration
+```
+
+Birinchi buyruq faqat development ranking/threshold diagnostikasi; undagi eng yuqori F1 nuqtasi avtomatik production sozlamasi emas. `calibration tune` development'da nomzod tanlaydi va muzlatadi. `calibration holdout` per-query xatolarni saqlamaydi yoki chiqarmaydi, faqat agregat metrikalarni beradi. Bir output katalogidagi nomzodni qayta tuning yoki holdout'ni qayta ochishga ruxsat bermaydi. `eval.evaluate` holdout ustida threshold sweep qilishni rad etadi.
+
+Tarixiy **0.64 → 0.67** tajribani aynan takrorlash uchun yangi output katalogiga asl `frozen_candidate.json` ni ko'chirib, faqat `holdout` bosqichini ishga tushiring. Baseline'ni joriy default 0.67 dan qayta tanlamang. Clean rebuild tekshiruvi shu muzlatilgan nomzodni ishlatadi; yangi tuning emas.
+
+## Ma'lum cheklovlar — QA-01 to'liq yopilmadi
+
+0.67 ham holdout'da **24 noto'g'ri javobni qabul qiladi**, ulardan 16 tasi OOD. Yuqori similarity javobning so'ralgan jihatni qamrab olishini kafolatlamaydi. Phase 1 dagi ID-karta narxi misoli kabi noto'g'ri, lekin yuqori balli javoblar qolishi mumkin. Maxsus misol keyword'lari kiritilmadi.
+
+Keyingi mustaqil tajriba uchun yangi holdout kerak: bu holdout endi release qarorida ishlatilgan. Reranker yoki sparse/hybrid qidiruv ushbu bosqichda qo'shilmadi; yangi model, dependency va kalibrovka ko'lamini oshirmasdan global threshold bilan kichik, o'lchangan yaxshilanish olindi. Bazadagi mazmunan yaqin, matni turlicha javoblar ham annotatsiya cheklovi bo'lib qoladi.

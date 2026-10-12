@@ -21,7 +21,7 @@ class Settings(BaseSettings):
 
     search_candidates: int = Field(default=20, ge=1, le=200)
     search_top_k: int = Field(default=5, ge=1, le=50)
-    match_threshold: float = Field(default=0.64, ge=0.0, le=1.0)
+    match_threshold: float = Field(default=0.67, ge=0.0, le=1.0)
     ambiguity_margin: float = Field(default=0.02, ge=0.0, le=1.0)
     ambiguity_max_words: int = Field(default=2, ge=0)
 

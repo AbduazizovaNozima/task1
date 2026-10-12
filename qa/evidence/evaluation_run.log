@@ -1,0 +1,44 @@
+
+Ranking (in-domain queries)
+  queries    186
+  recall@1   0.7849
+  recall@3   0.9086
+  mrr        0.8492
+
+No-match decision (positive class = out-of-domain query rejected)
+    thr   prec    rec     f1  answered false_rej false_acc
+   0.30  0.000  0.000  0.000     0.785         0        59
+   0.35  0.000  0.000  0.000     0.785         0        59
+   0.40  1.000  0.017  0.033     0.785         0        58
+   0.45  1.000  0.051  0.097     0.785         0        56
+   0.50  0.875  0.119  0.209     0.785         1        52
+   0.55  0.806  0.424  0.556     0.780         6        34
+   0.60  0.830  0.746  0.786     0.769         9        15
+   0.64  0.826  0.966  0.891     0.758        12         2  <- chosen
+   0.65  0.763  0.983  0.859     0.737        18         1
+   0.70  0.562  1.000  0.720     0.672        46         0
+   0.75  0.427  1.000  0.599     0.521        79         0
+   0.80  0.353  1.000  0.522     0.409       108         0
+   0.85  0.296  1.000  0.457     0.242       140         0
+   0.90  0.260  1.000  0.413     0.097       168         0
+
+Conversations: 12/15 turns correct
+  ok  [xalq iborasi va inkor] 'man erga tegmoqchiman. necha yosh bolishim kerak?' -> Iltimos, ayting: nikoh yoshi necha yosh?
+  ERR [xalq iborasi va inkor] 'erga tegmoqchiman prava olmayman' -> not found
+  ok  [xalq iborasi va inkor] "amir temur qachon tug'ilgan" -> not found
+  ok  [davomi savol (lotin)] 'Id karta olish uchun nima kerak' -> ID-karta olish uchun qanday hujjatlar kerak?
+  ok  [davomi savol (lotin)] 'muddati-chi?' -> ID-karta qancha muddatga beriladi?
+  ERR [davomi savol (lotin)] 'pensiya nechpul' -> Pensiyani qanday olish mumkin — naqd yoki kartaga?
+  ok  [davomi savol (kirill)] 'Ид карта олиш учун нима керак' -> ID-karta olish uchun qanday hujjatlar kerak?
+  ok  [davomi savol (kirill)] 'муддати-чи?' -> ID-karta qancha muddatga beriladi?
+  ok  [noaniq qisqa so'rov] 'passport' -> clarify: ["Pasport yoki ID-karta yo'qolsa qanday?", 'Xorijga chiqish biometrik pasportini olish qanday?', 'Pasportni (ID-karta) almashtirish qanday?', 'Xorijga chiqishda ID-karta yetarlimi yoki pasport qanday?']
+  ok  [noaniq qisqa so'rov] 'pasportni almashtirmoqchiman' -> Pasportni (ID-karta) almashtirish qanday?
+  ok  [ishora olmoshi] 'Pasportni almashtirish tartibi qanday' -> Pasportni (ID-karta) almashtirish tartibi qanday?
+  ERR [ishora olmoshi] 'buning uchun qanday hujjatlar kerak' -> Chet elda yashovchi fuqaro pasport/ID-kartani almashtiradi qanday?
+  ok  [mavzu almashishi] 'Id karta olish uchun nima kerak' -> ID-karta olish uchun qanday hujjatlar kerak?
+  ok  [mavzu almashishi] 'Nikoh yoshi necha yosh' -> Nikoh yoshi necha yosh?
+  ok  [mavzu almashishi] 'prava olish uchun ekzamen qanday topshiriladi' -> Haydovchilik imtihoni qanday topshiriladi?
+
+Saved results to /tmp/qa-eval-results/
+
+EXIT=0 ELAPSED=45.89s

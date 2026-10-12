@@ -83,3 +83,14 @@ def test_best_per_answer_keeps_highest_score() -> None:
     high = VectorHit(question_id=uuid4(), answer_id=answer, score=0.9)
 
     assert best_per_answer([low, high]) == [high]
+
+
+def test_calibrated_default_rejects_between_old_and_new_threshold() -> None:
+    from app.config import Settings
+    from app.domain.models import Candidate
+
+    settings = Settings(_env_file=None)
+    service = build_services(threshold=settings.match_threshold).search
+    # Midpoint between the frozen baseline and dev-selected candidate, independent of query wording.
+    candidate = Candidate(answer_id=uuid4(), question="generic query", answer="generic answer", score=(0.64 + 0.67) / 2)
+    assert not service._decide("generic query", [candidate]).found

@@ -6,4 +6,3 @@
 .ruff_cache
 tests
 eval
-data/*.csv

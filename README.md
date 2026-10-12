@@ -58,5 +58,14 @@ curl -X POST localhost:8000/ask -H 'Content-Type: application/json' \
 
 ```bash
 ruff check . && mypy app bot tests eval && pytest
-python -m eval.evaluate         # natijalar: EVALUATION.md
+python -m eval.evaluate --dataset eval/dev.jsonl --out eval/results/dev
+# Frozen holdout va bir martalik kalibrovka: EVALUATION.md
 ```
+
+## Import va xatolar
+
+Excel importi SQL tranzaksiyasida bajariladi: vektorlar yozilgandan keyingina SQL commit bo'ladi. Vektor yoki embedding xatosida SQL o'zgarishlari rollback qilinadi. Qisman qolgan vektorlar SQL'da tasdiqlangan yozuv bo'lmasa javob sifatida ishlatilmaydi; qayta import ularni yakunlaydi. Bu ikki servis uchun distributed transaction emas: muvaffaqiyatsiz importdan qolgan vector yozuvlar fizik jihatdan qayta importgacha saqlanishi mumkin.
+
+Ingest boshlanishida saqlash servislarining tayyorligi 60 soniyagacha qayta tekshiriladi; oxirgi tarmoq so'rovi o'z timeout'igacha davom etishi mumkin. Buzilgan Excel XML'i 422 beradi. Bot uzun javobni plain-text bo'laklarda to'liq yuboradi; input validatsiyasi bilan servis uzilishini farqlaydi.
+
+`MATCH_THRESHOLD=0.67` yangi, muzlatilgan holdout'da tekshirildi. Bu noto'g'ri javoblarni to'liq yo'qotmaydi; dev/holdout natijalari va cheklovlar [EVALUATION.md](EVALUATION.md) da.

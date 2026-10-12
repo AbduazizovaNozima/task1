@@ -1,0 +1,10 @@
+qa/probe_bot_outage.py:11:121: E501 Line too long (162 > 120)
+   |
+10 | root = Path(__file__).resolve().parent
+11 | compose = ['docker', 'compose', '-p', 'task1_adversarial_qa', '-f', str(root / 'clean-clone/docker-compose.yml'), '-f', str(root / 'clean-clone/qa-isolated.yml')]
+   |                                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ E501
+12 | async def run():
+13 |     api = QAApiClient('http://127.0.0.1:18000', 3)
+   |
+
+Found 1 error.

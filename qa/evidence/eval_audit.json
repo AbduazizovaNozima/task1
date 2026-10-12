@@ -1,0 +1,17 @@
+{
+  "total_queries": 245,
+  "in_domain": 186,
+  "ood": 59,
+  "distinct_queries": 245,
+  "corpus_rows": 3048,
+  "unique_answers": 505,
+  "evaluated_answers": 91,
+  "exact_query_overlap_with_corpus": [],
+  "evaluation_files": [
+    "eval/dataset.jsonl",
+    "eval/conversations.jsonl"
+  ],
+  "tuning_admission": [
+    "**Cheklov:** savollarni real foydalanuvchilar emas, ishlab chiquvchi yozgan. Lug'atdagi bir nechta so'z (\"rodom\", \"lgota\", \"pinfl\") shu to'plamdagi xatolarga qarab qo'shilgan, chegara ham shu to'plamda tanlangan. Shuning uchun raqamlar biroz optimistik."
+  ]
+}

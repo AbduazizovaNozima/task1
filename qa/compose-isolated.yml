@@ -1,0 +1,10 @@
+services:
+  ingest:
+    image: task1-adversarial-qa
+  api:
+    image: task1-adversarial-qa
+    ports: !override ["127.0.0.1:18000:8000"]
+  postgres:
+    ports: !override ["127.0.0.1:15440:5432"]
+  qdrant:
+    ports: !override ["127.0.0.1:16333:6333"]

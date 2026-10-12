@@ -1,0 +1,83 @@
+$ docker compose -p task1_adversarial_qa -f /home/nozima/Music/task1_semantic_qa/qa/phase2/clone/docker-compose.yml -f /home/nozima/Music/task1_semantic_qa/qa/phase2/clone/qa-isolated.yml down
+ Container task1_adversarial_qa-api-1 Stopping 
+ Container task1_adversarial_qa-api-1 Stopped 
+ Container task1_adversarial_qa-api-1 Removing 
+ Container task1_adversarial_qa-api-1 Removed 
+ Container task1_adversarial_qa-ingest-1 Stopping 
+ Container task1_adversarial_qa-ingest-1 Stopped 
+ Container task1_adversarial_qa-ingest-1 Removing 
+ Container task1_adversarial_qa-ingest-1 Removed 
+ Container task1_adversarial_qa-postgres-1 Stopping 
+ Container task1_adversarial_qa-qdrant-1 Stopping 
+ Container task1_adversarial_qa-qdrant-1 Stopped 
+ Container task1_adversarial_qa-qdrant-1 Removing 
+ Container task1_adversarial_qa-qdrant-1 Removed 
+ Container task1_adversarial_qa-postgres-1 Stopped 
+ Container task1_adversarial_qa-postgres-1 Removing 
+ Container task1_adversarial_qa-postgres-1 Removed 
+ Network task1_adversarial_qa_default Removing 
+ Network task1_adversarial_qa_default Removed 
+EXIT=0
+$ docker compose -p task1_adversarial_qa -f /home/nozima/Music/task1_semantic_qa/qa/phase2/clone/docker-compose.yml -f /home/nozima/Music/task1_semantic_qa/qa/phase2/clone/qa-isolated.yml -f /home/nozima/Music/task1_semantic_qa/qa/slow-qdrant.yml up -d api
+time="2026-10-11T14:55:25+05:00" level=warning msg="No services to build"
+ Network task1_adversarial_qa_default Creating 
+ Network task1_adversarial_qa_default Created 
+ Container task1_adversarial_qa-qdrant-1 Creating 
+ Container task1_adversarial_qa-postgres-1 Creating 
+ Container task1_adversarial_qa-postgres-1 Created 
+ Container task1_adversarial_qa-qdrant-1 Created 
+ Container task1_adversarial_qa-ingest-1 Creating 
+ Container task1_adversarial_qa-ingest-1 Created 
+ Container task1_adversarial_qa-api-1 Creating 
+ Container task1_adversarial_qa-api-1 Created 
+ Container task1_adversarial_qa-qdrant-1 Starting 
+ Container task1_adversarial_qa-postgres-1 Starting 
+ Container task1_adversarial_qa-postgres-1 Started 
+ Container task1_adversarial_qa-qdrant-1 Started 
+ Container task1_adversarial_qa-postgres-1 Waiting 
+ Container task1_adversarial_qa-postgres-1 Healthy 
+ Container task1_adversarial_qa-ingest-1 Starting 
+ Container task1_adversarial_qa-ingest-1 Started 
+ Container task1_adversarial_qa-ingest-1 Waiting 
+ Container task1_adversarial_qa-ingest-1 Exited 
+ Container task1_adversarial_qa-api-1 Starting 
+ Container task1_adversarial_qa-api-1 Started 
+EXIT=0
+$ docker compose -p task1_adversarial_qa -f /home/nozima/Music/task1_semantic_qa/qa/phase2/clone/docker-compose.yml -f /home/nozima/Music/task1_semantic_qa/qa/phase2/clone/qa-isolated.yml -f /home/nozima/Music/task1_semantic_qa/qa/slow-qdrant.yml logs --no-color --tail=60 ingest qdrant
+qdrant-1  |            _                 _    
+ingest-1  | 2026-10-11 09:55:34,668 WARNING __main__: Storage not ready; retrying startup check
+ingest-1  | 2026-10-11 09:55:36,673 WARNING __main__: Storage not ready; retrying startup check
+ingest-1  | 2026-10-11 09:55:38,678 WARNING __main__: Storage not ready; retrying startup check
+ingest-1  | 2026-10-11 09:55:40,684 WARNING __main__: Storage not ready; retrying startup check
+ingest-1  | 2026-10-11 09:55:42,688 WARNING __main__: Storage not ready; retrying startup check
+qdrant-1  |   __ _  __| |_ __ __ _ _ __ | |_  
+qdrant-1  |  / _` |/ _` | '__/ _` | '_ \| __| 
+qdrant-1  | | (_| | (_| | | | (_| | | | | |_  
+qdrant-1  |  \__, |\__,_|_|  \__,_|_| |_|\__| 
+qdrant-1  |     |_|                           
+qdrant-1  | 
+ingest-1  | 2026-10-11 09:55:44,690 WARNING __main__: Storage not ready; retrying startup check
+ingest-1  | 2026-10-11 09:55:46,695 WARNING __main__: Storage not ready; retrying startup check
+ingest-1  | 2026-10-11 09:55:48,699 WARNING __main__: Storage not ready; retrying startup check
+ingest-1  | 2026-10-11 09:55:50,701 WARNING __main__: Storage not ready; retrying startup check
+ingest-1  | 2026-10-11 09:55:52,705 WARNING __main__: Storage not ready; retrying startup check
+ingest-1  | 2026-10-11 09:55:54,710 WARNING __main__: Storage not ready; retrying startup check
+ingest-1  | 2026-10-11 09:55:56,965 INFO app.services.ingestion: Ingestion finished: {'rows_read': 3048, 'rows_skipped': 0, 'answers': 505, 'questions': 3048, 'newly_indexed': 0}
+qdrant-1  | Version: 1.12.5, build: 27260abd
+qdrant-1  | Access web UI at http://localhost:6333/dashboard
+qdrant-1  | 
+EXIT=0
+time="2026-10-11T14:55:58+05:00" level=warning msg="No services to build"
+ Container task1_adversarial_qa-postgres-1 Running 
+ Container task1_adversarial_qa-qdrant-1 Recreate 
+ Container task1_adversarial_qa-qdrant-1 Recreated 
+ Container task1_adversarial_qa-api-1 Running 
+ Container task1_adversarial_qa-qdrant-1 Starting 
+ Container task1_adversarial_qa-qdrant-1 Started 
+ Container task1_adversarial_qa-postgres-1 Waiting 
+ Container task1_adversarial_qa-postgres-1 Healthy 
+ Container task1_adversarial_qa-ingest-1 Starting 
+ Container task1_adversarial_qa-ingest-1 Started 
+ Container task1_adversarial_qa-ingest-1 Waiting 
+ Container task1_adversarial_qa-ingest-1 Exited 
+RECOVERY_EXIT=0

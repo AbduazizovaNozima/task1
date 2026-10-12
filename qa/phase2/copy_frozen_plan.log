@@ -1,0 +1,3 @@
+$ docker cp /home/nozima/Music/task1_semantic_qa/qa/phase2/calibration/frozen_candidate.json task1_adversarial_qa-api-1:/tmp/qa-holdout-replay/frozen_candidate.json
+
+EXIT=0 ELAPSED=0.03s

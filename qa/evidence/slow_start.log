@@ -1,0 +1,121 @@
+$ docker compose -p task1_adversarial_qa -f /home/nozima/Music/task1_semantic_qa/qa/clean-clone/docker-compose.yml -f /home/nozima/Music/task1_semantic_qa/qa/clean-clone/qa-isolated.yml down
+ Container task1_adversarial_qa-api-1 Stopping 
+ Container task1_adversarial_qa-api-1 Stopped 
+ Container task1_adversarial_qa-api-1 Removing 
+ Container task1_adversarial_qa-api-1 Removed 
+ Container task1_adversarial_qa-ingest-1 Stopping 
+ Container task1_adversarial_qa-ingest-1 Stopped 
+ Container task1_adversarial_qa-ingest-1 Removing 
+ Container task1_adversarial_qa-ingest-1 Removed 
+ Container task1_adversarial_qa-qdrant-1 Stopping 
+ Container task1_adversarial_qa-postgres-1 Stopping 
+ Container task1_adversarial_qa-qdrant-1 Stopped 
+ Container task1_adversarial_qa-qdrant-1 Removing 
+ Container task1_adversarial_qa-qdrant-1 Removed 
+ Container task1_adversarial_qa-postgres-1 Stopped 
+ Container task1_adversarial_qa-postgres-1 Removing 
+ Container task1_adversarial_qa-postgres-1 Removed 
+ Network task1_adversarial_qa_default Removing 
+ Network task1_adversarial_qa_default Removed 
+EXIT=0
+$ docker compose -p task1_adversarial_qa -f /home/nozima/Music/task1_semantic_qa/qa/clean-clone/docker-compose.yml -f /home/nozima/Music/task1_semantic_qa/qa/clean-clone/qa-isolated.yml -f /home/nozima/Music/task1_semantic_qa/qa/slow-qdrant.yml up -d api
+time="2026-10-11T13:52:27+05:00" level=warning msg="No services to build"
+ Network task1_adversarial_qa_default Creating 
+ Network task1_adversarial_qa_default Created 
+ Container task1_adversarial_qa-qdrant-1 Creating 
+ Container task1_adversarial_qa-postgres-1 Creating 
+ Container task1_adversarial_qa-qdrant-1 Created 
+ Container task1_adversarial_qa-postgres-1 Created 
+ Container task1_adversarial_qa-ingest-1 Creating 
+ Container task1_adversarial_qa-ingest-1 Created 
+ Container task1_adversarial_qa-api-1 Creating 
+ Container task1_adversarial_qa-api-1 Created 
+ Container task1_adversarial_qa-qdrant-1 Starting 
+ Container task1_adversarial_qa-postgres-1 Starting 
+ Container task1_adversarial_qa-postgres-1 Started 
+ Container task1_adversarial_qa-qdrant-1 Started 
+ Container task1_adversarial_qa-postgres-1 Waiting 
+ Container task1_adversarial_qa-postgres-1 Healthy 
+ Container task1_adversarial_qa-ingest-1 Starting 
+ Container task1_adversarial_qa-ingest-1 Started 
+ Container task1_adversarial_qa-ingest-1 Waiting 
+ Container task1_adversarial_qa-ingest-1 Error service "ingest" didn't complete successfully: exit 1
+service "ingest" didn't complete successfully: exit 1
+EXIT=1
+$ docker compose -p task1_adversarial_qa -f /home/nozima/Music/task1_semantic_qa/qa/clean-clone/docker-compose.yml -f /home/nozima/Music/task1_semantic_qa/qa/clean-clone/qa-isolated.yml -f /home/nozima/Music/task1_semantic_qa/qa/slow-qdrant.yml logs --no-color --tail=60 ingest qdrant
+ingest-1  |   File "/usr/local/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+ingest-1  |     raise mapped_exc(message) from exc
+ingest-1  | httpx.ConnectError: [Errno 111] Connection refused
+ingest-1  | 
+ingest-1  | During handling of the above exception, another exception occurred:
+ingest-1  | 
+ingest-1  | Traceback (most recent call last):
+ingest-1  |   File "/srv/app/adapters/qdrant_index.py", line 81, in _reachable
+ingest-1  |     yield
+ingest-1  |   File "/srv/app/adapters/qdrant_index.py", line 39, in indexed_answer_ids
+ingest-1  |     if not self._client.collection_exists(self._collection):
+ingest-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ingest-1  |   File "/usr/local/lib/python3.12/site-packages/qdrant_client/qdrant_client.py", line 2097, in collection_exists
+ingest-1  |     return self._client.collection_exists(collection_name=collection_name, **kwargs)
+ingest-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ingest-1  |   File "/usr/local/lib/python3.12/site-packages/qdrant_client/qdrant_remote.py", line 2623, in collection_exists
+ingest-1  |     result: Optional[models.CollectionExistence] = self.http.collections_api.collection_exists(
+ingest-1  |                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ingest-1  |   File "/usr/local/lib/python3.12/site-packages/qdrant_client/http/api/collections_api.py", line 1157, in collection_exists
+ingest-1  |     return self._build_for_collection_exists(
+ingest-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ingest-1  |   File "/usr/local/lib/python3.12/site-packages/qdrant_client/http/api/collections_api.py", line 87, in _build_for_collection_exists
+ingest-1  |     return self.api_client.request(
+ingest-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^
+ingest-1  |   File "/usr/local/lib/python3.12/site-packages/qdrant_client/http/api_client.py", line 79, in request
+ingest-1  |     return self.send(request, type_)
+ingest-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+ingest-1  |   File "/usr/local/lib/python3.12/site-packages/qdrant_client/http/api_client.py", line 96, in send
+ingest-1  |     response = self.middleware(request, self.send_inner)
+ingest-1  |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ingest-1  |   File "/usr/local/lib/python3.12/site-packages/qdrant_client/http/api_client.py", line 205, in __call__
+ingest-1  |     return call_next(request)
+ingest-1  |            ^^^^^^^^^^^^^^^^^^
+ingest-1  |   File "/usr/local/lib/python3.12/site-packages/qdrant_client/http/api_client.py", line 108, in send_inner
+ingest-1  |     raise ResponseHandlingException(e)
+ingest-1  | qdrant_client.http.exceptions.ResponseHandlingException: [Errno 111] Connection refused
+ingest-1  | 
+ingest-1  | The above exception was the direct cause of the following exception:
+ingest-1  | 
+ingest-1  | Traceback (most recent call last):
+ingest-1  |   File "<frozen runpy>", line 198, in _run_module_as_main
+ingest-1  |   File "<frozen runpy>", line 88, in _run_code
+ingest-1  |   File "/srv/app/cli.py", line 40, in <module>
+ingest-1  |     main()
+ingest-1  |   File "/srv/app/cli.py", line 34, in main
+ingest-1  |     container.ingestion.ingest(sheet)
+ingest-1  |   File "/srv/app/services/ingestion.py", line 29, in ingest
+ingest-1  |     newly_indexed = self._index_changed(questions)
+ingest-1  |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ingest-1  |   File "/srv/app/services/ingestion.py", line 41, in _index_changed
+ingest-1  |     indexed = self._index.indexed_answer_ids([q.id for q in questions])
+ingest-1  |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ingest-1  |   File "/srv/app/adapters/qdrant_index.py", line 38, in indexed_answer_ids
+ingest-1  |     with _reachable():
+ingest-1  |          ^^^^^^^^^^^^
+ingest-1  |   File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+ingest-1  |     self.gen.throw(value)
+ingest-1  |   File "/srv/app/adapters/qdrant_index.py", line 83, in _reachable
+ingest-1  |     raise StorageUnavailableError("Qdrant bilan aloqa yo'q.") from exc
+ingest-1  | app.domain.errors.StorageUnavailableError: Qdrant bilan aloqa yo'q.
+EXIT=0
+time="2026-10-11T13:52:39+05:00" level=warning msg="No services to build"
+ Container task1_adversarial_qa-postgres-1 Running 
+ Container task1_adversarial_qa-qdrant-1 Recreate 
+ Container task1_adversarial_qa-qdrant-1 Recreated 
+ Container task1_adversarial_qa-qdrant-1 Starting 
+ Container task1_adversarial_qa-qdrant-1 Started 
+ Container task1_adversarial_qa-postgres-1 Waiting 
+ Container task1_adversarial_qa-postgres-1 Healthy 
+ Container task1_adversarial_qa-ingest-1 Starting 
+ Container task1_adversarial_qa-ingest-1 Started 
+ Container task1_adversarial_qa-ingest-1 Waiting 
+ Container task1_adversarial_qa-ingest-1 Exited 
+ Container task1_adversarial_qa-api-1 Starting 
+ Container task1_adversarial_qa-api-1 Started 
+RECOVERY_EXIT=0

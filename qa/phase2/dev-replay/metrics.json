@@ -1,0 +1,568 @@
+{
+  "ranking": {
+    "queries": 186,
+    "recall@1": 0.7849,
+    "recall@3": 0.9086,
+    "mrr": 0.8492
+  },
+  "chosen": {
+    "threshold": 0.64,
+    "precision": 0.8261,
+    "recall": 0.9661,
+    "f1": 0.8906,
+    "answered_correctly": 0.7581,
+    "false_rejections": 12,
+    "false_acceptances": 2
+  },
+  "sweep": [
+    {
+      "threshold": 0.3,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 59
+    },
+    {
+      "threshold": 0.31,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 59
+    },
+    {
+      "threshold": 0.32,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 59
+    },
+    {
+      "threshold": 0.33,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 59
+    },
+    {
+      "threshold": 0.34,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 59
+    },
+    {
+      "threshold": 0.35,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 59
+    },
+    {
+      "threshold": 0.36,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 59
+    },
+    {
+      "threshold": 0.37,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 59
+    },
+    {
+      "threshold": 0.38,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 59
+    },
+    {
+      "threshold": 0.39,
+      "precision": 1.0,
+      "recall": 0.0169,
+      "f1": 0.0333,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 58
+    },
+    {
+      "threshold": 0.4,
+      "precision": 1.0,
+      "recall": 0.0169,
+      "f1": 0.0333,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 58
+    },
+    {
+      "threshold": 0.41,
+      "precision": 1.0,
+      "recall": 0.0339,
+      "f1": 0.0656,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 57
+    },
+    {
+      "threshold": 0.42,
+      "precision": 1.0,
+      "recall": 0.0339,
+      "f1": 0.0656,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 57
+    },
+    {
+      "threshold": 0.43,
+      "precision": 1.0,
+      "recall": 0.0339,
+      "f1": 0.0656,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 57
+    },
+    {
+      "threshold": 0.44,
+      "precision": 1.0,
+      "recall": 0.0339,
+      "f1": 0.0656,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 57
+    },
+    {
+      "threshold": 0.45,
+      "precision": 1.0,
+      "recall": 0.0508,
+      "f1": 0.0968,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 56
+    },
+    {
+      "threshold": 0.46,
+      "precision": 1.0,
+      "recall": 0.0678,
+      "f1": 0.127,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 55
+    },
+    {
+      "threshold": 0.47,
+      "precision": 1.0,
+      "recall": 0.0847,
+      "f1": 0.1562,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 54
+    },
+    {
+      "threshold": 0.48,
+      "precision": 1.0,
+      "recall": 0.0847,
+      "f1": 0.1562,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 54
+    },
+    {
+      "threshold": 0.49,
+      "precision": 1.0,
+      "recall": 0.1017,
+      "f1": 0.1846,
+      "answered_correctly": 0.7849,
+      "false_rejections": 0,
+      "false_acceptances": 53
+    },
+    {
+      "threshold": 0.5,
+      "precision": 0.875,
+      "recall": 0.1186,
+      "f1": 0.209,
+      "answered_correctly": 0.7849,
+      "false_rejections": 1,
+      "false_acceptances": 52
+    },
+    {
+      "threshold": 0.51,
+      "precision": 0.875,
+      "recall": 0.1186,
+      "f1": 0.209,
+      "answered_correctly": 0.7849,
+      "false_rejections": 1,
+      "false_acceptances": 52
+    },
+    {
+      "threshold": 0.52,
+      "precision": 0.9,
+      "recall": 0.1525,
+      "f1": 0.2609,
+      "answered_correctly": 0.7849,
+      "false_rejections": 1,
+      "false_acceptances": 50
+    },
+    {
+      "threshold": 0.53,
+      "precision": 0.8889,
+      "recall": 0.2712,
+      "f1": 0.4156,
+      "answered_correctly": 0.7849,
+      "false_rejections": 2,
+      "false_acceptances": 43
+    },
+    {
+      "threshold": 0.54,
+      "precision": 0.913,
+      "recall": 0.3559,
+      "f1": 0.5122,
+      "answered_correctly": 0.7849,
+      "false_rejections": 2,
+      "false_acceptances": 38
+    },
+    {
+      "threshold": 0.55,
+      "precision": 0.8065,
+      "recall": 0.4237,
+      "f1": 0.5556,
+      "answered_correctly": 0.7796,
+      "false_rejections": 6,
+      "false_acceptances": 34
+    },
+    {
+      "threshold": 0.56,
+      "precision": 0.8286,
+      "recall": 0.4915,
+      "f1": 0.617,
+      "answered_correctly": 0.7796,
+      "false_rejections": 6,
+      "false_acceptances": 30
+    },
+    {
+      "threshold": 0.57,
+      "precision": 0.8205,
+      "recall": 0.5424,
+      "f1": 0.6531,
+      "answered_correctly": 0.7742,
+      "false_rejections": 7,
+      "false_acceptances": 27
+    },
+    {
+      "threshold": 0.58,
+      "precision": 0.8222,
+      "recall": 0.6271,
+      "f1": 0.7115,
+      "answered_correctly": 0.7688,
+      "false_rejections": 8,
+      "false_acceptances": 22
+    },
+    {
+      "threshold": 0.59,
+      "precision": 0.8298,
+      "recall": 0.661,
+      "f1": 0.7358,
+      "answered_correctly": 0.7688,
+      "false_rejections": 8,
+      "false_acceptances": 20
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.8302,
+      "recall": 0.7458,
+      "f1": 0.7857,
+      "answered_correctly": 0.7688,
+      "false_rejections": 9,
+      "false_acceptances": 15
+    },
+    {
+      "threshold": 0.61,
+      "precision": 0.8393,
+      "recall": 0.7966,
+      "f1": 0.8174,
+      "answered_correctly": 0.7688,
+      "false_rejections": 9,
+      "false_acceptances": 12
+    },
+    {
+      "threshold": 0.62,
+      "precision": 0.8438,
+      "recall": 0.9153,
+      "f1": 0.878,
+      "answered_correctly": 0.7634,
+      "false_rejections": 10,
+      "false_acceptances": 5
+    },
+    {
+      "threshold": 0.63,
+      "precision": 0.8333,
+      "recall": 0.9322,
+      "f1": 0.88,
+      "answered_correctly": 0.7634,
+      "false_rejections": 11,
+      "false_acceptances": 4
+    },
+    {
+      "threshold": 0.64,
+      "precision": 0.8261,
+      "recall": 0.9661,
+      "f1": 0.8906,
+      "answered_correctly": 0.7581,
+      "false_rejections": 12,
+      "false_acceptances": 2
+    },
+    {
+      "threshold": 0.65,
+      "precision": 0.7632,
+      "recall": 0.9831,
+      "f1": 0.8593,
+      "answered_correctly": 0.7366,
+      "false_rejections": 18,
+      "false_acceptances": 1
+    },
+    {
+      "threshold": 0.66,
+      "precision": 0.7073,
+      "recall": 0.9831,
+      "f1": 0.8227,
+      "answered_correctly": 0.7366,
+      "false_rejections": 24,
+      "false_acceptances": 1
+    },
+    {
+      "threshold": 0.67,
+      "precision": 0.686,
+      "recall": 1.0,
+      "f1": 0.8138,
+      "answered_correctly": 0.7258,
+      "false_rejections": 27,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.68,
+      "precision": 0.6484,
+      "recall": 1.0,
+      "f1": 0.7867,
+      "answered_correctly": 0.7097,
+      "false_rejections": 32,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.69,
+      "precision": 0.6082,
+      "recall": 1.0,
+      "f1": 0.7564,
+      "answered_correctly": 0.6882,
+      "false_rejections": 38,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.5619,
+      "recall": 1.0,
+      "f1": 0.7195,
+      "answered_correctly": 0.672,
+      "false_rejections": 46,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.71,
+      "precision": 0.5175,
+      "recall": 1.0,
+      "f1": 0.6821,
+      "answered_correctly": 0.6344,
+      "false_rejections": 55,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.72,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6667,
+      "answered_correctly": 0.6129,
+      "false_rejections": 59,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.73,
+      "precision": 0.4836,
+      "recall": 1.0,
+      "f1": 0.6519,
+      "answered_correctly": 0.5968,
+      "false_rejections": 63,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.74,
+      "precision": 0.4609,
+      "recall": 1.0,
+      "f1": 0.631,
+      "answered_correctly": 0.5645,
+      "false_rejections": 69,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.75,
+      "precision": 0.4275,
+      "recall": 1.0,
+      "f1": 0.599,
+      "answered_correctly": 0.5215,
+      "false_rejections": 79,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.76,
+      "precision": 0.4069,
+      "recall": 1.0,
+      "f1": 0.5784,
+      "answered_correctly": 0.4946,
+      "false_rejections": 86,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.77,
+      "precision": 0.3933,
+      "recall": 1.0,
+      "f1": 0.5646,
+      "answered_correctly": 0.4731,
+      "false_rejections": 91,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.78,
+      "precision": 0.3831,
+      "recall": 1.0,
+      "f1": 0.554,
+      "answered_correctly": 0.4516,
+      "false_rejections": 95,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.79,
+      "precision": 0.3642,
+      "recall": 1.0,
+      "f1": 0.5339,
+      "answered_correctly": 0.4301,
+      "false_rejections": 103,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.8,
+      "precision": 0.3533,
+      "recall": 1.0,
+      "f1": 0.5221,
+      "answered_correctly": 0.4086,
+      "false_rejections": 108,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.81,
+      "precision": 0.3371,
+      "recall": 1.0,
+      "f1": 0.5043,
+      "answered_correctly": 0.371,
+      "false_rejections": 116,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.82,
+      "precision": 0.3296,
+      "recall": 1.0,
+      "f1": 0.4958,
+      "answered_correctly": 0.3495,
+      "false_rejections": 120,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.83,
+      "precision": 0.3172,
+      "recall": 1.0,
+      "f1": 0.4816,
+      "answered_correctly": 0.3118,
+      "false_rejections": 127,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.84,
+      "precision": 0.3026,
+      "recall": 1.0,
+      "f1": 0.4646,
+      "answered_correctly": 0.2634,
+      "false_rejections": 136,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.85,
+      "precision": 0.2965,
+      "recall": 1.0,
+      "f1": 0.4574,
+      "answered_correctly": 0.2419,
+      "false_rejections": 140,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.86,
+      "precision": 0.2864,
+      "recall": 1.0,
+      "f1": 0.4453,
+      "answered_correctly": 0.2097,
+      "false_rejections": 147,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.87,
+      "precision": 0.2796,
+      "recall": 1.0,
+      "f1": 0.437,
+      "answered_correctly": 0.1828,
+      "false_rejections": 152,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.88,
+      "precision": 0.2694,
+      "recall": 1.0,
+      "f1": 0.4245,
+      "answered_correctly": 0.1398,
+      "false_rejections": 160,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.89,
+      "precision": 0.2646,
+      "recall": 1.0,
+      "f1": 0.4184,
+      "answered_correctly": 0.1183,
+      "false_rejections": 164,
+      "false_acceptances": 0
+    },
+    {
+      "threshold": 0.9,
+      "precision": 0.2599,
+      "recall": 1.0,
+      "f1": 0.4126,
+      "answered_correctly": 0.0968,
+      "false_rejections": 168,
+      "false_acceptances": 0
+    }
+  ]
+}

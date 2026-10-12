@@ -1,0 +1,9 @@
+{
+  "created": "2026-10-11",
+  "sha256": "cb66e461bb8e4bf48f0f7559c45fe763b55b89a4c7a9d7cd8c7a70dc3120e154",
+  "in_domain": 80,
+  "out_of_domain": 40,
+  "new_answer_ids": 40,
+  "origin": "New developer-authored paraphrases and OOD queries; 40 answer IDs absent from legacy evaluation. All 245 previously inspected/tuned queries remain development data.",
+  "policy": "Tune only on dev.jsonl. Select and freeze one candidate before scoring holdout. Compare aggregate metrics once; do not inspect holdout errors or retune. Reject a candidate if any protected metric regresses."
+}

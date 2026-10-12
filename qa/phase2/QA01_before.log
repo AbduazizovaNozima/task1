@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_calibrated_default_rejects_between_old_and_new_threshold _________
+
+    def test_calibrated_default_rejects_between_old_and_new_threshold() -> None:
+        from app.config import Settings
+        from app.domain.models import Candidate
+    
+        settings = Settings(_env_file=None)
+        service = build_services(threshold=settings.match_threshold).search
+        # Midpoint between the frozen baseline and dev-selected candidate, independent of query wording.
+        candidate = Candidate(answer_id=uuid4(), question="generic query", answer="generic answer", score=(0.64 + 0.67) / 2)
+>       assert not service._decide("generic query", [candidate]).found
+E       AssertionError: assert not True
+E        +  where True = SearchResult(found=True, score=0.655, answer_id=UUID('d9e239a4-fd37-4e18-9ab0-22ad816213cc'), answer='generic answer',...swer_id=UUID('d9e239a4-fd37-4e18-9ab0-22ad816213cc'), question='generic query', answer='generic answer', score=0.655)]).found
+E        +    where SearchResult(found=True, score=0.655, answer_id=UUID('d9e239a4-fd37-4e18-9ab0-22ad816213cc'), answer='generic answer',...swer_id=UUID('d9e239a4-fd37-4e18-9ab0-22ad816213cc'), question='generic query', answer='generic answer', score=0.655)]) = _decide('generic query', [Candidate(answer_id=UUID('d9e239a4-fd37-4e18-9ab0-22ad816213cc'), question='generic query', answer='generic answer', score=0.655)])
+E        +      where _decide = <app.services.search.SearchService object at 0x7e97b4389670>._decide
+
+tests/test_search.py:96: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_search.py::test_calibrated_default_rejects_between_old_and_new_threshold
+1 failed, 9 deselected in 0.27s
