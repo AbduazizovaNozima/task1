@@ -117,3 +117,17 @@ def test_ask_with_session_and_reset(client: TestClient) -> None:
     assert body["context_used"] is False
     assert body["suggestions"] == []
     assert client.delete("/sessions/telegram-1").status_code == 204
+
+
+@pytest.mark.parametrize("member", ["xl/workbook.xml", "xl/worksheets/sheet1.xml"])
+def test_ingest_rejects_malformed_xml(client: TestClient, member: str) -> None:
+    from zipfile import ZipFile
+
+    source = xlsx([["question", "answer"]])
+    malformed = io.BytesIO()
+    with ZipFile(io.BytesIO(source)) as original, ZipFile(malformed, "w") as result:
+        for name in original.namelist():
+            result.writestr(name, b"<broken" if name == member else original.read(name))
+    response = client.post("/ingest", files={"file": ("broken.xlsx", malformed.getvalue())})
+    assert response.status_code == 422
+    assert "detail" in response.json()

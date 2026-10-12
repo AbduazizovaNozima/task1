@@ -1,4 +1,5 @@
 from collections.abc import Sequence
+from contextlib import AbstractContextManager
 from typing import Protocol
 from uuid import UUID
 
@@ -18,6 +19,10 @@ class VectorIndex(Protocol):
 
 
 class QARepository(Protocol):
+    def upsert_transaction(
+        self, answers: Sequence[Answer], questions: Sequence[Question]
+    ) -> AbstractContextManager[None]: ...
+
     def upsert(self, answers: Sequence[Answer], questions: Sequence[Question]) -> None: ...
 
     def get_many(self, question_ids: Sequence[UUID]) -> dict[UUID, QARecord]: ...

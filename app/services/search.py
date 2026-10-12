@@ -1,10 +1,11 @@
 from collections.abc import Sequence
 from uuid import UUID
 
-from app.domain.errors import DataInconsistencyError, EmptyQueryError
+from app.domain.errors import EmptyQueryError
 from app.domain.models import Candidate, SearchResult, VectorHit
 from app.domain.ports import Embedder, QARepository, VectorIndex
 from app.domain.query import expand, word_count
+from app.domain.text import stable_id
 
 
 class SearchService:
@@ -33,7 +34,15 @@ class SearchService:
         if not text:
             raise EmptyQueryError("Savol matni bo'sh.")
         [vector] = self._embedder.embed([text])
-        return best_per_answer(self._index.search(vector, self._candidates))
+        hits = self._index.search(vector, self._candidates)
+        records = self._repository.get_many([hit.question_id for hit in hits])
+        # SQL is the publication boundary. Partial vector writes may survive a rollback.
+        committed = [
+            hit.model_copy(update={"answer_id": stable_id(records[hit.question_id].answer)})
+            for hit in hits
+            if hit.question_id in records
+        ]
+        return best_per_answer(committed)
 
     def ask(self, query: str, exclude_answer_id: UUID | None = None) -> SearchResult:
         hits = [hit for hit in self.rank(query) if hit.answer_id != exclude_answer_id][: self._top_k]
@@ -41,17 +50,15 @@ class SearchService:
 
     def _candidates_for(self, hits: list[VectorHit]) -> list[Candidate]:
         records = self._repository.get_many([hit.question_id for hit in hits])
-        missing = [hit.question_id for hit in hits if hit.question_id not in records]
-        if missing:
-            raise DataInconsistencyError(f"Questions {missing} are indexed but missing in the database")
         return [
             Candidate(
-                answer_id=hit.answer_id,
+                answer_id=stable_id(records[hit.question_id].answer),
                 question=records[hit.question_id].question,
                 answer=records[hit.question_id].answer,
                 score=hit.score,
             )
             for hit in hits
+            if hit.question_id in records
         ]
 
     def _decide(self, query: str, candidates: list[Candidate]) -> SearchResult:

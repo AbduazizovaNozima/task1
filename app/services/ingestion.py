@@ -25,8 +25,8 @@ class IngestionService:
 
     def ingest(self, sheet: QASheet) -> IngestReport:
         answers, questions = to_records(sheet.pairs)
-        self._repository.upsert(answers, questions)
-        newly_indexed = self._index_changed(questions)
+        with self._repository.upsert_transaction(answers, questions):
+            newly_indexed = self._index_changed(questions)
         report = IngestReport(
             rows_read=len(sheet.pairs) + len(sheet.skipped),
             rows_skipped=len(sheet.skipped),

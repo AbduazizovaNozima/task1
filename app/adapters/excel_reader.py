@@ -2,6 +2,7 @@ import logging
 from collections.abc import Sequence
 from pathlib import Path
 from typing import Any, BinaryIO
+from xml.etree.ElementTree import ParseError
 from zipfile import BadZipFile
 
 from openpyxl import load_workbook
@@ -20,14 +21,14 @@ HEADER_ROW = 1
 def read_qa_sheet(source: Path | BinaryIO) -> QASheet:
     try:
         workbook = load_workbook(source, read_only=True, data_only=True)
-    except (BadZipFile, InvalidFileException, KeyError) as exc:
+        try:
+            rows = workbook.active.iter_rows(values_only=True)
+            columns = _column_positions(next(rows, ()))
+            return _parse_rows(rows, columns[QUESTION_COLUMN], columns[ANSWER_COLUMN])
+        finally:
+            workbook.close()
+    except (BadZipFile, InvalidFileException, KeyError, ParseError) as exc:
         raise InvalidSpreadsheetError("Fayl .xlsx formatida emas yoki buzilgan.") from exc
-    try:
-        rows = workbook.active.iter_rows(values_only=True)
-        columns = _column_positions(next(rows, ()))
-        return _parse_rows(rows, columns[QUESTION_COLUMN], columns[ANSWER_COLUMN])
-    finally:
-        workbook.close()
 
 
 def _column_positions(header: Sequence[Any]) -> dict[str, int]:

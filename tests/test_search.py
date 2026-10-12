@@ -2,7 +2,7 @@ from uuid import uuid4
 
 import pytest
 
-from app.domain.errors import DataInconsistencyError, EmptyQueryError
+from app.domain.errors import EmptyQueryError
 from app.domain.models import QAPair, VectorHit
 from app.services.search import best_per_answer
 from tests.fakes import build_services
@@ -38,12 +38,11 @@ def test_ask_rejects_blank_query() -> None:
         build_services(PAIRS).search.ask("   ")
 
 
-def test_ask_fails_loudly_when_database_lacks_indexed_question() -> None:
+def test_ask_ignores_uncommitted_indexed_question() -> None:
     services = build_services(PAIRS)
     services.repository.questions.clear()
 
-    with pytest.raises(DataInconsistencyError):
-        services.search.ask("Pasport qanday olinadi")
+    assert not services.search.ask("Pasport qanday olinadi").found
 
 
 def test_ask_can_exclude_previous_answer() -> None:

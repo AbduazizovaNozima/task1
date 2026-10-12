@@ -1,6 +1,7 @@
 import math
 import zlib
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
+from contextlib import contextmanager
 from dataclasses import dataclass
 from uuid import UUID
 
@@ -58,6 +59,16 @@ class InMemoryRepository:
     def upsert(self, answers: Sequence[Answer], questions: Sequence[Question]) -> None:
         self.answers.update((a.id, a) for a in answers)
         self.questions.update((q.id, q) for q in questions)
+
+    @contextmanager
+    def upsert_transaction(self, answers: Sequence[Answer], questions: Sequence[Question]) -> Iterator[None]:
+        old_answers, old_questions = self.answers.copy(), self.questions.copy()
+        try:
+            self.upsert(answers, questions)
+            yield
+        except Exception:
+            self.answers, self.questions = old_answers, old_questions
+            raise
 
     def get_many(self, question_ids: Sequence[UUID]) -> dict[UUID, QARecord]:
         return {

@@ -1,14 +1,30 @@
 import argparse
 import logging
+import time
+from collections.abc import Callable
 from pathlib import Path
 
 from app.adapters.excel_reader import read_qa_sheet
 from app.config import Settings
 from app.container import build_container
-from app.domain.errors import InvalidSpreadsheetError
+from app.domain.errors import InvalidSpreadsheetError, StorageUnavailableError
 from app.log import configure_logging
 
 logger = logging.getLogger(__name__)
+
+
+def wait_for_storage(check: Callable[[], None]) -> None:
+    deadline = time.monotonic() + 60
+    while True:
+        try:
+            check()
+            return
+        except StorageUnavailableError:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise
+            logger.warning("Storage not ready; retrying startup check")
+            time.sleep(min(2, remaining))
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -31,6 +47,7 @@ def main(argv: list[str] | None = None) -> None:
 
     container = build_container(settings)
     try:
+        wait_for_storage(container.check)
         container.ingestion.ingest(sheet)
     finally:
         container.close()

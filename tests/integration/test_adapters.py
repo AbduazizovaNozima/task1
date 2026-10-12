@@ -140,3 +140,27 @@ def test_unreachable_qdrant_raises_storage_error() -> None:
 
     with pytest.raises(StorageUnavailableError):
         index.ping()
+
+
+def test_postgres_upsert_transaction_rolls_back_before_publication(
+    repository: PostgresRepository, pool: ConnectionPool
+) -> None:
+    old = Answer(id=uuid4(), text="Committed answer")
+    question = Question(id=uuid4(), answer_id=old.id, text="Atomic question")
+    repository.upsert([old], [question])
+    replacement = Answer(id=uuid4(), text="Uncommitted answer")
+    changed = question.model_copy(update={"answer_id": replacement.id})
+    with pool.connection() as connection:
+        row = connection.execute("SELECT current_schema()").fetchone()
+        assert row is not None
+        schema = row[0]
+    with (
+        psycopg.connect(DATABASE_URL, options=f"-c search_path={schema}") as observer,
+        pytest.raises(StorageUnavailableError, match="vector-store failure"),
+        repository.upsert_transaction([replacement], [changed]),
+    ):
+        # A separate connection must see the committed answer until the writer commits.
+        visible = observer.execute("SELECT answer_id FROM questions WHERE id=%s", (question.id,)).fetchone()
+        assert visible == (old.id,)
+        raise StorageUnavailableError("vector-store failure")
+    assert repository.get_many([question.id])[question.id].answer == old.text

@@ -63,3 +63,51 @@ def test_reingest_reindexes_question_whose_answer_changed(parts: Parts) -> None:
     changed = QASheet(pairs=[QAPair(question="Pasport qanday olinadi?", answer="Faqat onlayn.")], skipped=[])
 
     assert service.ingest(changed).newly_indexed == 1
+
+
+def test_failed_vector_write_rolls_back_sql_state(parts: Parts, monkeypatch: pytest.MonkeyPatch) -> None:
+    from app.domain.errors import StorageUnavailableError
+
+    service = make_service(parts)
+    service.ingest(SHEET)
+    repository, index, _ = parts
+    before = repository.questions.copy(), repository.answers.copy()
+
+    def fail(*args: object) -> None:
+        raise StorageUnavailableError("vector write failed")
+
+    monkeypatch.setattr(index, "upsert", fail)
+    changed = QASheet(pairs=[QAPair(question="Pasport qanday olinadi?", answer="Changed answer")], skipped=[])
+    with pytest.raises(StorageUnavailableError):
+        service.ingest(changed)
+    assert (repository.questions, repository.answers) == before
+
+
+def test_partial_vector_write_does_not_publish_uncommitted_rows(monkeypatch: pytest.MonkeyPatch) -> None:
+    from app.domain.errors import StorageUnavailableError
+    from tests.fakes import build_services
+
+    services = build_services([QAPair(question="passport renewal", answer="Committed answer")])
+    services.ingestion._batch_size = 1
+    original = services.index.upsert
+    calls = 0
+
+    def write_then_fail(*args: object) -> None:
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            raise StorageUnavailableError("second vector batch failed")
+        original(*args)  # type: ignore[arg-type]
+
+    monkeypatch.setattr(services.index, "upsert", write_then_fail)
+    sheet = QASheet(
+        pairs=[
+            QAPair(question="orphan record", answer="Uncommitted"),
+            QAPair(question="passport renewal", answer="Changed"),
+        ],
+        skipped=[],
+    )
+    with pytest.raises(StorageUnavailableError):
+        services.ingestion.ingest(sheet)
+    assert not services.search.ask("orphan record").found
+    assert services.search.ask("passport renewal").answer == "Committed answer"
