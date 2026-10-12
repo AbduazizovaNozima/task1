@@ -1,6 +1,5 @@
 from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Any
 
 from psycopg import Connection, OperationalError
 from psycopg_pool import ConnectionPool, PoolTimeout
@@ -9,7 +8,7 @@ from app.domain.errors import StorageUnavailableError
 
 
 @contextmanager
-def connect(pool: ConnectionPool) -> Iterator[Connection[Any]]:
+def connect(pool: ConnectionPool) -> Iterator[Connection[tuple[object, ...]]]:
     try:
         with pool.connection() as connection:
             yield connection

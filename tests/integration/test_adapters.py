@@ -68,8 +68,10 @@ def test_postgres_upsert_is_idempotent_and_get_joins_answer(repository: Postgres
     answer = Answer(id=uuid4(), text="DXM orqali.")
     question = Question(id=uuid4(), answer_id=answer.id, text="Pasport qanday olinadi?")
 
-    repository.upsert([answer], [question])
-    repository.upsert([answer], [question])
+    with repository.upsert_transaction([answer], [question]):
+        pass
+    with repository.upsert_transaction([answer], [question]):
+        pass
 
     records = repository.get_many([question.id, uuid4()])
     assert list(records) == [question.id]
@@ -121,7 +123,8 @@ def test_postgres_upsert_transaction_rolls_back_before_publication(
 ) -> None:
     old = Answer(id=uuid4(), text="Committed answer")
     question = Question(id=uuid4(), answer_id=old.id, text="Atomic question")
-    repository.upsert([old], [question])
+    with repository.upsert_transaction([old], [question]):
+        pass
     replacement = Answer(id=uuid4(), text="Uncommitted answer")
     changed = question.model_copy(update={"answer_id": replacement.id})
     with pool.connection() as connection:

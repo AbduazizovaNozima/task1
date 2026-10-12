@@ -1,7 +1,7 @@
 import logging
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from pathlib import Path
-from typing import Any, BinaryIO
+from typing import BinaryIO
 from xml.etree.ElementTree import ParseError
 from zipfile import BadZipFile
 
@@ -31,7 +31,7 @@ def read_qa_sheet(source: Path | BinaryIO) -> QASheet:
         raise InvalidSpreadsheetError("Fayl .xlsx formatida emas yoki buzilgan.") from exc
 
 
-def _column_positions(header: Sequence[Any]) -> dict[str, int]:
+def _column_positions(header: Sequence[object]) -> dict[str, int]:
     names = [_text(cell).lower() for cell in header]
     missing = [column for column in (QUESTION_COLUMN, ANSWER_COLUMN) if column not in names]
     if missing:
@@ -39,7 +39,7 @@ def _column_positions(header: Sequence[Any]) -> dict[str, int]:
     return {column: names.index(column) for column in (QUESTION_COLUMN, ANSWER_COLUMN)}
 
 
-def _parse_rows(rows: Any, question_at: int, answer_at: int) -> QASheet:
+def _parse_rows(rows: Iterable[Sequence[object]], question_at: int, answer_at: int) -> QASheet:
     pairs: list[QAPair] = []
     skipped: list[SkippedRow] = []
     for number, row in enumerate(rows, start=HEADER_ROW + 1):
@@ -53,9 +53,9 @@ def _parse_rows(rows: Any, question_at: int, answer_at: int) -> QASheet:
     return QASheet(pairs=pairs, skipped=skipped)
 
 
-def _cell(row: Sequence[Any], index: int) -> str:
+def _cell(row: Sequence[object], index: int) -> str:
     return _text(row[index]) if index < len(row) else ""
 
 
-def _text(value: Any) -> str:
+def _text(value: object) -> str:
     return "" if value is None else str(value).strip()

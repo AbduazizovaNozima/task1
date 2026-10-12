@@ -1,5 +1,6 @@
 from collections.abc import Iterator, Sequence
 from contextlib import contextmanager
+from typing import cast
 from uuid import UUID
 
 from psycopg_pool import ConnectionPool
@@ -48,10 +49,6 @@ class PostgresRepository:
         with connect(self._pool) as connection:
             connection.execute(SCHEMA)
 
-    def upsert(self, answers: Sequence[Answer], questions: Sequence[Question]) -> None:
-        with self.upsert_transaction(answers, questions):
-            pass
-
     @contextmanager
     def upsert_transaction(self, answers: Sequence[Answer], questions: Sequence[Question]) -> Iterator[None]:
         with connect(self._pool) as connection, connection.cursor() as cursor:
@@ -62,4 +59,7 @@ class PostgresRepository:
     def get_many(self, question_ids: Sequence[UUID]) -> dict[UUID, QARecord]:
         with connect(self._pool) as connection:
             rows = connection.execute(SELECT_RECORDS, (list(question_ids),)).fetchall()
-        return {question_id: QARecord(question=question, answer=answer) for question_id, question, answer in rows}
+        return {
+            cast(UUID, question_id): QARecord(question=question, answer=answer)
+            for question_id, question, answer in rows
+        }

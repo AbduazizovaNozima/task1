@@ -31,12 +31,18 @@ def build_container(settings: Settings) -> Container:
         open=True,
     )
     repository = PostgresRepository(pool)
-    qdrant = QdrantClient(url=settings.qdrant_url, timeout=settings.qdrant_timeout_seconds)
+    try:
+        qdrant = QdrantClient(url=settings.qdrant_url, timeout=settings.qdrant_timeout_seconds)
+    except Exception:
+        pool.close()
+        raise
     index = QdrantIndex(qdrant, settings.qdrant_collection)
 
     def close() -> None:
-        pool.close()
-        qdrant.close()
+        try:
+            qdrant.close()
+        finally:
+            pool.close()
 
     try:
         repository.create_schema()
