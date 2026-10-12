@@ -75,15 +75,17 @@ async def run() -> None:
     logging.basicConfig(level=settings.log_level.upper(), format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     for name in NOISY_LOGGERS:
         logging.getLogger(name).setLevel(logging.WARNING)
-    api = QAApiClient(settings.api_base_url, settings.api_timeout_seconds)
     bot = Bot(settings.telegram_bot_token)
-    dispatcher = Dispatcher()
-    dispatcher.include_router(build_router(api))
     try:
-        logger.info("Bot started, API: %s", settings.api_base_url)
-        await dispatcher.start_polling(bot)
+        api = QAApiClient(settings.api_base_url, settings.api_timeout_seconds)
+        try:
+            dispatcher = Dispatcher()
+            dispatcher.include_router(build_router(api))
+            logger.info("Bot started, API: %s", settings.api_base_url)
+            await dispatcher.start_polling(bot)
+        finally:
+            await api.close()
     finally:
-        await api.close()
         await bot.session.close()
 
 
