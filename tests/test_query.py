@@ -1,6 +1,6 @@
 import pytest
 
-from app.domain.query import expand, refers_to_previous, to_latin, word_count
+from app.domain.query import expand, to_latin, word_count
 
 
 @pytest.mark.parametrize(
@@ -46,35 +46,6 @@ def test_glossary_does_not_fire_inside_other_words() -> None:
 )
 def test_to_latin(text: str, expected: str) -> None:
     assert to_latin(text) == expected
-
-
-@pytest.mark.parametrize(
-    "query",
-    [
-        "buning uchun qanday hujjat kerak?",
-        "hujjatlari-chi?",
-        "narxi chi?",
-        "uning narxi",
-        "муддати-чи?",
-        "буни қаердан оламан?",
-    ],
-)
-def test_refers_to_previous(query: str) -> None:
-    assert refers_to_previous(query)
-
-
-@pytest.mark.parametrize(
-    "query",
-    [
-        "men haydovchi",
-        "o'qituvchi uchun imtiyoz",
-        "Bu yil pensiya qachon oshadi?",
-        "U kishi vafot etdi",
-        "pensiya nechpul",
-    ],
-)
-def test_new_questions_are_not_follow_ups(query: str) -> None:
-    assert not refers_to_previous(query)
 
 
 def test_word_count_ignores_extra_spaces() -> None:

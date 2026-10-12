@@ -25,7 +25,5 @@ class Settings(BaseSettings):
     ambiguity_margin: float = Field(default=0.02, ge=0.0, le=1.0)
     ambiguity_max_words: int = Field(default=2, ge=0)
 
-    chat_context_minutes: int = Field(default=30, ge=1)
-
     max_upload_mb: int = Field(default=10, ge=1)
     log_level: str = "INFO"

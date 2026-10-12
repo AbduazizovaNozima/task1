@@ -5,8 +5,7 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from uuid import UUID
 
-from app.domain.models import Answer, ChatTurn, QAPair, QARecord, QASheet, Question, VectorHit
-from app.services.conversation import ConversationService
+from app.domain.models import Answer, QAPair, QARecord, QASheet, Question, VectorHit
 from app.services.ingestion import IngestionService
 from app.services.search import SearchService
 
@@ -78,28 +77,12 @@ class InMemoryRepository:
         }
 
 
-class InMemoryChatHistory:
-    def __init__(self) -> None:
-        self.sessions: dict[str, ChatTurn] = {}
-
-    def last(self, session_id: str) -> ChatTurn | None:
-        return self.sessions.get(session_id)
-
-    def save(self, session_id: str, turn: ChatTurn) -> None:
-        self.sessions[session_id] = turn
-
-    def clear(self, session_id: str) -> None:
-        self.sessions.pop(session_id, None)
-
-
 @dataclass(frozen=True)
 class Services:
     repository: InMemoryRepository
     index: InMemoryIndex
     embedder: FakeEmbedder
-    history: InMemoryChatHistory
     search: SearchService
-    conversation: ConversationService
     ingestion: IngestionService
 
 
@@ -108,7 +91,7 @@ def build_services(
     threshold: float = 0.6,
     ambiguity_margin: float = 0.0,
 ) -> Services:
-    repository, index, embedder, history = InMemoryRepository(), InMemoryIndex(), FakeEmbedder(), InMemoryChatHistory()
+    repository, index, embedder = InMemoryRepository(), InMemoryIndex(), FakeEmbedder()
     ingestion = IngestionService(repository, index, embedder, batch_size=8)
     if pairs:
         ingestion.ingest(QASheet(pairs=list(pairs), skipped=[]))
@@ -122,5 +105,4 @@ def build_services(
         ambiguity_margin=ambiguity_margin,
         ambiguity_max_words=2,
     )
-    conversation = ConversationService(search, history)
-    return Services(repository, index, embedder, history, search, conversation, ingestion)
+    return Services(repository, index, embedder, search, ingestion)

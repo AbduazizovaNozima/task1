@@ -8,7 +8,6 @@ Production threshold: **MATCH_THRESHOLD=0.67**. Hech bir alohida xato misolga mo
 - `eval/holdout.jsonl`: yangi **120 savol**: ilgari eval'da qamrab olinmagan **40 javob ID** uchun 80 ta lotin/kirill parafraz va 40 ta begona/qo'llab-quvvatlanmaydigan so'rov. Oddiy begona mavzular bilan birga shaxsiy balans, shaxsiy ariza holati kabi bazadagi umumiy yo'riqnoma javob bera olmaydigan so'rovlar ham bor.
 - Holdout model bilan tekshirilishidan oldin muzlatildi. SHA-256 va kelib chiqishi: `eval/holdout_manifest.json`. Test hash o'zgarmaganini va dev bilan so'rovlar kesishmasligini tekshiradi.
 - Savollar inson foydalanuvchilaridan mustaqil yig'ilmagan: developer tomonidan yozilgan. 120 ta sintetik savol ishlab chiqarish muhitidagi aniqlik uchun kafolat emas. Ikki semantik teng xizmat-ma'lumoti manbasi scoringdan oldin birga maqbul javob sifatida belgilangan.
-- `eval/conversations.jsonl` — eski 6 ssenariy/15 xabarli diagnostika; u ham oldin ko'rilgan, mustaqil holdout emas.
 
 ## Tajriba tartibi
 
@@ -42,7 +41,7 @@ Holdout'da **5 qaror yaxshilandi, 0 qaror yomonlashdi**; barcha himoyalangan met
 
 Phase 1 dagi 0.785 Recall@1, 0.909 Recall@3, 0.849 MRR va 0.891 F1 raqamlari qayta takrorlangan edi. Eski F1 faqat threshold bo'yicha hisoblangan; yangi jadval ambiguity rad etishlarini ham qo'shadi, shu sabab dev baseline F1 0.8837. Bu raqamlar turli qaror o'lchovlarini ifodalaydi.
 
-Asl muzlatilgan tajriba artefaktlari: `qa/phase2/calibration/{frozen_candidate,dev_summary,holdout_summary}.json`.
+Asl muzlatilgan tajriba artefaktlari: `eval/baseline/{frozen_candidate,dev_summary,holdout_summary}.json`.
 
 ## Qayta bajarish
 
@@ -50,13 +49,9 @@ Ishlayotgan PostgreSQL/Qdrant va yuklangan korpus/model bilan, loyiha ildizidan:
 
 ```bash
 python -m eval.evaluate --dataset eval/dev.jsonl --out eval/results/dev
-python -m eval.calibration tune --out eval/results/calibration
-python -m eval.calibration holdout --out eval/results/calibration
 ```
 
-Birinchi buyruq faqat development ranking/threshold diagnostikasi; undagi eng yuqori F1 nuqtasi avtomatik production sozlamasi emas. `calibration tune` development'da nomzod tanlaydi va muzlatadi. `calibration holdout` per-query xatolarni saqlamaydi yoki chiqarmaydi, faqat agregat metrikalarni beradi. Bir output katalogidagi nomzodni qayta tuning yoki holdout'ni qayta ochishga ruxsat bermaydi. `eval.evaluate` holdout ustida threshold sweep qilishni rad etadi.
-
-Tarixiy **0.64 → 0.67** tajribani aynan takrorlash uchun yangi output katalogiga asl `frozen_candidate.json` ni ko'chirib, faqat `holdout` bosqichini ishga tushiring. Baseline'ni joriy default 0.67 dan qayta tanlamang. Clean rebuild tekshiruvi shu muzlatilgan nomzodni ishlatadi; yangi tuning emas.
+Dev evaluator joriy threshold bo'yicha bitta savol qarorlarini hisoblaydi. Tuning va suhbat baholash olib tashlangan; holdout qayta baholanmaydi.
 
 ## Ma'lum cheklovlar — QA-01 to'liq yopilmadi
 

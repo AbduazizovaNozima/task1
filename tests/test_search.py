@@ -45,15 +45,6 @@ def test_ask_ignores_uncommitted_indexed_question() -> None:
     assert not services.search.ask("Pasport qanday olinadi").found
 
 
-def test_ask_can_exclude_previous_answer() -> None:
-    services = build_services(PAIRS)
-    first = services.search.ask("pasport qanday olinadi")
-
-    second = services.search.ask("pasport qanday olinadi", exclude_answer_id=first.answer_id)
-
-    assert second.answer_id != first.answer_id
-
-
 def test_short_ambiguous_query_asks_to_clarify() -> None:
     pairs = [QAPair(question="pasport olish", answer="A"), QAPair(question="pasport almashtirish", answer="B")]
     services = build_services(pairs, threshold=0.5, ambiguity_margin=0.05)

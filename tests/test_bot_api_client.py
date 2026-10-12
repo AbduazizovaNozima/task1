@@ -16,7 +16,7 @@ def test_invalid_upstream_body_is_a_service_error(body: bytes) -> None:
         )
         try:
             with pytest.raises(QAApiError):
-                await api.ask("question", "user")
+                await api.ask("question")
         finally:
             await api.close()
 
@@ -35,7 +35,7 @@ def test_validation_status_is_not_a_service_outage() -> None:
         )
         try:
             with pytest.raises(QAApiValidationError):
-                await api.ask("x" * 1001, "user")
+                await api.ask("x" * 1001)
         finally:
             await api.close()
 

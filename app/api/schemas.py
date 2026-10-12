@@ -1,9 +1,21 @@
-from pydantic import BaseModel, Field
+import unicodedata
+
+from pydantic import BaseModel, Field, field_validator
+
+QUESTION_MAX_LENGTH = 1000
 
 
 class AskRequest(BaseModel):
-    question: str = Field(min_length=1, max_length=1000, examples=["ID karta olish uchun nima kerak?"])
-    session_id: str | None = Field(default=None, min_length=1, max_length=100, examples=["telegram-123456"])
+    question: str = Field(min_length=1, max_length=QUESTION_MAX_LENGTH, examples=["ID karta olish uchun nima kerak?"])
+
+    @field_validator("question")
+    @classmethod
+    def validate_question(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("Savol matni bo'sh.")
+        if any(unicodedata.category(char) in {"Cc", "Cf"} for char in value):
+            raise ValueError("Savolda boshqaruv belgilariga ruxsat berilmaydi.")
+        return value
 
 
 class AskResponse(BaseModel):
@@ -12,7 +24,6 @@ class AskResponse(BaseModel):
     matched_question: str | None
     score: float | None
     suggestions: list[str]
-    context_used: bool
 
 
 class IngestResponse(BaseModel):

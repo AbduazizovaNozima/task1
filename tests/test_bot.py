@@ -56,28 +56,11 @@ def test_handler_sends_all_answer_chunks_without_markup() -> None:
         api.ask.return_value = reply(True, text)
         message = AsyncMock()
         message.text = "question"
-        await build_router(api).message.handlers[3].callback(message)
+        await build_router(api).message.handlers[2].callback(message)
         calls = message.answer.call_args_list
         assert "".join(call.args[0] for call in calls) == text
         assert all(0 < len(call.args[0]) <= TELEGRAM_MESSAGE_LIMIT for call in calls)
         assert all(call.kwargs["parse_mode"] is None for call in calls)
-
-    asyncio.run(scenario())
-
-
-def test_failed_reset_reports_service_unavailable() -> None:
-    import asyncio
-    from unittest.mock import AsyncMock
-
-    from bot.api_client import QAApiError
-    from bot.main import SERVICE_DOWN, build_router
-
-    async def scenario() -> None:
-        api = AsyncMock()
-        api.reset.side_effect = QAApiError("offline")
-        message = AsyncMock()
-        await build_router(api).message.handlers[1].callback(message)
-        message.answer.assert_awaited_once_with(SERVICE_DOWN)
 
     asyncio.run(scenario())
 
@@ -94,7 +77,7 @@ def test_bot_explains_invalid_question() -> None:
         api.ask.side_effect = QAApiValidationError("too long")
         message = AsyncMock()
         message.text = "x" * 1001
-        await build_router(api).message.handlers[3].callback(message)
+        await build_router(api).message.handlers[2].callback(message)
         message.answer.assert_awaited_once_with(INVALID_QUESTION)
 
     asyncio.run(scenario())

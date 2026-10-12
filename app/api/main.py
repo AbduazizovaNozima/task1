@@ -9,7 +9,6 @@ from app.api.routes import router
 from app.config import Settings
 from app.container import Container, build_container
 from app.domain.errors import (
-    DataInconsistencyError,
     DomainError,
     EmptyQueryError,
     IndexNotReadyError,
@@ -25,7 +24,6 @@ ERROR_STATUS: dict[type[DomainError], int] = {
     InvalidSpreadsheetError: status.HTTP_422_UNPROCESSABLE_ENTITY,
     IndexNotReadyError: status.HTTP_503_SERVICE_UNAVAILABLE,
     StorageUnavailableError: status.HTTP_503_SERVICE_UNAVAILABLE,
-    DataInconsistencyError: status.HTTP_500_INTERNAL_SERVER_ERROR,
 }
 
 

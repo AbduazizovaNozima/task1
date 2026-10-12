@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from eval.calibration import Observation, metrics
+from eval.evaluate import Observation, metrics
 
 
 def test_decision_metrics_count_wrong_acceptance_and_ambiguity() -> None:

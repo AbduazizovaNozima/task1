@@ -1,16 +1,13 @@
 from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import timedelta
 
 from psycopg_pool import ConnectionPool
 from qdrant_client import QdrantClient
 
 from app.adapters.bge_embedder import BgeEmbedder
-from app.adapters.pg_chat_history import PostgresChatHistory
 from app.adapters.pg_repository import PostgresRepository
 from app.adapters.qdrant_index import QdrantIndex
 from app.config import Settings
-from app.services.conversation import ConversationService
 from app.services.ingestion import IngestionService
 from app.services.search import SearchService
 
@@ -20,7 +17,6 @@ WARM_UP_TEXT = "salom"
 @dataclass(frozen=True)
 class Container:
     search: SearchService
-    conversation: ConversationService
     ingestion: IngestionService
     check: Callable[[], None]
     warm_up: Callable[[], None]
@@ -35,7 +31,6 @@ def build_container(settings: Settings) -> Container:
         open=True,
     )
     repository = PostgresRepository(pool)
-    history = PostgresChatHistory(pool, ttl=timedelta(minutes=settings.chat_context_minutes))
     qdrant = QdrantClient(url=settings.qdrant_url, timeout=settings.qdrant_timeout_seconds)
     index = QdrantIndex(qdrant, settings.qdrant_collection)
 
@@ -45,7 +40,6 @@ def build_container(settings: Settings) -> Container:
 
     try:
         repository.create_schema()
-        history.create_schema()
     except Exception:
         close()
         raise
@@ -77,7 +71,6 @@ def build_container(settings: Settings) -> Container:
 
     return Container(
         search=search,
-        conversation=ConversationService(search, history),
         ingestion=IngestionService(repository, index, embedder, batch_size=settings.embedding_batch_size),
         check=check,
         warm_up=warm_up,

@@ -58,13 +58,7 @@ class SearchResult(_Frozen):
     answer: str | None = None
     matched_question: str | None = None
     suggestions: list[str] = []
-    context_used: bool = False
     candidates: list[Candidate] = []
-
-
-class ChatTurn(_Frozen):
-    topic: str
-    answer_id: UUID | None
 
 
 class IngestReport(_Frozen):

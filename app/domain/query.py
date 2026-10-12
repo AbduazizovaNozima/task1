@@ -82,11 +82,6 @@ SYNONYMS: tuple[tuple[re.Pattern[str], re.Pattern[str], str], ...] = tuple(
     )
 )
 
-REFERENCE_WORDS = (
-    r"uni|unga|uning|undan|buni|bunga|buning|bundan|shuni|shunga|shuning|shundan|o'shani|o'shanga|o'shaning"
-)
-FOLLOW_UP = re.compile(rf"\b(?:{REFERENCE_WORDS})\b|-chi\b|(?:^|\s)chi\b")
-
 
 def to_latin(text: str) -> str:
     return YE_SOUND.sub("ye", text).translate(CYRILLIC_TO_LATIN)
@@ -107,10 +102,6 @@ def expand(query: str) -> str:
         if term.search(text):
             additions.append(canonical)
     return " ".join([*text.split(), *additions])
-
-
-def refers_to_previous(query: str) -> bool:
-    return bool(FOLLOW_UP.search(prepare(query)))
 
 
 def word_count(query: str) -> int:

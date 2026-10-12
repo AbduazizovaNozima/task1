@@ -44,8 +44,8 @@ class SearchService:
         ]
         return best_per_answer(committed)
 
-    def ask(self, query: str, exclude_answer_id: UUID | None = None) -> SearchResult:
-        hits = [hit for hit in self.rank(query) if hit.answer_id != exclude_answer_id][: self._top_k]
+    def ask(self, query: str) -> SearchResult:
+        hits = self.rank(query)[: self._top_k]
         return self._decide(query, self._candidates_for(hits))
 
     def _candidates_for(self, hits: list[VectorHit]) -> list[Candidate]:

@@ -21,7 +21,6 @@ def make_client(check_fails: bool = False) -> TestClient:
 
     container = Container(
         search=services.search,
-        conversation=services.conversation,
         ingestion=services.ingestion,
         check=check,
         warm_up=lambda: None,
@@ -108,17 +107,6 @@ def test_ingest_rejects_too_large_file(client: TestClient) -> None:
     assert upload(client, b"x" * (1024 * 1024 + 1))["status"] == 422
 
 
-def test_ask_with_session_and_reset(client: TestClient) -> None:
-    upload(client, xlsx([["question", "answer"], ["Pasport qanday olinadi", "DXM orqali."]]))
-
-    body = client.post("/ask", json={"question": "pasport qanday olinadi", "session_id": "telegram-1"}).json()
-
-    assert body["found"] is True
-    assert body["context_used"] is False
-    assert body["suggestions"] == []
-    assert client.delete("/sessions/telegram-1").status_code == 204
-
-
 @pytest.mark.parametrize("member", ["xl/workbook.xml", "xl/worksheets/sheet1.xml"])
 def test_ingest_rejects_malformed_xml(client: TestClient, member: str) -> None:
     from zipfile import ZipFile
@@ -131,3 +119,10 @@ def test_ingest_rejects_malformed_xml(client: TestClient, member: str) -> None:
     response = client.post("/ingest", files={"file": ("broken.xlsx", malformed.getvalue())})
     assert response.status_code == 422
     assert "detail" in response.json()
+
+
+@pytest.mark.parametrize("question", ["x\x00", "x\n", "x\t", "x\x1f", "x\x7f", "x\x85", "x\u202e", "x" * 1001])
+def test_ask_rejects_control_characters_and_overlength_input(client: TestClient, question: str) -> None:
+    response = client.post("/ask", json={"question": question})
+    assert response.status_code == 422
+    assert response.json()["detail"][0]["loc"] == ["body", "question"]

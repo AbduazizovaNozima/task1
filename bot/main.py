@@ -16,11 +16,9 @@ NOISY_LOGGERS = ("httpx", "aiogram.event")
 HELP = (
     "Men davlat xizmatlari bo'yicha savollarga javob beraman: pasport va ID-karta, nikoh va FHDYO, "
     "haydovchilik guvohnomasi, soliq va tadbirkorlik, pensiya va nafaqalar, ta'lim va tibbiyot, "
-    "harbiy xizmat, notarius va ko'chmas mulk.\n\n"
-    "Agar yangi mavzuga o'tmoqchi bo'lsangiz: /new"
+    "harbiy xizmat, notarius va ko'chmas mulk."
 )
 WELCOME = "Assalomu alaykum! Savolingizni bemalol lotin yoki kirill yozuvida so'rashingiz mumkin.\n\n" + HELP
-NEW_CHAT = "Yangi suhbat boshlandi. Savolingizni yozing."
 NOT_FOUND = (
     "Kechirasiz, bu savolga mos javob bazada topilmadi. "
     "Savolni boshqacharoq ifodalab ko'ring yoki /help orqali mavzularni ko'ring."
@@ -39,21 +37,12 @@ def format_reply(reply: AskReply) -> str:
     return NOT_FOUND
 
 
-def session_id(message: Message) -> str:
-    user_id = message.from_user.id if message.from_user else message.chat.id
-    return f"telegram-{message.chat.id}-{user_id}"
-
-
 def build_router(api: QAApiClient) -> Router:
     router = Router()
 
     @router.message(CommandStart())
     async def on_start(message: Message) -> None:
-        await _reset(message, WELCOME)
-
-    @router.message(Command("new"))
-    async def on_new(message: Message) -> None:
-        await _reset(message, NEW_CHAT)
+        await message.answer(WELCOME)
 
     @router.message(Command("help"))
     async def on_help(message: Message) -> None:
@@ -62,7 +51,7 @@ def build_router(api: QAApiClient) -> Router:
     @router.message(F.text)
     async def on_question(message: Message) -> None:
         try:
-            reply = await api.ask(message.text or "", session_id(message))
+            reply = await api.ask(message.text or "")
         except QAApiValidationError:
             await message.answer(INVALID_QUESTION)
             return
@@ -73,15 +62,6 @@ def build_router(api: QAApiClient) -> Router:
         text = format_reply(reply)
         for offset in range(0, len(text), TELEGRAM_MESSAGE_LIMIT):
             await message.answer(text[offset : offset + TELEGRAM_MESSAGE_LIMIT], parse_mode=None)
-
-    async def _reset(message: Message, text: str) -> None:
-        try:
-            await api.reset(session_id(message))
-        except QAApiError:
-            logger.exception("Q&A API reset failed")
-            await message.answer(SERVICE_DOWN)
-            return
-        await message.answer(text)
 
     @router.message()
     async def on_other(message: Message) -> None:

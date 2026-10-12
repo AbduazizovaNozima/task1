@@ -1,6 +1,5 @@
 import os
 from collections.abc import Iterator
-from datetime import timedelta
 from uuid import uuid4
 
 import psycopg
@@ -8,11 +7,10 @@ import pytest
 from psycopg_pool import ConnectionPool
 from qdrant_client import QdrantClient
 
-from app.adapters.pg_chat_history import PostgresChatHistory
 from app.adapters.pg_repository import PostgresRepository
 from app.adapters.qdrant_index import QdrantIndex
 from app.domain.errors import IndexNotReadyError, StorageUnavailableError
-from app.domain.models import Answer, ChatTurn, Question
+from app.domain.models import Answer, Question
 from tests.fakes import bag_of_words
 
 pytestmark = pytest.mark.integration
@@ -100,30 +98,6 @@ def test_qdrant_upsert_search_and_lookup(index: QdrantIndex) -> None:
     assert hits[0].answer_id == answer_id
     assert hits[0].score == pytest.approx(1.0, abs=1e-4)
     assert index.indexed_answer_ids([questions[0].id, uuid4()]) == {questions[0].id: answer_id}
-
-
-def test_postgres_chat_history_keeps_one_turn_per_session(pool: ConnectionPool) -> None:
-    history = PostgresChatHistory(pool, ttl=timedelta(minutes=5))
-    history.create_schema()
-    answer_id = uuid4()
-
-    history.save("user-1", ChatTurn(topic="pasport", answer_id=None))
-    history.save("user-1", ChatTurn(topic="id karta", answer_id=answer_id))
-    history.save("user-2", ChatTurn(topic="nikoh", answer_id=None))
-
-    assert history.last("user-1") == ChatTurn(topic="id karta", answer_id=answer_id)
-    assert history.last("user-2") == ChatTurn(topic="nikoh", answer_id=None)
-    history.clear("user-1")
-    assert history.last("user-1") is None
-
-
-def test_postgres_chat_history_expires_old_turns(pool: ConnectionPool) -> None:
-    history = PostgresChatHistory(pool, ttl=timedelta(0))
-    history.create_schema()
-
-    history.save("user-1", ChatTurn(topic="pasport", answer_id=None))
-
-    assert history.last("user-1") is None
 
 
 def test_unreachable_postgres_raises_storage_error() -> None:
