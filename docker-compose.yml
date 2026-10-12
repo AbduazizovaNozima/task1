@@ -56,7 +56,7 @@ services:
     env_file: .env
     environment:
       API_BASE_URL: http://api:8000
-    restart: on-failure
+    restart: on-failure:3
     depends_on:
       api: {condition: service_healthy}
 

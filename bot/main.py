@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher, F, Router
 from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
 
-from bot.api_client import AskReply, QAApiClient, QAApiError
+from bot.api_client import AskReply, QAApiClient, QAApiError, QAApiValidationError
 from bot.config import BotSettings
 
 logger = logging.getLogger(__name__)
@@ -17,12 +17,9 @@ HELP = (
     "Men davlat xizmatlari bo'yicha savollarga javob beraman: pasport va ID-karta, nikoh va FHDYO, "
     "haydovchilik guvohnomasi, soliq va tadbirkorlik, pensiya va nafaqalar, ta'lim va tibbiyot, "
     "harbiy xizmat, notarius va ko'chmas mulk.\n\n"
-    "Masalan:\n• ID karta olish uchun nima kerak?\n• Nikoh yoshi necha yosh?\n"
-    "• Pensiyani kartaga o'tkazsa bo'ladimi?\n\n"
-    "Lotin yoki kirill yozuvida yozishingiz mumkin. Oldingi savolingizni eslab qolaman, "
-    'masalan "muddati-chi?" deb davom ettirishingiz mumkin. Yangi mavzu: /new'
+    "Agar yangi mavzuga o'tmoqchi bo'lsangiz: /new"
 )
-WELCOME = "Assalomu alaykum! Savolingizni o'z so'zlaringiz bilan yozing.\n\n" + HELP
+WELCOME = "Assalomu alaykum! Savolingizni bemalol lotin yoki kirill yozuvida so'rashingiz mumkin.\n\n" + HELP
 NEW_CHAT = "Yangi suhbat boshlandi. Savolingizni yozing."
 NOT_FOUND = (
     "Kechirasiz, bu savolga mos javob bazada topilmadi. "
@@ -30,14 +27,15 @@ NOT_FOUND = (
 )
 CLARIFY = "Savolingizni aniqlashtiring. Balki quyidagilardan birini nazarda tutgandirsiz:"
 SERVICE_DOWN = "Xizmat vaqtincha ishlamayapti. Birozdan so'ng qayta urinib ko'ring."
+INVALID_QUESTION = "Savolni tekshiring: bo‘sh bo‘lmagan, 1000 belgidan oshmaydigan matn yuboring."
 TEXT_ONLY = "Iltimos, savolingizni matn ko'rinishida yozing."
 
 
 def format_reply(reply: AskReply) -> str:
     if reply.found and reply.answer:
-        return reply.answer[:TELEGRAM_MESSAGE_LIMIT]
+        return reply.answer
     if reply.suggestions:
-        return "\n".join([CLARIFY, *(f"• {question}" for question in reply.suggestions)])[:TELEGRAM_MESSAGE_LIMIT]
+        return "\n".join([CLARIFY, *(f"• {question}" for question in reply.suggestions)])
     return NOT_FOUND
 
 
@@ -65,17 +63,24 @@ def build_router(api: QAApiClient) -> Router:
     async def on_question(message: Message) -> None:
         try:
             reply = await api.ask(message.text or "", session_id(message))
+        except QAApiValidationError:
+            await message.answer(INVALID_QUESTION)
+            return
         except QAApiError:
             logger.exception("Q&A API request failed")
             await message.answer(SERVICE_DOWN)
             return
-        await message.answer(format_reply(reply))
+        text = format_reply(reply)
+        for offset in range(0, len(text), TELEGRAM_MESSAGE_LIMIT):
+            await message.answer(text[offset : offset + TELEGRAM_MESSAGE_LIMIT], parse_mode=None)
 
     async def _reset(message: Message, text: str) -> None:
         try:
             await api.reset(session_id(message))
         except QAApiError:
             logger.exception("Q&A API reset failed")
+            await message.answer(SERVICE_DOWN)
+            return
         await message.answer(text)
 
     @router.message()
