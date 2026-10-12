@@ -58,7 +58,6 @@ class SearchResult(_Frozen):
     answer: str | None = None
     matched_question: str | None = None
     suggestions: list[str] = []
-    candidates: list[Candidate] = []
 
 
 class IngestReport(_Frozen):

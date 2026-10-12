@@ -66,17 +66,16 @@ class SearchService:
             return SearchResult(found=False, score=None)
         best = candidates[0]
         if best.score < self._threshold:
-            return SearchResult(found=False, score=best.score, candidates=candidates)
+            return SearchResult(found=False, score=best.score)
         if self._is_ambiguous(query, candidates):
             close = [c.question for c in candidates if best.score - c.score < self._ambiguity_margin]
-            return SearchResult(found=False, score=best.score, suggestions=close, candidates=candidates)
+            return SearchResult(found=False, score=best.score, suggestions=close)
         return SearchResult(
             found=True,
             score=best.score,
             answer_id=best.answer_id,
             answer=best.answer,
             matched_question=best.question,
-            candidates=candidates,
         )
 
     def _is_ambiguous(self, query: str, candidates: list[Candidate]) -> bool:
