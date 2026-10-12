@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from app.adapters.excel_reader import read_qa_sheet
 from app.config import Settings
 from app.container import build_container
-from app.domain.query import word_count
+from app.domain.query import is_ambiguous
 from app.domain.text import stable_id
 from app.log import configure_logging
 from app.services.ingestion import to_records
@@ -28,14 +28,12 @@ class EvalItem(BaseModel):
 @dataclass(frozen=True)
 class Reference:
     answer_of: dict[UUID, UUID]
-    question_text: dict[UUID, str]
 
 
 def load_reference(sheet_path: Path) -> Reference:
     _, questions = to_records(read_qa_sheet(sheet_path).pairs)
     return Reference(
         answer_of={q.id: q.answer_id for q in questions},
-        question_text={q.id: q.text for q in questions},
     )
 
 
@@ -50,17 +48,18 @@ class Observation:
 
 def collect(search: SearchService, path: Path, reference: Reference, settings: Settings) -> list[Observation]:
     observations = []
-    for line in path.read_text().splitlines():
+    for line in path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
         item = EvalItem.model_validate_json(line)
         hits = search.rank(item.query)
         expected = frozenset(str(reference.answer_of[stable_id(text)]) for text in item.expected)
         ranked = [str(hit.answer_id) for hit in hits]
-        ambiguous = (
-            len(hits) > 1
-            and word_count(item.query) <= settings.ambiguity_max_words
-            and hits[0].score - hits[1].score < settings.ambiguity_margin
+        ambiguous = is_ambiguous(
+            item.query,
+            [hit.score for hit in hits[: settings.search_top_k]],
+            settings.ambiguity_margin,
+            settings.ambiguity_max_words,
         )
         observations.append(
             Observation(

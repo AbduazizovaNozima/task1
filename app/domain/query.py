@@ -1,4 +1,5 @@
 import re
+from collections.abc import Sequence
 
 from app.domain.text import normalize
 
@@ -106,3 +107,7 @@ def expand(query: str) -> str:
 
 def word_count(query: str) -> int:
     return len(normalize(query).split())
+
+
+def is_ambiguous(query: str, scores: Sequence[float], margin: float, max_words: int) -> bool:
+    return len(scores) > 1 and word_count(query) <= max_words and scores[0] - scores[1] < margin

@@ -4,7 +4,7 @@ from uuid import UUID
 from app.domain.errors import EmptyQueryError
 from app.domain.models import Candidate, SearchResult, VectorHit
 from app.domain.ports import Embedder, QARepository, VectorIndex
-from app.domain.query import expand, word_count
+from app.domain.query import expand, is_ambiguous
 from app.domain.text import stable_id
 
 
@@ -67,7 +67,7 @@ class SearchService:
         best = candidates[0]
         if best.score < self._threshold:
             return SearchResult(found=False, score=best.score)
-        if self._is_ambiguous(query, candidates):
+        if is_ambiguous(query, [c.score for c in candidates], self._ambiguity_margin, self._ambiguity_max_words):
             close = [c.question for c in candidates if best.score - c.score < self._ambiguity_margin]
             return SearchResult(found=False, score=best.score, suggestions=close)
         return SearchResult(
@@ -77,11 +77,6 @@ class SearchService:
             answer=best.answer,
             matched_question=best.question,
         )
-
-    def _is_ambiguous(self, query: str, candidates: list[Candidate]) -> bool:
-        if len(candidates) < 2 or word_count(query) > self._ambiguity_max_words:
-            return False
-        return candidates[0].score - candidates[1].score < self._ambiguity_margin
 
 
 def best_per_answer(hits: Sequence[VectorHit]) -> list[VectorHit]:
