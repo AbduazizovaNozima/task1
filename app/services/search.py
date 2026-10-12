@@ -24,7 +24,7 @@ class SearchService:
         self._index = index
         self._repository = repository
         self._threshold = threshold
-        self._candidates = candidates
+        self._candidate_limit = candidates
         self._top_k = top_k
         self._ambiguity_margin = ambiguity_margin
         self._ambiguity_max_words = ambiguity_max_words
@@ -34,7 +34,7 @@ class SearchService:
         if not text:
             raise EmptyQueryError("Savol matni bo'sh.")
         [vector] = self._embedder.embed([text])
-        hits = self._index.search(vector, self._candidates)
+        hits = self._index.search(vector, self._candidate_limit)
         records = self._repository.get_many([hit.question_id for hit in hits])
         # SQL is the publication boundary. Partial vector writes may survive a rollback.
         committed = [

@@ -12,9 +12,12 @@ from app.log import configure_logging
 
 logger = logging.getLogger(__name__)
 
+STORAGE_READY_TIMEOUT_SECONDS = 60
+STORAGE_RETRY_INTERVAL_SECONDS = 2
+
 
 def wait_for_storage(check: Callable[[], None]) -> None:
-    deadline = time.monotonic() + 60
+    deadline = time.monotonic() + STORAGE_READY_TIMEOUT_SECONDS
     while True:
         try:
             check()
@@ -24,7 +27,7 @@ def wait_for_storage(check: Callable[[], None]) -> None:
             if remaining <= 0:
                 raise
             logger.warning("Storage not ready; retrying startup check")
-            time.sleep(min(2, remaining))
+            time.sleep(min(STORAGE_RETRY_INTERVAL_SECONDS, remaining))
 
 
 def main(argv: list[str] | None = None) -> None:
