@@ -73,11 +73,11 @@ def build_router(api: QAApiClient, log_questions: bool = True) -> Router:
             reply = await api.ask(message.text or "")
         except QAApiValidationError:
             await message.answer(INVALID_QUESTION)
-            return
+            return None
         except QAApiError:
             logger.exception("Q&A API request failed")
             await message.answer(SERVICE_DOWN)
-            return
+            return None
         text = format_reply(reply)
         for offset in range(0, len(text), TELEGRAM_MESSAGE_LIMIT):
             await message.answer(text[offset : offset + TELEGRAM_MESSAGE_LIMIT], parse_mode=None)

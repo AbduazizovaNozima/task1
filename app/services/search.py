@@ -7,7 +7,6 @@ from app.domain.ports import Embedder, QARepository, VectorIndex
 from app.domain.query import expand, is_ambiguous
 from app.domain.text import stable_id
 
-
 DecisionObserver = Callable[[Sequence[Candidate], SearchResult, str, float], None]
 
 

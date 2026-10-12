@@ -1,7 +1,7 @@
 import logging
+import re
 from collections.abc import Iterator
 from unittest.mock import Mock
-from uuid import UUID
 
 import pytest
 from fastapi import FastAPI
@@ -12,8 +12,7 @@ from app.api.main import create_app
 from app.config import Settings
 from app.container import Container
 from app.domain.errors import StorageUnavailableError
-from app.domain.models import SearchResult
-from app.services.search import SearchService
+from app.domain.models import QAPair, VectorHit
 from tests.fakes import build_services, xlsx
 
 
@@ -130,35 +129,59 @@ def test_model_warmup_failure_closes_the_container() -> None:
     close.assert_called_once_with()
 
 
-def test_ask_log_format_and_toggle(client: TestClient, caplog: pytest.LogCaptureFixture) -> None:
-    search = Mock(spec=SearchService)
-    search.ask.return_value = SearchResult(
-        found=True,
-        score=0.77549,
-        answer_id=UUID(int=1),
-        answer="ID-karta\n" + "a" * 100,
+def test_ask_log_format_and_toggle(
+    client: TestClient, caplog: pytest.LogCaptureFixture, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    services = build_services(
+        [
+            QAPair(question="id karta\u2028" + "x" * 150, answer="ID-karta\n" + "a" * 100),
+            QAPair(question="Other", answer="B"),
+        ],
+        threshold=0.67,
+        ambiguity_margin=0.02,
     )
-    settings = Settings(_env_file=None)
+    questions = list(services.repository.questions.values())
+    index_search = Mock()
+    monkeypatch.setattr(services.index, "search", index_search)
+    settings = Settings(_env_file=None, log_top_k=1)
     assert isinstance(client.app, FastAPI)
-    client.app.dependency_overrides[get_search] = lambda: search
+    client.app.dependency_overrides[get_search] = lambda: services.search
     client.app.dependency_overrides[get_settings] = lambda: settings
     caplog.set_level(logging.INFO, logger="app.api.routes")
 
-    response = client.post("/ask", json={"question": "id karta\u2028" + "x" * 210})
-
-    assert response.status_code == 200
-    lines = [record.getMessage() for record in caplog.records if record.name == "app.api.routes"]
-    assert lines == [
-        f'ask question="id karta {"x" * 191}" found=true score=0.775 '
-        f'answer_id=00000000-0000-0000-0000-000000000001 answer="ID-karta {"a" * 71}"'
+    cases = [
+        ("id karta\u2028" + "x" * 210, [0.77549, 0.7], True, "0.775", "+0.105", "accepted"),
+        ("unknown", [0.66949, 0.65], False, "0.669", "-0.001", "below_threshold"),
+        ("short", [0.68949, 0.68], False, "0.689", "+0.019", "ambiguous"),
+        ("unknown", [], False, "null", "null", "no_candidates"),
     ]
-
-    caplog.clear()
-    search.ask.return_value = SearchResult(found=False, score=None)
-    assert client.post("/ask", json={"question": "unknown"}).status_code == 200
-    assert [record.getMessage() for record in caplog.records if record.name == "app.api.routes"] == [
-        'ask question="unknown" found=false score=null answer_id=null answer=""'
-    ]
+    for question, scores, found, score, margin, reason in cases:
+        index_search.return_value = [
+            VectorHit(question_id=q.id, answer_id=q.answer_id, score=value)
+            for q, value in zip(questions, scores, strict=False)
+        ]
+        caplog.clear()
+        response = client.post("/ask", json={"question": question})
+        assert response.status_code == 200
+        assert response.json()["found"] is found
+        request_id = response.headers["X-Request-ID"]
+        assert re.fullmatch(r"[0-9a-f]{8}", request_id)
+        logged_question = f'id karta {"x" * 191}' if found else question
+        expected = [f'ask request_id={request_id} question="{logged_question}"']
+        if scores:
+            expected.append(
+                f"candidate request_id={request_id} rank=1 score={score} answer_id={questions[0].answer_id} "
+                f'matched_question="id karta {"x" * 111}"'
+            )
+        chosen_rank = "1" if found else "null"
+        answer = f'ID-karta {"a" * 71}' if found else ""
+        expected.append(
+            f"decision request_id={request_id} found={str(found).lower()} chosen_rank={chosen_rank} "
+            f'score={score} threshold=0.670 margin_to_threshold={margin} reason={reason} answer="{answer}"'
+        )
+        assert [record.getMessage() for record in caplog.records if record.name == "app.api.routes"] == expected
+        index_search.assert_called_once()
+        index_search.reset_mock()
 
     caplog.clear()
     settings.log_questions = False
