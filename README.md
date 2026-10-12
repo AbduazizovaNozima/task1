@@ -65,6 +65,6 @@ Ingest boshlanishida saqlash servislarining tayyorligi 60 soniyagacha qayta teks
 
 ## So'rov loglari
 
-`LOG_QUESTIONS=true` (default) API'da savol, topilgan javob ID'si, ball va javob boshini INFO darajasida yozadi; bot kiruvchi matn uchun faqat Telegram user/chat ID'larini yozadi. Savollar shaxsiy ma'lumotlarni o'z ichiga olishi mumkin. Ushbu loglarni o'chirish uchun `.env` da `LOG_QUESTIONS=false` belgilang va servislarni qayta yarating.
+`LOG_QUESTIONS=true` (default) API'da savol, qaror uchun ishlatilgan nomzodlar va yakuniy qarorni INFO darajasida yozadi. `LOG_TOP_K=5` logdagi nomzodlar sonini cheklaydi, qidiruv qarorini o'zgartirmaydi. Har bir satrda 8 hex belgili `request_id` bor; u `X-Request-ID` javob header'ida ham qaytadi. Bot matn uchun Telegram user/chat ID'larini va mavjud bo'lsa shu `request_id` ni yozadi. Savollar shaxsiy ma'lumotlarni o'z ichiga olishi mumkin. Ushbu loglarni o'chirish uchun `.env` da `LOG_QUESTIONS=false` belgilang va servislarni qayta yarating.
 
 Model keshi tashqi Docker volume'da saqlanadi; yuqoridagi `docker volume create` mavjud keshni saqlaydi va yangi muhitda volume yaratadi. `HF_CACHE_VOLUME` bilan boshqa kesh nomini tanlash mumkin.

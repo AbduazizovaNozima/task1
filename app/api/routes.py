@@ -1,8 +1,10 @@
 import json
 import logging
+from collections.abc import Sequence
 from typing import Annotated
+from uuid import uuid4
 
-from fastapi import APIRouter, Depends, File, UploadFile
+from fastapi import APIRouter, Depends, File, Response, UploadFile
 
 from app.adapters.excel_reader import read_qa_sheet
 from app.api.deps import get_container, get_ingestion, get_search, get_settings
@@ -10,6 +12,7 @@ from app.api.schemas import AskRequest, AskResponse, HealthResponse, IngestRespo
 from app.config import Settings
 from app.container import Container
 from app.domain.errors import InvalidSpreadsheetError
+from app.domain.models import Candidate, SearchResult
 from app.services.ingestion import IngestionService
 from app.services.search import SearchService
 
@@ -29,19 +32,43 @@ def health(container: Annotated[Container, Depends(get_container)]) -> HealthRes
 @router.post("/ask")
 def ask(
     payload: AskRequest,
+    response: Response,
     search: Annotated[SearchService, Depends(get_search)],
     settings: Annotated[Settings, Depends(get_settings)],
 ) -> AskResponse:
-    result = search.ask(payload.question)
-    if settings.log_questions:
+    request_id = uuid4().hex[:8]
+    response.headers["X-Request-ID"] = request_id
+
+    def log_decision(candidates: Sequence[Candidate], result: SearchResult, reason: str, threshold: float) -> None:
+        for rank, candidate in enumerate(candidates[: settings.log_top_k], 1):
+            logger.info(
+                "candidate request_id=%s rank=%d score=%.3f answer_id=%s matched_question=%s",
+                request_id,
+                rank,
+                candidate.score,
+                candidate.answer_id,
+                json.dumps(" ".join(candidate.question.splitlines())[:120], ensure_ascii=False),
+            )
         logger.info(
-            "ask question=%s found=%s score=%s answer_id=%s answer=%s",
-            json.dumps(" ".join(payload.question.splitlines())[:200], ensure_ascii=False),
+            "decision request_id=%s found=%s chosen_rank=%s score=%s threshold=%.3f "
+            "margin_to_threshold=%s reason=%s answer=%s",
+            request_id,
             str(result.found).lower(),
+            1 if result.found else "null",
             f"{result.score:.3f}" if result.score is not None else "null",
-            result.answer_id or "null",
+            threshold,
+            f"{result.score - threshold:+.3f}" if result.score is not None else "null",
+            reason,
             json.dumps(" ".join((result.answer or "").splitlines())[:80], ensure_ascii=False),
         )
+
+    if settings.log_questions:
+        logger.info(
+            "ask request_id=%s question=%s",
+            request_id,
+            json.dumps(" ".join(payload.question.splitlines())[:200], ensure_ascii=False),
+        )
+    result = search.ask(payload.question, observe=log_decision if settings.log_questions else None)
     return AskResponse.model_validate(result.model_dump())
 
 

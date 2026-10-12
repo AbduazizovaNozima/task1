@@ -1,4 +1,4 @@
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from uuid import UUID
 
 from app.domain.errors import EmptyQueryError
@@ -6,6 +6,9 @@ from app.domain.models import Candidate, SearchResult, VectorHit
 from app.domain.ports import Embedder, QARepository, VectorIndex
 from app.domain.query import expand, is_ambiguous
 from app.domain.text import stable_id
+
+
+DecisionObserver = Callable[[Sequence[Candidate], SearchResult, str, float], None]
 
 
 class SearchService:
@@ -44,9 +47,9 @@ class SearchService:
         ]
         return best_per_answer(committed)
 
-    def ask(self, query: str) -> SearchResult:
+    def ask(self, query: str, *, observe: DecisionObserver | None = None) -> SearchResult:
         hits = self.rank(query)[: self._top_k]
-        return self._decide(query, self._candidates_for(hits))
+        return self._decide(query, self._candidates_for(hits), observe=observe)
 
     def _candidates_for(self, hits: list[VectorHit]) -> list[Candidate]:
         records = self._repository.get_many([hit.question_id for hit in hits])
@@ -61,21 +64,31 @@ class SearchService:
             if hit.question_id in records
         ]
 
-    def _decide(self, query: str, candidates: list[Candidate]) -> SearchResult:
+    def _decide(
+        self, query: str, candidates: list[Candidate], *, observe: DecisionObserver | None = None
+    ) -> SearchResult:
+        def report(result: SearchResult, reason: str) -> SearchResult:
+            if observe is not None:
+                observe(candidates, result, reason, self._threshold)
+            return result
+
         if not candidates:
-            return SearchResult(found=False, score=None)
+            return report(SearchResult(found=False, score=None), "no_candidates")
         best = candidates[0]
         if best.score < self._threshold:
-            return SearchResult(found=False, score=best.score)
+            return report(SearchResult(found=False, score=best.score), "below_threshold")
         if is_ambiguous(query, [c.score for c in candidates], self._ambiguity_margin, self._ambiguity_max_words):
             close = [c.question for c in candidates if best.score - c.score < self._ambiguity_margin]
-            return SearchResult(found=False, score=best.score, suggestions=close)
-        return SearchResult(
-            found=True,
-            score=best.score,
-            answer_id=best.answer_id,
-            answer=best.answer,
-            matched_question=best.question,
+            return report(SearchResult(found=False, score=best.score, suggestions=close), "ambiguous")
+        return report(
+            SearchResult(
+                found=True,
+                score=best.score,
+                answer_id=best.answer_id,
+                answer=best.answer,
+                matched_question=best.question,
+            ),
+            "accepted",
         )
 
 

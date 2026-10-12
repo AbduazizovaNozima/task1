@@ -47,13 +47,15 @@ def build_router(api: QAApiClient, log_questions: bool = True) -> Router:
         event: TelegramObject,
         data: dict[str, Any],
     ) -> Any:
+        result = await handler(event, data)
         if log_questions and isinstance(event, Message) and event.text is not None:
             logger.info(
-                "telegram user_id=%s chat_id=%s",
+                "telegram user_id=%s chat_id=%s%s",
                 event.from_user.id if event.from_user else "null",
                 event.chat.id,
+                f" request_id={result}" if isinstance(result, str) else "",
             )
-        return await handler(event, data)
+        return result
 
     router.message.outer_middleware(log_incoming_text)
 
@@ -66,7 +68,7 @@ def build_router(api: QAApiClient, log_questions: bool = True) -> Router:
         await message.answer(HELP)
 
     @router.message(F.text)
-    async def on_question(message: Message) -> None:
+    async def on_question(message: Message) -> str | None:
         try:
             reply = await api.ask(message.text or "")
         except QAApiValidationError:
@@ -79,6 +81,7 @@ def build_router(api: QAApiClient, log_questions: bool = True) -> Router:
         text = format_reply(reply)
         for offset in range(0, len(text), TELEGRAM_MESSAGE_LIMIT):
             await message.answer(text[offset : offset + TELEGRAM_MESSAGE_LIMIT], parse_mode=None)
+        return reply.request_id
 
     @router.message()
     async def on_other(message: Message) -> None:

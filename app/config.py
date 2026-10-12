@@ -28,3 +28,4 @@ class Settings(BaseSettings):
     max_upload_mb: int = Field(default=10, ge=1)
     log_level: str = "INFO"
     log_questions: bool = True
+    log_top_k: int = Field(default=5, ge=1, le=50)

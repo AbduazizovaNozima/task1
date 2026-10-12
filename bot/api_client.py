@@ -1,5 +1,5 @@
 import httpx
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class AskReply(BaseModel):
@@ -8,6 +8,7 @@ class AskReply(BaseModel):
     matched_question: str | None
     score: float | None
     suggestions: list[str] = []
+    request_id: str | None = Field(default=None, exclude=True)
 
 
 class QAApiError(Exception):
@@ -31,7 +32,8 @@ class QAApiClient:
         except httpx.HTTPError as exc:
             raise QAApiError(str(exc)) from exc
         try:
-            return AskReply.model_validate(response.json())
+            reply = AskReply.model_validate(response.json())
+            return reply.model_copy(update={"request_id": response.headers.get("X-Request-ID")})
         except ValueError as exc:
             raise QAApiError("Q&A API returned an invalid response") from exc
 
