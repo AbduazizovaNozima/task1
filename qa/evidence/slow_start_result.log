@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/home/nozima/Music/task1_semantic_qa/qa/check_slow_start.py", line 16, in <module>
-    assert results[1] == 0, 'API startup failed when Qdrant needed 30 seconds to become ready; see evidence/slow_start.log'
-           ^^^^^^^^^^^^^^^
-AssertionError: API startup failed when Qdrant needed 30 seconds to become ready; see evidence/slow_start.log

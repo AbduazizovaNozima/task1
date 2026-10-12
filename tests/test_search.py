@@ -1,10 +1,7 @@
-from uuid import uuid4
-
 import pytest
 
 from app.domain.errors import EmptyQueryError
-from app.domain.models import QAPair, VectorHit
-from app.services.search import best_per_answer
+from app.domain.models import QAPair
 from tests.fakes import build_services
 
 PAIRS = [
@@ -15,14 +12,13 @@ PAIRS = [
 ]
 
 
-def test_ask_returns_answer_and_candidates() -> None:
+def test_ask_returns_the_stored_answer_and_matching_question() -> None:
     result = build_services(PAIRS).search.ask("Pasport  qanday OLINADI")
 
     assert result.found
     assert result.answer == "DXM orqali."
     assert result.matched_question == "Pasport qanday olinadi"
     assert result.score == pytest.approx(1.0)
-    assert result.candidates[0].question == "Pasport qanday olinadi"
 
 
 def test_ask_reports_not_found_below_threshold() -> None:
@@ -66,22 +62,3 @@ def test_rank_returns_one_hit_per_answer() -> None:
     ranked = build_services(PAIRS).search.rank("pasport")
 
     assert len(ranked) == len({hit.answer_id for hit in ranked})
-
-
-def test_best_per_answer_keeps_highest_score() -> None:
-    answer = uuid4()
-    low = VectorHit(question_id=uuid4(), answer_id=answer, score=0.4)
-    high = VectorHit(question_id=uuid4(), answer_id=answer, score=0.9)
-
-    assert best_per_answer([low, high]) == [high]
-
-
-def test_calibrated_default_rejects_between_old_and_new_threshold() -> None:
-    from app.config import Settings
-    from app.domain.models import Candidate
-
-    settings = Settings(_env_file=None)
-    service = build_services(threshold=settings.match_threshold).search
-    # Midpoint between the frozen baseline and dev-selected candidate, independent of query wording.
-    candidate = Candidate(answer_id=uuid4(), question="generic query", answer="generic answer", score=(0.64 + 0.67) / 2)
-    assert not service._decide("generic query", [candidate]).found

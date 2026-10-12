@@ -1,9 +1,12 @@
+import io
 import math
 import zlib
 from collections.abc import Iterator, Sequence
 from contextlib import contextmanager
 from dataclasses import dataclass
 from uuid import UUID
+
+from openpyxl import Workbook
 
 from app.domain.models import Answer, QAPair, QARecord, QASheet, Question, VectorHit
 from app.services.ingestion import IngestionService
@@ -90,9 +93,10 @@ def build_services(
     pairs: Sequence[QAPair] = (),
     threshold: float = 0.6,
     ambiguity_margin: float = 0.0,
+    batch_size: int = 8,
 ) -> Services:
     repository, index, embedder = InMemoryRepository(), InMemoryIndex(), FakeEmbedder()
-    ingestion = IngestionService(repository, index, embedder, batch_size=8)
+    ingestion = IngestionService(repository, index, embedder, batch_size=batch_size)
     if pairs:
         ingestion.ingest(QASheet(pairs=list(pairs), skipped=[]))
     search = SearchService(
@@ -106,3 +110,15 @@ def build_services(
         ambiguity_max_words=2,
     )
     return Services(repository, index, embedder, search, ingestion)
+
+
+def xlsx(rows: list[list[str | None]]) -> bytes:
+    workbook = Workbook()
+    try:
+        for row in rows:
+            workbook.active.append(row)
+        with io.BytesIO() as buffer:
+            workbook.save(buffer)
+            return buffer.getvalue()
+    finally:
+        workbook.close()

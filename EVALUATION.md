@@ -58,3 +58,10 @@ Dev evaluator joriy threshold bo'yicha bitta savol qarorlarini hisoblaydi. Tunin
 0.67 ham holdout'da **24 noto'g'ri javobni qabul qiladi**, ulardan 16 tasi OOD. Yuqori similarity javobning so'ralgan jihatni qamrab olishini kafolatlamaydi. Phase 1 dagi ID-karta narxi misoli kabi noto'g'ri, lekin yuqori balli javoblar qolishi mumkin. Maxsus misol keyword'lari kiritilmadi.
 
 Keyingi mustaqil tajriba uchun yangi holdout kerak: bu holdout endi release qarorida ishlatilgan. Reranker yoki sparse/hybrid qidiruv ushbu bosqichda qo'shilmadi; yangi model, dependency va kalibrovka ko'lamini oshirmasdan global threshold bilan kichik, o'lchangan yaxshilanish olindi. Bazadagi mazmunan yaqin, matni turlicha javoblar ham annotatsiya cheklovi bo'lib qoladi.
+
+
+QA cheklovlari: real Telegram akkaunti va guruhlarida xabar yetkazish tekshirilmagan;
+bot testlari lokal HTTP va ushlangan chiqish xabarlaridan foydalanadi. QA-01 misoli:
+"ID-karta narxi" yuqori similarity bilan kartada saqlanadigan shaxsiy ma'lumotlar
+haqidagi javobni qaytarishi mumkin. Sintetik dev/holdout savollari real foydalanuvchi
+savollarining mustaqil namunasi emas.

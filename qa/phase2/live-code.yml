@@ -1,7 +1,0 @@
-services:
-  ingest:
-    volumes:
-      - /home/nozima/Music/task1_semantic_qa/app:/srv/app:ro
-  api:
-    volumes:
-      - /home/nozima/Music/task1_semantic_qa/app:/srv/app:ro

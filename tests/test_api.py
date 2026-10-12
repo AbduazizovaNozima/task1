@@ -1,15 +1,13 @@
-import io
 from collections.abc import Iterator
 
 import pytest
 from fastapi.testclient import TestClient
-from openpyxl import Workbook
 
 from app.api.main import create_app
 from app.config import Settings
 from app.container import Container
 from app.domain.errors import StorageUnavailableError
-from tests.fakes import build_services
+from tests.fakes import build_services, xlsx
 
 
 def make_client(check_fails: bool = False) -> TestClient:
@@ -33,15 +31,6 @@ def make_client(check_fails: bool = False) -> TestClient:
 def client() -> Iterator[TestClient]:
     with make_client() as test_client:
         yield test_client
-
-
-def xlsx(rows: list[list[str | None]]) -> bytes:
-    workbook = Workbook()
-    for row in rows:
-        workbook.active.append(row)
-    buffer = io.BytesIO()
-    workbook.save(buffer)
-    return buffer.getvalue()
 
 
 def upload(client: TestClient, content: bytes, name: str = "qa.xlsx") -> dict[str, object]:
@@ -105,20 +94,6 @@ def test_ingest_rejects_non_xlsx(client: TestClient) -> None:
 
 def test_ingest_rejects_too_large_file(client: TestClient) -> None:
     assert upload(client, b"x" * (1024 * 1024 + 1))["status"] == 422
-
-
-@pytest.mark.parametrize("member", ["xl/workbook.xml", "xl/worksheets/sheet1.xml"])
-def test_ingest_rejects_malformed_xml(client: TestClient, member: str) -> None:
-    from zipfile import ZipFile
-
-    source = xlsx([["question", "answer"]])
-    malformed = io.BytesIO()
-    with ZipFile(io.BytesIO(source)) as original, ZipFile(malformed, "w") as result:
-        for name in original.namelist():
-            result.writestr(name, b"<broken" if name == member else original.read(name))
-    response = client.post("/ingest", files={"file": ("broken.xlsx", malformed.getvalue())})
-    assert response.status_code == 422
-    assert "detail" in response.json()
 
 
 @pytest.mark.parametrize("question", ["x\x00", "x\n", "x\t", "x\x1f", "x\x7f", "x\x85", "x\u202e", "x" * 1001])

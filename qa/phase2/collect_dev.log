@@ -1,3 +1,0 @@
-$ docker cp task1_adversarial_qa-api-1:/tmp/qa-dev-results /home/nozima/Music/task1_semantic_qa/qa/phase2/dev-replay
-
-EXIT=0 ELAPSED=0.03s

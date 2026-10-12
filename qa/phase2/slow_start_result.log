@@ -1,3 +1,0 @@
-$ /home/nozima/Music/task1_semantic_qa/.venv/bin/python qa/check_slow_start.py
-
-EXIT=0 ELAPSED=41.35s

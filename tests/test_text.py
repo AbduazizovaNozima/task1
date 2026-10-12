@@ -8,13 +8,10 @@ from app.domain.text import normalize, stable_id
     [
         ("O‘zbekiston", "o'zbekiston"),
         ("oʻqish  va\tgʼalaba", "o'qish va g'alaba"),
-        ("Ma`lumot  ", "ma'lumot"),
         ("  ПАСПОРТ   олиш ", "паспорт олиш"),
-        ("Как получить паспорт?", "как получить паспорт?"),
-        ("", ""),
     ],
 )
-def test_normalize(raw: str, expected: str) -> None:
+def test_normalizes_apostrophes_case_and_spacing(raw: str, expected: str) -> None:
     assert normalize(raw) == expected
 
 

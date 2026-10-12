@@ -1,4 +1,0 @@
-$ /home/nozima/Music/task1_semantic_qa/qa/phase2/venv/bin/mypy app bot tests eval
-Success: no issues found in 48 source files
-
-EXIT=0 ELAPSED=34.47s

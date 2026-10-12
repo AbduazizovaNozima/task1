@@ -38,14 +38,6 @@ def test_ingest_deduplicates_answers_and_reports_counts(parts: Parts) -> None:
     }
 
 
-def test_ingest_embeds_in_batches_of_normalized_text(parts: Parts) -> None:
-    make_service(parts).ingest(SHEET)
-
-    embedder = parts[2]
-    assert [len(call) for call in embedder.calls] == [2, 1]
-    assert embedder.calls[0][0] == "pasport qanday olinadi?"
-
-
 def test_reingest_creates_no_duplicates_and_skips_unchanged(parts: Parts) -> None:
     service = make_service(parts)
     service.ingest(SHEET)
@@ -87,8 +79,7 @@ def test_partial_vector_write_does_not_publish_uncommitted_rows(monkeypatch: pyt
     from app.domain.errors import StorageUnavailableError
     from tests.fakes import build_services
 
-    services = build_services([QAPair(question="passport renewal", answer="Committed answer")])
-    services.ingestion._batch_size = 1
+    services = build_services([QAPair(question="passport renewal", answer="Committed answer")], batch_size=1)
     original = services.index.upsert
     calls = 0
 

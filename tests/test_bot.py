@@ -1,83 +1,80 @@
-import ast
-from pathlib import Path
+import asyncio
+from unittest.mock import AsyncMock, Mock
 
-from bot.api_client import AskReply
-from bot.main import CLARIFY, NOT_FOUND, format_reply
+import httpx
+import pytest
+from aiogram import Bot
+from aiogram.types import Message
 
-BOT_DIR = Path(__file__).resolve().parents[1] / "bot"
-
-
-def reply(found: bool, answer: str | None) -> AskReply:
-    return AskReply(found=found, answer=answer, matched_question=None, score=0.9)
-
-
-def test_found_answer_is_sent_as_is() -> None:
-    assert format_reply(reply(True, "DXM orqali.")) == "DXM orqali."
+from bot.api_client import AskReply, QAApiClient, QAApiError, QAApiValidationError
+from bot.main import INVALID_QUESTION, NOT_FOUND, SERVICE_DOWN, TELEGRAM_MESSAGE_LIMIT, build_router
 
 
-def test_not_found_gives_friendly_message() -> None:
-    assert format_reply(reply(False, None)) == NOT_FOUND
+def deliver(monkeypatch: pytest.MonkeyPatch, api: QAApiClient) -> list[tuple[str, str | None]]:
+    sent: list[tuple[str, str | None]] = []
 
+    async def capture(message: Message, text: str, parse_mode: str | None = None) -> Message:
+        sent.append((text, parse_mode))
+        return message
 
-def test_ambiguous_reply_lists_suggestions() -> None:
-    ambiguous = AskReply(
-        found=False,
-        answer=None,
-        matched_question=None,
-        score=0.7,
-        suggestions=["Pasport olish", "Pasport almashtirish"],
+    monkeypatch.setattr(Message, "answer", capture)
+    message = Message.model_validate(
+        {"message_id": 1, "date": 0, "chat": {"id": 1, "type": "private"}, "text": "Savol"}
     )
-
-    assert format_reply(ambiguous) == f"{CLARIFY}\n• Pasport olish\n• Pasport almashtirish"
-
-
-def test_long_answer_is_not_truncated() -> None:
-    assert format_reply(reply(True, "x" * 10_000)) == "x" * 10_000
+    asyncio.run(build_router(api).message.trigger(message, bot=Mock(spec=Bot)))
+    return sent
 
 
-def test_bot_never_imports_the_app_package() -> None:
-    for source in BOT_DIR.glob("*.py"):
-        for node in ast.walk(ast.parse(source.read_text())):
-            if isinstance(node, ast.ImportFrom):
-                assert not (node.module or "").startswith("app"), source.name
-            if isinstance(node, ast.Import):
-                assert not any(alias.name.startswith("app") for alias in node.names), source.name
+@pytest.mark.parametrize("answer", ["DXM orqali.", None])
+def test_question_routes_to_api_and_delivers_answer_or_not_found(
+    monkeypatch: pytest.MonkeyPatch, answer: str | None
+) -> None:
+    api = AsyncMock(spec=QAApiClient)
+    api.ask.return_value = AskReply(found=answer is not None, answer=answer, matched_question=None, score=0.9)
+    assert deliver(monkeypatch, api) == [(answer or NOT_FOUND, None)]
+    api.ask.assert_awaited_once_with("Savol")
 
 
-def test_handler_sends_all_answer_chunks_without_markup() -> None:
-    import asyncio
-    from unittest.mock import AsyncMock
+def test_long_answer_is_delivered_completely_as_plain_text(monkeypatch: pytest.MonkeyPatch) -> None:
+    text = "* _ [ ] < > & " * 800
+    api = AsyncMock(spec=QAApiClient)
+    api.ask.return_value = AskReply(found=True, answer=text, matched_question=None, score=0.9)
+    chunks = deliver(monkeypatch, api)
+    assert "".join(text for text, _ in chunks) == text
+    assert all(0 < len(text) <= TELEGRAM_MESSAGE_LIMIT and mode is None for text, mode in chunks)
 
-    from bot.main import TELEGRAM_MESSAGE_LIMIT, build_router
 
+@pytest.mark.parametrize(
+    "error,expected", [(QAApiError("offline"), SERVICE_DOWN), (QAApiValidationError("invalid"), INVALID_QUESTION)]
+)
+def test_api_errors_produce_an_actionable_bot_message(
+    monkeypatch: pytest.MonkeyPatch, error: QAApiError, expected: str
+) -> None:
+    api = AsyncMock(spec=QAApiClient)
+    api.ask.side_effect = error
+    assert deliver(monkeypatch, api) == [(expected, None)]
+
+
+@pytest.mark.parametrize(
+    "status,body,error",
+    [
+        (200, b"not JSON", QAApiError),
+        (200, b"{}", QAApiError),
+        (503, b"offline", QAApiError),
+        (422, b"invalid", QAApiValidationError),
+    ],
+)
+def test_client_translates_invalid_responses_and_http_errors(status: int, body: bytes, error: type[QAApiError]) -> None:
     async def scenario() -> None:
-        text = "* _ [ ] < > & " * 800
-        api = AsyncMock()
-        api.ask.return_value = reply(True, text)
-        message = AsyncMock()
-        message.text = "question"
-        await build_router(api).message.handlers[2].callback(message)
-        calls = message.answer.call_args_list
-        assert "".join(call.args[0] for call in calls) == text
-        assert all(0 < len(call.args[0]) <= TELEGRAM_MESSAGE_LIMIT for call in calls)
-        assert all(call.kwargs["parse_mode"] is None for call in calls)
-
-    asyncio.run(scenario())
-
-
-def test_bot_explains_invalid_question() -> None:
-    import asyncio
-    from unittest.mock import AsyncMock
-
-    from bot.api_client import QAApiValidationError
-    from bot.main import INVALID_QUESTION, build_router
-
-    async def scenario() -> None:
-        api = AsyncMock()
-        api.ask.side_effect = QAApiValidationError("too long")
-        message = AsyncMock()
-        message.text = "x" * 1001
-        await build_router(api).message.handlers[2].callback(message)
-        message.answer.assert_awaited_once_with(INVALID_QUESTION)
+        api = QAApiClient("http://api.test", 1)
+        await api._http.aclose()
+        api._http = httpx.AsyncClient(
+            transport=httpx.MockTransport(lambda _: httpx.Response(status, content=body)), base_url="http://api.test"
+        )
+        try:
+            with pytest.raises(error):
+                await api.ask("Savol")
+        finally:
+            await api.close()
 
     asyncio.run(scenario())

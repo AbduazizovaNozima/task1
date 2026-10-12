@@ -1,3 +1,0 @@
-services:
-  qdrant:
-    entrypoint: ["/bin/sh", "-c", "sleep 30; exec ./entrypoint.sh"]

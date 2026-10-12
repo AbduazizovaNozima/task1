@@ -1,3 +1,0 @@
-$ docker compose down -v
-
-EXIT=0 ELAPSED=0.11s

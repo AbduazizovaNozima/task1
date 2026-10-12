@@ -6,3 +6,5 @@
 .ruff_cache
 tests
 eval
+
+*.egg-info/
