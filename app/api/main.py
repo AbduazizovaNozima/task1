@@ -37,10 +37,10 @@ def create_app(
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         container = container_factory(app_settings)
-        container.warm_up()
-        app.state.settings = app_settings
-        app.state.container = container
         try:
+            container.warm_up()
+            app.state.settings = app_settings
+            app.state.container = container
             yield
         finally:
             container.close()

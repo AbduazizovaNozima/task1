@@ -101,3 +101,23 @@ def test_ask_rejects_control_characters_and_overlength_input(client: TestClient,
     response = client.post("/ask", json={"question": question})
     assert response.status_code == 422
     assert response.json()["detail"][0]["loc"] == ["body", "question"]
+
+
+def test_model_warmup_failure_closes_the_container() -> None:
+    from unittest.mock import Mock
+
+    services = build_services()
+    close = Mock()
+    container = Container(
+        search=services.search,
+        ingestion=services.ingestion,
+        check=lambda: None,
+        warm_up=Mock(side_effect=RuntimeError("model unavailable")),
+        close=close,
+    )
+    with (
+        pytest.raises(RuntimeError, match="model unavailable"),
+        TestClient(create_app(Settings(_env_file=None), container_factory=lambda _: container)),
+    ):
+        pass
+    close.assert_called_once_with()

@@ -3,6 +3,7 @@ import unicodedata
 from pydantic import BaseModel, Field, field_validator
 
 QUESTION_MAX_LENGTH = 1000
+CONTROL_CATEGORIES = frozenset({"Cc", "Cf"})
 
 
 class AskRequest(BaseModel):
@@ -13,7 +14,7 @@ class AskRequest(BaseModel):
     def validate_question(cls, value: str) -> str:
         if not value.strip():
             raise ValueError("Savol matni bo'sh.")
-        if any(unicodedata.category(char) in {"Cc", "Cf"} for char in value):
+        if any(unicodedata.category(char) in CONTROL_CATEGORIES for char in value):
             raise ValueError("Savolda boshqaruv belgilariga ruxsat berilmaydi.")
         return value
 
