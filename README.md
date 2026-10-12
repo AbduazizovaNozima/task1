@@ -30,12 +30,14 @@ tests/         unit testlar (fake'lar bilan) va integratsion testlar
 ## Ishga tushirish
 
 ```bash
-cp .env.example .env            # TELEGRAM_BOT_TOKEN ni yozing
+cp .env.example .env            # bot uchun TELEGRAM_BOT_TOKEN ni yozing; API uchun shart emas
 docker compose up -d --build    # postgres, qdrant, ingest, api, bot
 docker compose logs -f api bot  # loglarni kuzatish
 ```
 
-`ingest` servisi `data/qa.xlsx` faylini yuklaydi (birinchi marta ~7 daqiqa, keyingi safar faqat o'zgargan savollar). API: http://localhost:8000/docs
+Portlar band bo'lsa, ishga tushirishdan oldin `POSTGRES_PORT`, `QDRANT_PORT`, `API_PORT` ni bo'sh portlarga belgilang. API so'rovlarida yangi `API_PORT` dan foydalaning; lokal test/eval uchun `.env` dagi `DATABASE_URL` va `QDRANT_URL` portlarini ham moslang. Parallel nusxa uchun alohida `COMPOSE_PROJECT_NAME` va `QA_IMAGE` ishlating. Token bo'lmasa bot ishga tushmaydi, API ishlaydi.
+
+`ingest` servisi `data/qa.xlsx` faylini yuklaydi (birinchi safar model yuklanishi va embedding hisoblanishini kuting; keyingi safar faqat o'zgargan savollar). API: http://localhost:8000/docs
 
 ```bash
 curl -X POST localhost:8000/ask -H 'Content-Type: application/json' \
@@ -45,10 +47,12 @@ curl -X POST localhost:8000/ask -H 'Content-Type: application/json' \
 **Testlar va baholash** (`pip install -e ".[api,bot,dev]"`):
 
 ```bash
-ruff check . && mypy app bot tests eval && pytest
+ruff check . && ruff format --check . && mypy app bot tests eval && pytest
 python -m eval.evaluate --dataset eval/dev.jsonl --out eval/results/dev
 # Frozen holdout va bir martalik kalibrovka: EVALUATION.md
 ```
+
+Joriy tekshiruv: **68 test o'tdi**, shu jumladan PostgreSQL/Qdrant bilan 6 integratsion test.
 
 ## Import va xatolar
 

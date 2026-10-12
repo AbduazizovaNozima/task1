@@ -39,8 +39,6 @@ Holdout'da **5 qaror yaxshilandi, 0 qaror yomonlashdi**; barcha himoyalangan met
 
 **Dev'dagi tradeoff yashirilmagan:** 6 ta to'g'ri javob yo'qolgan va decision accuracy hamda OOD F1 pasaygan. Nomzodni qabul qilish mustaqil holdout bo'yicha amalga oshirildi. Global threshold bir xil ma'nodagi so'rovlarni mukammal ajratmaydi.
 
-Phase 1 dagi 0.785 Recall@1, 0.909 Recall@3, 0.849 MRR va 0.891 F1 raqamlari qayta takrorlangan edi. Eski F1 faqat threshold bo'yicha hisoblangan; yangi jadval ambiguity rad etishlarini ham qo'shadi, shu sabab dev baseline F1 0.8837. Bu raqamlar turli qaror o'lchovlarini ifodalaydi.
-
 Asl muzlatilgan tajriba artefaktlari: `eval/baseline/{frozen_candidate,dev_summary,holdout_summary}.json`.
 
 ## Qayta bajarish
@@ -51,7 +49,7 @@ Ishlayotgan PostgreSQL/Qdrant va yuklangan korpus/model bilan, loyiha ildizidan:
 python -m eval.evaluate --dataset eval/dev.jsonl --out eval/results/dev
 ```
 
-Dev evaluator joriy threshold bo'yicha bitta savol qarorlarini hisoblaydi. Tuning va suhbat baholash olib tashlangan; holdout qayta baholanmaydi.
+Dev evaluator joriy threshold bo'yicha bitta savol qarorlarini hisoblaydi; holdout qayta baholanmaydi.
 
 ## Ma'lum cheklovlar — QA-01 to'liq yopilmadi
 

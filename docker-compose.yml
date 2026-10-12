@@ -23,13 +23,13 @@ services:
     image: qdrant/qdrant:v1.12.5
     environment:
       QDRANT__LOG_LEVEL: WARN
-    ports: ["127.0.0.1:6333:6333"]
+    ports: ["127.0.0.1:${QDRANT_PORT:-6333}:6333"]
     volumes: [qdrant_storage:/qdrant/storage]
 
   ingest:
     <<: *app-env
     build: .
-    image: semantic-qa
+    image: ${QA_IMAGE:-semantic-qa}
     command: ["python", "-m", "app.cli", "ingest", "data/qa.xlsx"]
     volumes: [hf_cache:/models]
     depends_on:
@@ -38,8 +38,8 @@ services:
 
   api:
     <<: *app-env
-    image: semantic-qa
-    ports: ["127.0.0.1:8000:8000"]
+    image: ${QA_IMAGE:-semantic-qa}
+    ports: ["127.0.0.1:${API_PORT:-8000}:8000"]
     volumes: [hf_cache:/models]
     depends_on:
       ingest: {condition: service_completed_successfully}
