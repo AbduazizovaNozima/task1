@@ -64,13 +64,16 @@ def test_api_errors_produce_an_actionable_bot_message(
         (422, b"invalid", QAApiValidationError),
     ],
 )
-def test_client_translates_invalid_responses_and_http_errors(status: int, body: bytes, error: type[QAApiError]) -> None:
+def test_client_translates_invalid_responses_and_http_errors(
+    monkeypatch: pytest.MonkeyPatch, status: int, body: bytes, error: type[QAApiError]
+) -> None:
+    async def respond(client: httpx.AsyncClient, request: httpx.Request, **kwargs: object) -> httpx.Response:
+        return httpx.Response(status, content=body, request=request)
+
+    monkeypatch.setattr(httpx.AsyncClient, "send", respond)
+
     async def scenario() -> None:
         api = QAApiClient("http://api.test", 1)
-        await api._http.aclose()
-        api._http = httpx.AsyncClient(
-            transport=httpx.MockTransport(lambda _: httpx.Response(status, content=body)), base_url="http://api.test"
-        )
         try:
             with pytest.raises(error):
                 await api.ask("Savol")

@@ -6,17 +6,20 @@ import psycopg
 import pytest
 from psycopg_pool import ConnectionPool
 from qdrant_client import QdrantClient
+from qdrant_client.http.exceptions import ResponseHandlingException
 
 from app.adapters.pg_repository import PostgresRepository
 from app.adapters.qdrant_index import QdrantIndex
+from app.config import Settings
 from app.domain.errors import IndexNotReadyError, StorageUnavailableError
 from app.domain.models import Answer, Question
 from tests.fakes import bag_of_words
 
 pytestmark = pytest.mark.integration
 
-DATABASE_URL = os.environ.get("TEST_DATABASE_URL", "postgresql://qa:qa@localhost:5440/qa")
-QDRANT_URL = os.environ.get("TEST_QDRANT_URL", "http://localhost:6333")
+SETTINGS = Settings()
+DATABASE_URL = os.environ.get("TEST_DATABASE_URL", SETTINGS.database_url)
+QDRANT_URL = os.environ.get("TEST_QDRANT_URL", SETTINGS.qdrant_url)
 UNREACHABLE_DATABASE_URL = "postgresql://qa:qa@127.0.0.1:1/qa"
 UNREACHABLE_QDRANT_URL = "http://127.0.0.1:1"
 CONNECT_TIMEOUT_SECONDS = 3
@@ -38,10 +41,12 @@ def pool() -> Iterator[ConnectionPool]:
         kwargs={"options": f"-c search_path={schema}"},
         open=True,
     )
-    yield pool
-    pool.close()
-    with psycopg.connect(DATABASE_URL) as admin:
-        admin.execute(f'DROP SCHEMA "{schema}" CASCADE')
+    try:
+        yield pool
+    finally:
+        pool.close()
+        with psycopg.connect(DATABASE_URL) as admin:
+            admin.execute(f'DROP SCHEMA "{schema}" CASCADE')
 
 
 @pytest.fixture
@@ -56,12 +61,18 @@ def index() -> Iterator[QdrantIndex]:
     client = QdrantClient(url=QDRANT_URL, timeout=3)
     try:
         client.get_collections()
-    except Exception:
+    except ResponseHandlingException:
+        client.close()
         pytest.skip("Qdrant is not reachable")
     collection = f"test_{uuid4().hex}"
-    yield QdrantIndex(client, collection)
-    client.delete_collection(collection)
-    client.close()
+    try:
+        yield QdrantIndex(client, collection)
+    finally:
+        try:
+            if client.collection_exists(collection):
+                client.delete_collection(collection)
+        finally:
+            client.close()
 
 
 def test_postgres_upsert_is_idempotent_and_get_joins_answer(repository: PostgresRepository) -> None:
@@ -112,10 +123,12 @@ def test_unreachable_postgres_raises_storage_error() -> None:
 
 
 def test_unreachable_qdrant_raises_storage_error() -> None:
-    index = QdrantIndex(QdrantClient(url=UNREACHABLE_QDRANT_URL, timeout=1), "qa_questions")
-
-    with pytest.raises(StorageUnavailableError):
-        index.ping()
+    client = QdrantClient(url=UNREACHABLE_QDRANT_URL, timeout=1)
+    try:
+        with pytest.raises(StorageUnavailableError):
+            QdrantIndex(client, "qa_questions").ping()
+    finally:
+        client.close()
 
 
 def test_postgres_upsert_transaction_rolls_back_before_publication(

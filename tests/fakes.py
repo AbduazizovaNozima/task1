@@ -16,11 +16,7 @@ DIMENSION = 64
 
 
 class FakeEmbedder:
-    def __init__(self) -> None:
-        self.calls: list[list[str]] = []
-
     def embed(self, texts: Sequence[str]) -> list[list[float]]:
-        self.calls.append(list(texts))
         return [bag_of_words(text) for text in texts]
 
 

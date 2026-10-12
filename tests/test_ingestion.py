@@ -1,6 +1,8 @@
+from collections.abc import Sequence
+
 import pytest
 
-from app.domain.models import QAPair, QASheet, SkippedRow
+from app.domain.models import QAPair, QASheet, Question, SkippedRow
 from app.services.ingestion import IngestionService
 from tests.fakes import FakeEmbedder, InMemoryIndex, InMemoryRepository
 
@@ -83,12 +85,12 @@ def test_partial_vector_write_does_not_publish_uncommitted_rows(monkeypatch: pyt
     original = services.index.upsert
     calls = 0
 
-    def write_then_fail(*args: object) -> None:
+    def write_then_fail(questions: Sequence[Question], vectors: Sequence[Sequence[float]]) -> None:
         nonlocal calls
         calls += 1
         if calls == 2:
             raise StorageUnavailableError("second vector batch failed")
-        original(*args)  # type: ignore[arg-type]
+        original(questions, vectors)
 
     monkeypatch.setattr(services.index, "upsert", write_then_fail)
     sheet = QASheet(
